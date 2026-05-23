@@ -1,6 +1,22 @@
-# Rules for AI
+# CLAUDE.md
 
-This file provides guidance to AI Agent when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project
+
+**Beer Recipe Builder** — a multi-step wizard web app for home brewers to define full beer recipes (grist, mash, hops, yeast, adjuncts) with live auto-calculation of BLG, ABV, SRM, and IBU. Users can save and view a read-only list of their recipes. Primary UI language is **Polish**. v1 scope: create + save + view only (no edit or delete).
+
+## Key conventions
+
+- **Astro components** for static content/layout; **React components** only when interactivity is needed.
+- **Tailwind class merging**: use the `cn()` helper from `@/lib/utils` (clsx + tailwind-merge) for conditional/merged class names. Do not concatenate class strings manually.
+- **shadcn/ui**: components live in `src/components/ui/`, "new-york" style variant. Install new ones with `npx shadcn@latest add [name]`.
+- **API routes**: use uppercase `GET`, `POST` exports; validate input with zod.
+- **Supabase migrations**: `supabase/migrations/` using naming format `YYYYMMDDHHmmss_short_description.sql`. Always enable RLS on new tables with granular per-operation, per-role policies.
+- **React**: no Next.js directives ("use client" etc.). Extract hooks to `src/components/hooks/`.
+- **Services/helpers** go in `src/lib/` (or `src/lib/services/` for extracted business logic).
+- **Shared types** (entities, DTOs) go in `src/types.ts`.
+- **Path alias**: `@/*` maps to `./src/*` (tsconfig paths).
 
 ## Commands
 
@@ -15,31 +31,19 @@ Pre-commit hooks: husky + lint-staged runs `eslint --fix` on `*.{ts,tsx,astro}` 
 
 ## Architecture
 
-**Astro 6 SSR app** with React 19 islands, Tailwind 4, Supabase auth, and shadcn/ui components. Deployed to Cloudflare Workers.
+**Astro 6 SSR app** with React 19 islands, Tailwind 4, Supabase auth + PostgreSQL, and shadcn/ui components. Deployed to Cloudflare Workers.
 
 ### Rendering mode
 
-Full server-side rendering (`output: "server"` in astro.config.mjs). All pages are server-rendered by default. API routes must export `const prerender = false`.
+Full server-side rendering (`output: "server"` in `astro.config.mjs`). All pages are server-rendered by default. API routes must export `const prerender = false`.
 
 ### Auth flow
 
-- `src/lib/supabase.ts` — creates a Supabase SSR client using `@supabase/ssr` with cookie-based sessions. Uses `astro:env/server` for `SUPABASE_URL` and `SUPABASE_KEY` (server-only secrets declared in astro.config.mjs `env.schema`).
-- `src/middleware.ts` — runs on every request, resolves the current user, attaches to `context.locals.user`. Redirects unauthenticated users away from routes listed in `PROTECTED_ROUTES`.
+- `src/lib/supabase.ts` — creates a Supabase SSR client using `@supabase/ssr` with cookie-based sessions. Uses `astro:env/server` for `SUPABASE_URL` and `SUPABASE_KEY` (server-only secrets declared in `astro.config.mjs` `env.schema`). Returns `null` when env vars are missing (graceful degradation in scaffolded state).
+- `src/middleware.ts` — runs on every request, resolves the current user, attaches to `context.locals.user` (typed in `src/env.d.ts`). Redirects unauthenticated users away from routes listed in `PROTECTED_ROUTES`.
 - API endpoints: `src/pages/api/auth/{signin,signup,signout}.ts`
 - Auth pages: `src/pages/auth/{signin,signup,confirm-email}.astro`
 - Protected page example: `src/pages/dashboard.astro`
-
-### Key conventions
-
-- **Path alias**: `@/*` maps to `./src/*` (tsconfig paths).
-- **Astro components** for static content/layout; **React components** only when interactivity is needed.
-- **Tailwind class merging**: use the `cn()` helper from `@/lib/utils` (clsx + tailwind-merge) for conditional/merged class names. Do not concatenate class strings manually.
-- **shadcn/ui**: components live in `src/components/ui/`, "new-york" style variant. Install new ones with `npx shadcn@latest add [name]`.
-- **API routes**: use uppercase `GET`, `POST` exports; validate input with zod.
-- **Supabase migrations**: `supabase/migrations/` using naming format `YYYYMMDDHHmmss_short_description.sql`. Always enable RLS on new tables with granular per-operation, per-role policies.
-- **React**: no Next.js directives ("use client" etc.). Extract hooks to `src/components/hooks/`.
-- **Services/helpers** go in `src/lib/` (or `src/lib/services/` for extracted business logic).
-- **Shared types** (entities, DTOs) go in `src/types.ts`.
 
 ### Environment
 
@@ -48,6 +52,14 @@ Full server-side rendering (`output: "server"` in astro.config.mjs). All pages a
 - Local Supabase: `npx supabase start` (requires Docker)
 - Cloudflare local dev: secrets go in `.dev.vars` (gitignored)
 - Deploy: `npx wrangler deploy` (requires Cloudflare account + `wrangler` auth)
+
+## Context directory
+
+`context/` holds product and architecture documents used during planning — not runtime code:
+
+- `context/foundation/prd.md` — full product requirements (Beer Recipe Builder v1)
+- `context/foundation/tech-stack.md` — stack selection rationale
+- `context/changes/` and `context/archive/` — change tracking and archived decisions
 
 ## CI
 
