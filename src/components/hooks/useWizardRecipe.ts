@@ -7,7 +7,7 @@ export function useWizardRecipe() {
   const form = useForm<RecipeDraft>({
     resolver: zodResolver(recipeDraftSchema),
     defaultValues: defaultRecipeDraft,
-    mode: "onSubmit",
+    mode: "onTouched",
   });
 
   const malts = useFieldArray({

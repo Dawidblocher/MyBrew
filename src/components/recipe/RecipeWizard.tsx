@@ -4,6 +4,7 @@ import { useWizardRecipe } from "@/components/hooks/useWizardRecipe";
 import { gristStepSchema } from "@/lib/recipe-schema";
 import { validateWizardStep } from "@/lib/wizard-step-validation";
 import { BasicsStep } from "@/components/recipe/steps/BasicsStep";
+import { GristStep } from "@/components/recipe/steps/GristStep";
 import { WizardStepper, type WizardStepConfig } from "@/components/recipe/WizardStepper";
 
 const WIZARD_STEPS: WizardStepConfig[] = [
@@ -11,15 +12,7 @@ const WIZARD_STEPS: WizardStepConfig[] = [
   { id: "grist", label: "Zasyp i parametry" },
 ];
 
-function GristPlaceholder() {
-  return (
-    <p className="text-sm text-blue-100/60">
-      Parametry warki i lista słodów — ten krok zostanie uzupełniony w następnej fazie.
-    </p>
-  );
-}
-
-const STEP_COMPONENTS = [BasicsStep, GristPlaceholder];
+const STEP_COMPONENTS = [BasicsStep, GristStep];
 
 export default function RecipeWizard() {
   const { form } = useWizardRecipe();

@@ -1,4 +1,5 @@
 export interface MaltEntry {
+  name: string;
   amountKg: number;
   colorEbc: number;
   extractPercent: number;

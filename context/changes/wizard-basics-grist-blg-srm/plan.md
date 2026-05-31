@@ -331,27 +331,27 @@ None — no persistence or schema changes in this slice.
 
 #### Automated
 
-- [x] 2.1 Build passes: `npm run build`
-- [x] 2.2 Linting passes: `npm run lint`
+- [x] 2.1 Build passes: `npm run build` — 747c0da
+- [x] 2.2 Linting passes: `npm run lint` — 747c0da
 
 #### Manual
 
-- [x] 2.3 Stepper shows two steps with Basics active first
-- [x] 2.4 Next is gated on a valid name, allowed once valid
-- [x] 2.5 Back/next preserve entered values
+- [x] 2.3 Stepper shows two steps with Basics active first — 747c0da
+- [x] 2.4 Next is gated on a valid name, allowed once valid — 747c0da
+- [x] 2.5 Back/next preserve entered values — 747c0da
 
 ### Phase 3: Grist & batch step + dynamic malt list
 
 #### Automated
 
-- [ ] 3.1 Build passes: `npm run build`
-- [ ] 3.2 Linting passes: `npm run lint`
+- [x] 3.1 Build passes: `npm run build`
+- [x] 3.2 Linting passes: `npm run lint`
 
 #### Manual
 
-- [ ] 3.3 Add creates an empty row; remove deletes the correct row
-- [ ] 3.4 Up/down reorder correctly and disable at list ends
-- [ ] 3.5 Invalid numeric entries show validation messages
+- [x] 3.3 Add creates an empty row; remove deletes the correct row
+- [x] 3.4 Up/down reorder correctly and disable at list ends
+- [x] 3.5 Invalid numeric entries show validation messages
 
 ### Phase 4: Live metrics integration + tests
 
