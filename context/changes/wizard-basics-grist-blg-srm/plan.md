@@ -317,28 +317,28 @@ None — no persistence or schema changes in this slice.
 
 #### Automated
 
-- [x] 1.1 Dependencies install cleanly: `npm install`
-- [x] 1.2 Type checking / build passes: `npm run build`
-- [x] 1.3 Linting passes: `npm run lint`
+- [x] 1.1 Dependencies install cleanly: `npm install` — ed93160
+- [x] 1.2 Type checking / build passes: `npm run build` — ed93160
+- [x] 1.3 Linting passes: `npm run lint` — ed93160
 
 #### Manual
 
-- [x] 1.4 `/recipes/new` redirects to signin when logged out
-- [x] 1.5 `/recipes/new` renders the wizard island when logged in
-- [x] 1.6 Dashboard shows a working "Nowy przepis" link
+- [x] 1.4 `/recipes/new` redirects to signin when logged out — ed93160
+- [x] 1.5 `/recipes/new` renders the wizard island when logged in — ed93160
+- [x] 1.6 Dashboard shows a working "Nowy przepis" link — ed93160
 
 ### Phase 2: Wizard shell & basics step
 
 #### Automated
 
-- [ ] 2.1 Build passes: `npm run build`
-- [ ] 2.2 Linting passes: `npm run lint`
+- [x] 2.1 Build passes: `npm run build`
+- [x] 2.2 Linting passes: `npm run lint`
 
 #### Manual
 
-- [ ] 2.3 Stepper shows two steps with Basics active first
-- [ ] 2.4 Next is gated on a valid name, allowed once valid
-- [ ] 2.5 Back/next preserve entered values
+- [x] 2.3 Stepper shows two steps with Basics active first
+- [x] 2.4 Next is gated on a valid name, allowed once valid
+- [x] 2.5 Back/next preserve entered values
 
 ### Phase 3: Grist & batch step + dynamic malt list
 
