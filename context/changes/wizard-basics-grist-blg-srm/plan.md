@@ -344,14 +344,14 @@ None — no persistence or schema changes in this slice.
 
 #### Automated
 
-- [x] 3.1 Build passes: `npm run build`
-- [x] 3.2 Linting passes: `npm run lint`
+- [x] 3.1 Build passes: `npm run build` — ecc920c
+- [x] 3.2 Linting passes: `npm run lint` — ecc920c
 
 #### Manual
 
-- [x] 3.3 Add creates an empty row; remove deletes the correct row
-- [x] 3.4 Up/down reorder correctly and disable at list ends
-- [x] 3.5 Invalid numeric entries show validation messages
+- [x] 3.3 Add creates an empty row; remove deletes the correct row — ecc920c
+- [x] 3.4 Up/down reorder correctly and disable at list ends — ecc920c
+- [x] 3.5 Invalid numeric entries show validation messages — ecc920c
 
 ### Phase 4: Live metrics integration + tests
 
