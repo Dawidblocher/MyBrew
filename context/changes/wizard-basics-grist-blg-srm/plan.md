@@ -357,13 +357,13 @@ None — no persistence or schema changes in this slice.
 
 #### Automated
 
-- [x] 4.1 Unit tests pass: `npm run test` (or `npx vitest run`)
-- [x] 4.2 Build passes: `npm run build`
-- [x] 4.3 Linting passes: `npm run lint`
+- [x] 4.1 Unit tests pass: `npm run test` (or `npx vitest run`) — 37a693b
+- [x] 4.2 Build passes: `npm run build` — 37a693b
+- [x] 4.3 Linting passes: `npm run lint` — 37a693b
 
 #### Manual
 
-- [x] 4.4 No malts / blank volume → BLG and SRM show `—`
-- [x] 4.5 Valid malt + volume → SRM and BLG show real values
-- [x] 4.6 Editing any contributing field updates metrics immediately
-- [x] 4.7 Removing all malts returns metrics to `—`
+- [x] 4.4 No malts / blank volume → BLG and SRM show `—` — 37a693b
+- [x] 4.5 Valid malt + volume → SRM and BLG show real values — 37a693b
+- [x] 4.6 Editing any contributing field updates metrics immediately — 37a693b
+- [x] 4.7 Removing all malts returns metrics to `—` — 37a693b
