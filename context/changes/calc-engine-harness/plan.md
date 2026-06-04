@@ -366,11 +366,11 @@ None — new module and test tooling only; no schema, data, or runtime-config ch
 
 #### Automated
 
-- [x] 4.1 Tests pass: `npm run test:run`
-- [x] 4.2 Build passes: `npm run build`
-- [x] 4.3 Linting passes: `npm run lint`
+- [x] 4.1 Tests pass: `npm run test:run` — ae98948
+- [x] 4.2 Build passes: `npm run build` — ae98948
+- [x] 4.3 Linting passes: `npm run lint` — ae98948
 
 #### Manual
 
-- [x] 4.4 `computeMetrics` returns independent results for grist-only input
-- [x] 4.5 `@/lib/calc` exports match S-01's assumed contract names
+- [x] 4.4 `computeMetrics` returns independent results for grist-only input — ae98948
+- [x] 4.5 `@/lib/calc` exports match S-01's assumed contract names — ae98948
