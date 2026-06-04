@@ -34,7 +34,20 @@ function Metric({ label, unit, value }: MetricProps) {
 
 export function MetricsPanel() {
   const { control } = useFormContext<RecipeDraft>();
-  const draft = useWatch({ control });
+  // useWatch returns a deep-partial view of the form values; normalize it back
+  // to a full RecipeDraft so the pure mapping receives a fully-shaped draft.
+  const watched = useWatch({ control });
+
+  const draft: RecipeDraft = {
+    basics: { name: watched.basics?.name ?? "", style: watched.basics?.style ?? "" },
+    batch: { volumeL: watched.batch?.volumeL ?? 0 },
+    malts: (watched.malts ?? []).map((m) => ({
+      name: m.name ?? "",
+      amountKg: m.amountKg ?? 0,
+      colorEbc: m.colorEbc ?? 0,
+      extractPercent: m.extractPercent ?? 0,
+    })),
+  };
 
   const { blg, srm } = computeWizardMetrics(draft);
 

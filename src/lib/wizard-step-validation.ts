@@ -5,7 +5,7 @@ import type { RecipeDraft } from "@/types";
 export function validateWizardStep<S extends z.ZodType>(
   schema: S,
   values: z.infer<S>,
-  form: UseFormReturn<RecipeDraft>,
+  form: Pick<UseFormReturn<RecipeDraft>, "clearErrors" | "setError">,
   fieldPaths: FieldPath<RecipeDraft>[],
 ): boolean {
   const result = schema.safeParse(values);
@@ -23,7 +23,7 @@ export function validateWizardStep<S extends z.ZodType>(
   for (const issue of result.error.issues) {
     const path = issue.path.join(".") as FieldPath<RecipeDraft>;
     if (fieldPaths.includes(path)) {
-      form.setError(path, { type: "manual", message: issue.message, shouldFocus: true });
+      form.setError(path, { type: "manual", message: issue.message }, { shouldFocus: true });
     }
   }
 
