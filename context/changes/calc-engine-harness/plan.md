@@ -326,28 +326,28 @@ None — new module and test tooling only; no schema, data, or runtime-config ch
 
 #### Automated
 
-- [x] 1.1 Dependencies install cleanly: `npm install`
-- [x] 1.2 Tests run and pass: `npm run test:run`
-- [x] 1.3 Build passes: `npm run build`
-- [x] 1.4 Linting passes (including test files): `npm run lint`
+- [x] 1.1 Dependencies install cleanly: `npm install` — 0770321
+- [x] 1.2 Tests run and pass: `npm run test:run` — 0770321
+- [x] 1.3 Build passes: `npm run build` — 0770321
+- [x] 1.4 Linting passes (including test files): `npm run lint` — 0770321
 
 #### Manual
 
-- [x] 1.5 CI run shows a passing test step after lint+build
-- [x] 1.6 `@/lib/calc` alias resolves in a test import
+- [x] 1.5 CI run shows a passing test step after lint+build — 0770321
+- [x] 1.6 `@/lib/calc` alias resolves in a test import — 0770321
 
 ### Phase 2: Gravity + BLG + SRM
 
 #### Automated
 
-- [ ] 2.1 Tests pass: `npm run test:run`
-- [ ] 2.2 Build passes: `npm run build`
-- [ ] 2.3 Linting passes: `npm run lint`
+- [x] 2.1 Tests pass: `npm run test:run`
+- [x] 2.2 Build passes: `npm run build`
+- [x] 2.3 Linting passes: `npm run lint`
 
 #### Manual
 
-- [ ] 2.4 BLG & SRM golden values match cited references within tolerance (hand spot-check)
-- [ ] 2.5 Provenance recorded for each golden vector
+- [x] 2.4 BLG & SRM golden values match cited references within tolerance (hand spot-check)
+- [x] 2.5 Provenance recorded for each golden vector
 
 ### Phase 3: IBU + ABV
 
