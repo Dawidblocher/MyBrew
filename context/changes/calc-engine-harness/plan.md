@@ -340,27 +340,27 @@ None — new module and test tooling only; no schema, data, or runtime-config ch
 
 #### Automated
 
-- [x] 2.1 Tests pass: `npm run test:run`
-- [x] 2.2 Build passes: `npm run build`
-- [x] 2.3 Linting passes: `npm run lint`
+- [x] 2.1 Tests pass: `npm run test:run` — bc4e526
+- [x] 2.2 Build passes: `npm run build` — bc4e526
+- [x] 2.3 Linting passes: `npm run lint` — bc4e526
 
 #### Manual
 
-- [x] 2.4 BLG & SRM golden values match cited references within tolerance (hand spot-check)
-- [x] 2.5 Provenance recorded for each golden vector
+- [x] 2.4 BLG & SRM golden values match cited references within tolerance (hand spot-check) — bc4e526
+- [x] 2.5 Provenance recorded for each golden vector — bc4e526
 
 ### Phase 3: IBU + ABV
 
 #### Automated
 
-- [ ] 3.1 Tests pass: `npm run test:run`
-- [ ] 3.2 Build passes: `npm run build`
-- [ ] 3.3 Linting passes: `npm run lint`
+- [x] 3.1 Tests pass: `npm run test:run`
+- [x] 3.2 Build passes: `npm run build`
+- [x] 3.3 Linting passes: `npm run lint`
 
 #### Manual
 
-- [ ] 3.4 IBU & ABV golden values match cited references within tolerance (hand spot-check)
-- [ ] 3.5 Provenance recorded for each golden vector
+- [x] 3.4 IBU & ABV golden values match cited references within tolerance (hand spot-check)
+- [x] 3.5 Provenance recorded for each golden vector
 
 ### Phase 4: Aggregate + barrel finalize
 
