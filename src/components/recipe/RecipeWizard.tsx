@@ -5,6 +5,7 @@ import { gristStepSchema } from "@/lib/recipe-schema";
 import { validateWizardStep } from "@/lib/wizard-step-validation";
 import { BasicsStep } from "@/components/recipe/steps/BasicsStep";
 import { GristStep } from "@/components/recipe/steps/GristStep";
+import { MetricsPanel } from "@/components/recipe/MetricsPanel";
 import { WizardStepper, type WizardStepConfig } from "@/components/recipe/WizardStepper";
 
 const WIZARD_STEPS: WizardStepConfig[] = [
@@ -64,6 +65,8 @@ export default function RecipeWizard() {
         >
           <StepComponent />
         </WizardStepper>
+
+        <MetricsPanel />
       </FormProvider>
     </div>
   );
