@@ -333,8 +333,8 @@ None — new module and test tooling only; no schema, data, or runtime-config ch
 
 #### Manual
 
-- [ ] 1.5 CI run shows a passing test step after lint+build
-- [ ] 1.6 `@/lib/calc` alias resolves in a test import
+- [x] 1.5 CI run shows a passing test step after lint+build
+- [x] 1.6 `@/lib/calc` alias resolves in a test import
 
 ### Phase 2: Gravity + BLG + SRM
 
