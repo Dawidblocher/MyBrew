@@ -1,6 +1,7 @@
 import { useFormContext, useWatch } from "react-hook-form";
 import { computeWizardMetrics } from "@/lib/recipe-to-calc";
 import type { CalcResult } from "@/lib/calc";
+import { defaultRecipeDraft } from "@/lib/recipe-schema";
 import { cn } from "@/lib/utils";
 import type { RecipeDraft } from "@/types";
 
@@ -46,6 +47,8 @@ export function MetricsPanel() {
     basics: { name: "", style: "" },
     batch,
     malts,
+    mash: defaultRecipeDraft.mash,
+    hops: defaultRecipeDraft.hops,
   };
 
   const { blg, srm } = computeWizardMetrics(draft);

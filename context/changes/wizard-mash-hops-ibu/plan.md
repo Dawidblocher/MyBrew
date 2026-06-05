@@ -318,15 +318,15 @@ Brak migracji danych — model jest in-memory (`RecipeDraft`). Persystencja przy
 
 #### Automated
 
-- [x] 1.1 Nowe golden vectors przechodzą: `npm run test`
-- [x] 1.2 Type checking / lint przechodzi: `npm run lint`
+- [x] 1.1 Nowe golden vectors przechodzą: `npm run test` — e1e79ac
+- [x] 1.2 Type checking / lint przechodzi: `npm run lint` — e1e79ac
 
 ### Phase 2: Model danych + schemat
 
 #### Automated
 
-- [ ] 2.1 Type checking przechodzi (rozszerzony `RecipeDraft` spójny ze schematem): `npm run lint`
-- [ ] 2.2 Istniejące testy nie regresują: `npm run test`
+- [x] 2.1 Type checking przechodzi (rozszerzony `RecipeDraft` spójny ze schematem): `npm run lint`
+- [x] 2.2 Istniejące testy nie regresują: `npm run test`
 
 ### Phase 3: Seam obliczeń + metryki na żywo
 

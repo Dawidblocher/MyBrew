@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { DEFAULT_MASH_EFFICIENCY, computeWizardMetrics, mapDraftToCalcInput } from "@/lib/recipe-to-calc";
+import { defaultRecipeDraft } from "@/lib/recipe-schema";
 import type { RecipeDraft } from "@/types";
 
 function draft(overrides: Partial<RecipeDraft> = {}): RecipeDraft {
@@ -8,6 +9,8 @@ function draft(overrides: Partial<RecipeDraft> = {}): RecipeDraft {
     basics: { name: "Test", style: "" },
     batch: { volumeL: 20 },
     malts: [{ name: "Pilsner", amountKg: 5, colorEbc: 4, extractPercent: 80 }],
+    mash: defaultRecipeDraft.mash,
+    hops: defaultRecipeDraft.hops,
     ...overrides,
   };
 }
