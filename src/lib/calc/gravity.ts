@@ -1,8 +1,9 @@
 /**
  * Shared original-gravity helper — the math root for BLG, IBU, and ABV.
  *
- * Internal to the engine (not on the public barrel). The aggregate computes
- * gravity once and feeds it to the gravity-dependent metrics.
+ * Exported on the public barrel for wizard seams that need SG without
+ * duplicating the gravity formula. The aggregate computes gravity once and
+ * feeds it to the gravity-dependent metrics.
  */
 
 import type { CalcMalt, CalcResult } from "./types";

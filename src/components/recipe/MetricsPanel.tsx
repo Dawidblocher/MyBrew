@@ -1,7 +1,6 @@
 import { useFormContext, useWatch } from "react-hook-form";
 import { computeWizardMetrics } from "@/lib/recipe-to-calc";
 import type { CalcResult } from "@/lib/calc";
-import { defaultRecipeDraft } from "@/lib/recipe-schema";
 import { cn } from "@/lib/utils";
 import type { RecipeDraft } from "@/types";
 
@@ -37,21 +36,19 @@ function Metric({ label, unit, value }: MetricProps) {
 
 export function MetricsPanel() {
   const { control } = useFormContext<RecipeDraft>();
-  // Metrics depend only on batch + malts, so scope the subscription to those
-  // slices — basics keystrokes (name/style) must not trigger a recompute. The
-  // form's defaultValues guarantee both are present; the mapping enforces
-  // finiteness, so the raw values can flow straight in.
-  const [batch, malts] = useWatch({ control, name: ["batch", "malts"] });
+  // Scope the subscription to fields that affect BLG/SRM/IBU — basics keystrokes
+  // (name/style) must not trigger a recompute.
+  const [batch, malts, mash, hops] = useWatch({ control, name: ["batch", "malts", "mash", "hops"] });
 
   const draft: RecipeDraft = {
     basics: { name: "", style: "" },
     batch,
     malts,
-    mash: defaultRecipeDraft.mash,
-    hops: defaultRecipeDraft.hops,
+    mash,
+    hops,
   };
 
-  const { blg, srm } = computeWizardMetrics(draft);
+  const { blg, srm, ibu } = computeWizardMetrics(draft);
 
   return (
     <section
@@ -60,6 +57,7 @@ export function MetricsPanel() {
     >
       <Metric label="BLG" unit="°BLG" value={formatMetric(blg, 1)} />
       <Metric label="Barwa" unit="SRM" value={formatMetric(srm, 1)} />
+      <Metric label="IBU" unit="IBU" value={formatMetric(ibu, 0)} />
     </section>
   );
 }

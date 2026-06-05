@@ -19,6 +19,7 @@ export { calcBLG } from "./blg";
 export { calcSRM } from "./srm";
 export { calcIBU } from "./ibu";
 export { calcABV } from "./abv";
+export { computeGravity } from "./gravity";
 
 export type {
   CalcResult,
@@ -31,6 +32,8 @@ export type {
   RecipeMetricsInput,
   RecipeMetrics,
 } from "./types";
+
+export type { Gravity, GravityInput } from "./gravity";
 
 /**
  * Compute all four metrics in one call, sharing gravity.

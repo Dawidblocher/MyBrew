@@ -325,15 +325,15 @@ Brak migracji danych — model jest in-memory (`RecipeDraft`). Persystencja przy
 
 #### Automated
 
-- [x] 2.1 Type checking przechodzi (rozszerzony `RecipeDraft` spójny ze schematem): `npm run lint`
-- [x] 2.2 Istniejące testy nie regresują: `npm run test`
+- [x] 2.1 Type checking przechodzi (rozszerzony `RecipeDraft` spójny ze schematem): `npm run lint` — 6748c57
+- [x] 2.2 Istniejące testy nie regresują: `npm run test` — 6748c57
 
 ### Phase 3: Seam obliczeń + metryki na żywo
 
 #### Automated
 
-- [ ] 3.1 Testy seamu przechodzą: `npm run test`
-- [ ] 3.2 Type checking / lint przechodzi: `npm run lint`
+- [x] 3.1 Testy seamu przechodzą: `npm run test`
+- [x] 3.2 Type checking / lint przechodzi: `npm run lint`
 
 ### Phase 4: UI kreatora — kroki Zacieranie i Chmiel
 

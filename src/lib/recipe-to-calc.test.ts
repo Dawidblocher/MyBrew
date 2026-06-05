@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { DEFAULT_MASH_EFFICIENCY, computeWizardMetrics, mapDraftToCalcInput } from "@/lib/recipe-to-calc";
+import { computeWizardMetrics, mapDraftToCalcInput } from "@/lib/recipe-to-calc";
 import { defaultRecipeDraft } from "@/lib/recipe-schema";
-import type { RecipeDraft } from "@/types";
+import type { HopEntry, RecipeDraft } from "@/types";
 
 function draft(overrides: Partial<RecipeDraft> = {}): RecipeDraft {
   return {
@@ -14,6 +14,15 @@ function draft(overrides: Partial<RecipeDraft> = {}): RecipeDraft {
     ...overrides,
   };
 }
+
+const boilHop = (overrides: Partial<HopEntry> = {}): HopEntry => ({
+  name: "Magnum",
+  alphaAcidPercent: 5,
+  amountG: 28,
+  stage: "boil",
+  timeMin: 60,
+  ...overrides,
+});
 
 describe("mapDraftToCalcInput — insufficient-input guards", () => {
   it("empty malt list → sentinel", () => {
@@ -54,15 +63,25 @@ describe("mapDraftToCalcInput — insufficient-input guards", () => {
     );
     expect(result.ok).toBe(false);
   });
+
+  it("zero mash efficiency → sentinel", () => {
+    const result = mapDraftToCalcInput(draft({ mash: { ...defaultRecipeDraft.mash, efficiencyPct: 0 } }));
+    expect(result.ok).toBe(false);
+  });
+
+  it("mash efficiency above 100 → sentinel", () => {
+    const result = mapDraftToCalcInput(draft({ mash: { ...defaultRecipeDraft.mash, efficiencyPct: 101 } }));
+    expect(result.ok).toBe(false);
+  });
 });
 
 describe("mapDraftToCalcInput — valid mapping", () => {
-  it("valid draft → calc input with default efficiency applied and EBC/volume passed through", () => {
+  it("valid draft → calc input with mash efficiency from draft and EBC/volume passed through", () => {
     const result = mapDraftToCalcInput(draft());
     expect(result.ok).toBe(true);
     if (!result.ok) throw new Error("expected ok result");
 
-    expect(result.input.mashEfficiency).toBe(DEFAULT_MASH_EFFICIENCY);
+    expect(result.input.mashEfficiency).toBe(0.75);
     expect(result.input.volumeL).toBe(20);
     expect(result.input.malts).toEqual([{ amountKg: 5, colorEbc: 4, extractPercent: 80 }]);
   });
@@ -84,13 +103,14 @@ describe("mapDraftToCalcInput — valid mapping", () => {
 });
 
 describe("computeWizardMetrics", () => {
-  it("propagates the insufficient-input sentinel to both metrics", () => {
-    const { blg, srm } = computeWizardMetrics(draft({ malts: [] }));
+  it("propagates the insufficient-input sentinel to all metrics", () => {
+    const { blg, srm, ibu } = computeWizardMetrics(draft({ malts: [] }));
     expect(blg.ok).toBe(false);
     expect(srm.ok).toBe(false);
+    expect(ibu.ok).toBe(false);
   });
 
-  it("valid draft → both BLG and SRM resolve to real values", () => {
+  it("valid draft → BLG and SRM resolve to real values", () => {
     const { blg, srm } = computeWizardMetrics(draft());
     expect(blg.ok).toBe(true);
     expect(srm.ok).toBe(true);
@@ -98,9 +118,57 @@ describe("computeWizardMetrics", () => {
     if (srm.ok) expect(srm.value).toBeGreaterThan(0);
   });
 
-  it("NaN volume → both metrics return the sentinel (never NaN/Infinity)", () => {
-    const { blg, srm } = computeWizardMetrics(draft({ batch: { volumeL: NaN } }));
+  it("NaN volume → all metrics return the sentinel (never NaN/Infinity)", () => {
+    const { blg, srm, ibu } = computeWizardMetrics(draft({ batch: { volumeL: NaN } }));
     expect(blg.ok).toBe(false);
     expect(srm.ok).toBe(false);
+    expect(ibu.ok).toBe(false);
+  });
+
+  it("empty hop list → ibu { ok: false }", () => {
+    const { ibu } = computeWizardMetrics(draft({ hops: [] }));
+    expect(ibu.ok).toBe(false);
+  });
+
+  it("boil hop addition → IBU > 0", () => {
+    const { ibu } = computeWizardMetrics(draft({ hops: [boilHop()] }));
+    expect(ibu.ok).toBe(true);
+    if (ibu.ok) expect(ibu.value).toBeGreaterThan(0);
+  });
+
+  it("whirlpool yields lower IBU than boil for same params", () => {
+    const boil = computeWizardMetrics(draft({ hops: [boilHop({ stage: "boil" })] }));
+    const whirlpool = computeWizardMetrics(draft({ hops: [boilHop({ stage: "whirlpool" })] }));
+    expect(boil.ibu.ok).toBe(true);
+    expect(whirlpool.ibu.ok).toBe(true);
+    if (boil.ibu.ok && whirlpool.ibu.ok) {
+      expect(whirlpool.ibu.value).toBeLessThan(boil.ibu.value);
+    }
+  });
+
+  it("dry hop does not contribute to IBU", () => {
+    const without = computeWizardMetrics(draft({ hops: [] }));
+    const withDryHop = computeWizardMetrics(draft({ hops: [boilHop({ stage: "dryHop" })] }));
+    expect(without.ibu.ok).toBe(false);
+    expect(withDryHop.ibu.ok).toBe(false);
+  });
+
+  it("mash efficiency from input affects BLG", () => {
+    const low = computeWizardMetrics(draft({ mash: { ...defaultRecipeDraft.mash, efficiencyPct: 65 } }));
+    const high = computeWizardMetrics(draft({ mash: { ...defaultRecipeDraft.mash, efficiencyPct: 85 } }));
+    expect(low.blg.ok).toBe(true);
+    expect(high.blg.ok).toBe(true);
+    if (low.blg.ok && high.blg.ok) {
+      expect(high.blg.value).toBeGreaterThan(low.blg.value);
+    }
+  });
+
+  it("invalid mash efficiency → sentinel for all metrics", () => {
+    const zero = computeWizardMetrics(draft({ mash: { ...defaultRecipeDraft.mash, efficiencyPct: 0 } }));
+    const over = computeWizardMetrics(draft({ mash: { ...defaultRecipeDraft.mash, efficiencyPct: 150 } }));
+    expect(zero.blg.ok).toBe(false);
+    expect(zero.ibu.ok).toBe(false);
+    expect(over.blg.ok).toBe(false);
+    expect(over.ibu.ok).toBe(false);
   });
 });
