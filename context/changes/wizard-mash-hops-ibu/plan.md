@@ -332,22 +332,22 @@ Brak migracji danych — model jest in-memory (`RecipeDraft`). Persystencja przy
 
 #### Automated
 
-- [x] 3.1 Testy seamu przechodzą: `npm run test`
-- [x] 3.2 Type checking / lint przechodzi: `npm run lint`
+- [x] 3.1 Testy seamu przechodzą: `npm run test` — 5a16312
+- [x] 3.2 Type checking / lint przechodzi: `npm run lint` — 5a16312
 
 ### Phase 4: UI kreatora — kroki Zacieranie i Chmiel
 
 #### Automated
 
-- [ ] 4.1 Lint i build przechodzą: `npm run lint` i `npm run build`
-- [ ] 4.2 Testy nie regresują: `npm run test`
+- [x] 4.1 Lint i build przechodzą: `npm run lint` i `npm run build`
+- [x] 4.2 Testy nie regresują: `npm run test`
 
 #### Manual
 
-- [ ] 4.3 Przejście Podstawy → Zasyp → Zacieranie → Chmiel działa; Wstecz/Dalej poprawne
-- [ ] 4.4 Krok Zacieranie blokuje przejście przy wydajności ≤ 0; dopuszcza puste przerwy
-- [ ] 4.5 Add/move/remove działa na liście przerw i liście chmielu
-- [ ] 4.6 IBU na żywo po dodaniu ważącego dodatku boil; rośnie z ilością/alfą/czasem
-- [ ] 4.7 Whirlpool < boil przy tych samych parametrach; dry hop nie zmienia IBU
-- [ ] 4.8 Zmiana wydajności zacierania zmienia BLG na żywo
-- [ ] 4.9 IBU pokazuje `—` gdy brak grawitacji lub brak ważącego dodatku
+- [x] 4.3 Przejście Podstawy → Zasyp → Zacieranie → Chmiel działa; Wstecz/Dalej poprawne
+- [x] 4.4 Krok Zacieranie blokuje przejście przy wydajności ≤ 0; dopuszcza puste przerwy
+- [x] 4.5 Add/move/remove działa na liście przerw i liście chmielu
+- [x] 4.6 IBU na żywo po dodaniu ważącego dodatku boil; rośnie z ilością/alfą/czasem
+- [x] 4.7 Whirlpool < boil przy tych samych parametrach; dry hop nie zmienia IBU
+- [x] 4.8 Zmiana wydajności zacierania zmienia BLG na żywo
+- [x] 4.9 IBU pokazuje `—` gdy brak grawitacji lub brak ważącego dodatku

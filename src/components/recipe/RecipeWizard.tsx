@@ -1,19 +1,23 @@
 import { useState } from "react";
 import { FormProvider } from "react-hook-form";
 import { useWizardRecipe } from "@/components/hooks/useWizardRecipe";
-import { gristStepSchema } from "@/lib/recipe-schema";
+import { gristStepSchema, hopsStepSchema, mashStepSchema } from "@/lib/recipe-schema";
 import { validateWizardStep } from "@/lib/wizard-step-validation";
 import { BasicsStep } from "@/components/recipe/steps/BasicsStep";
 import { GristStep } from "@/components/recipe/steps/GristStep";
+import { MashStep } from "@/components/recipe/steps/MashStep";
+import { HopsStep } from "@/components/recipe/steps/HopsStep";
 import { MetricsPanel } from "@/components/recipe/MetricsPanel";
 import { WizardStepper, type WizardStepConfig } from "@/components/recipe/WizardStepper";
 
 const WIZARD_STEPS: WizardStepConfig[] = [
   { id: "basics", label: "Podstawy" },
   { id: "grist", label: "Zasyp i parametry" },
+  { id: "mash", label: "Zacieranie" },
+  { id: "hops", label: "Chmiel" },
 ];
 
-const STEP_COMPONENTS = [BasicsStep, GristStep];
+const STEP_COMPONENTS = [BasicsStep, GristStep, MashStep, HopsStep];
 
 export default function RecipeWizard() {
   const { form } = useWizardRecipe();
@@ -34,6 +38,12 @@ export default function RecipeWizard() {
         form,
         ["batch.volumeL"],
       );
+      if (!valid) return;
+    } else if (currentStep === 2) {
+      const valid = validateWizardStep(mashStepSchema, { mash: form.getValues("mash") }, form, ["mash.efficiencyPct"]);
+      if (!valid) return;
+    } else if (currentStep === 3) {
+      const valid = validateWizardStep(hopsStepSchema, { hops: form.getValues("hops") }, form, []);
       if (!valid) return;
     }
 
