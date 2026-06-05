@@ -23,7 +23,7 @@ function boilTimeFactor(minutes: number): number {
 /**
  * Compute total IBU as the sum over additions of
  * `AA_decimal × mass_g × utilization × 1000 / volumeL`, where
- * `utilization = bignessFactor(SG) × boilTimeFactor(t)`.
+ * `utilization = bignessFactor(SG) × boilTimeFactor(t) × (utilizationFactor ?? 1)`.
  *
  * Provenance: Glenn Tinseth's IBU model (realbeer.com). Returns `{ ok: false }`
  * for non-positive volume, SG below 1.0, or no valid hop addition.
@@ -45,7 +45,7 @@ export function calcIBU(input: IbuInput): CalcResult<number> {
 
   const bigness = bignessFactor(sg);
   const ibu = validHops.reduce((sum, h) => {
-    const utilization = bigness * boilTimeFactor(h.boilTimeMin);
+    const utilization = bigness * boilTimeFactor(h.boilTimeMin) * (h.utilizationFactor ?? 1);
     const aaDecimal = h.alphaAcidPercent / 100;
     return sum + (aaDecimal * h.amountG * utilization * 1000) / volumeL;
   }, 0);

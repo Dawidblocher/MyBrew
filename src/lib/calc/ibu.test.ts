@@ -32,6 +32,46 @@ describe("calcIBU — golden vectors", () => {
     });
     expect(Math.abs(ibu - 16.15)).toBeLessThanOrEqual(TOLERANCE);
   });
+
+  const goldenHop = { alphaAcidPercent: 5, amountG: 28, boilTimeMin: 60 };
+  const goldenInput: IbuInput = { hops: [goldenHop], volumeL: 20, sg: 1.05 };
+
+  it("omitted utilizationFactor matches default (regression)", () => {
+    const baseline = expectOk(goldenInput);
+    const explicit = expectOk({
+      ...goldenInput,
+      hops: [{ ...goldenHop, utilizationFactor: 1 }],
+    });
+    expect(explicit).toBeCloseTo(baseline, 10);
+  });
+
+  it("utilizationFactor 0.25 yields ~1/4 contribution", () => {
+    const baseline = expectOk(goldenInput);
+    const scaled = expectOk({
+      ...goldenInput,
+      hops: [{ ...goldenHop, utilizationFactor: 0.25 }],
+    });
+    expect(scaled).toBeCloseTo(baseline * 0.25, 1);
+  });
+
+  it("utilizationFactor 0 yields zero contribution from that addition", () => {
+    const result = calcIBU({
+      ...goldenInput,
+      hops: [{ ...goldenHop, utilizationFactor: 0 }],
+    });
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.value).toBe(0);
+    }
+  });
+
+  it("golden ~16.2 IBU unchanged with explicit factor 1.0", () => {
+    const ibu = expectOk({
+      ...goldenInput,
+      hops: [{ ...goldenHop, utilizationFactor: 1 }],
+    });
+    expect(Math.abs(ibu - 16.15)).toBeLessThanOrEqual(TOLERANCE);
+  });
 });
 
 describe("calcIBU — invariants", () => {

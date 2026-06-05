@@ -51,7 +51,9 @@ exception-free.
 - Malt: `amountKg` (kg), `colorEbc` (EBC), `extractPercent` (%, e.g. 80)
 - Batch: `volumeL` (liters)
 - Mash: `mashEfficiency` (fraction in `(0, 1]`)
-- Hops: `alphaAcidPercent` (%), `amountG` (g), `boilTimeMin` (min)
+- Hops: `alphaAcidPercent` (%), `amountG` (g), `boilTimeMin` (min),
+  `utilizationFactor` (optional dimensionless multiplier in `[0, 1]`, default
+  `1.0`)
 - Yeast: `attenuation` (fraction in `(0, 1]`)
 - Gravity (`IbuInput.sg`, `AbvInput.og`): specific gravity, e.g. `1.050`
 
@@ -72,7 +74,10 @@ a contract change and must move its golden vectors with it.
 - **SRM:** Morey `1.4922 × MCU^0.6859`, MCU = `Σ (°L × lb) / gal` with
   `°L = EBC/1.97`. (Morey 2000; Daniels, _Designing Great Beers_.)
 - **IBU:** Tinseth `Σ AA_decimal × mass_g × utilization × 1000 / volumeL`,
-  `utilization = 1.65 × 0.000125^(SG−1) × (1 − e^(−0.04·t))/4.15`.
+  `utilization = 1.65 × 0.000125^(SG−1) × (1 − e^(−0.04·t))/4.15 ×
+  (utilizationFactor ?? 1)`. The optional `HopAddition.utilizationFactor`
+  scales per-addition utilization (range `[0, 1]`, default `1.0`) — an
+  approximation for whirlpool vs boil, not a physical whirlpool model.
 - **ABV:** `FG_points = OG_points × (1 − attenuation)`; `ABV% =
   (OG − FG) × 131.25`.
 

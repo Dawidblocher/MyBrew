@@ -47,6 +47,12 @@ export interface HopAddition {
   amountG: number;
   /** Boil time in minutes. */
   boilTimeMin: number;
+  /**
+   * Dimensionless utilization multiplier in `[0, 1]`, default `1.0`.
+   * Scales Tinseth utilization for a single addition (e.g. whirlpool vs boil)
+   * without encoding stage semantics in the engine.
+   */
+  utilizationFactor?: number;
 }
 
 /** Input to {@link calcIBU}: hop schedule + volume + boil gravity. */
