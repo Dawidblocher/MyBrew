@@ -7,7 +7,9 @@ import type { RecipeDraft } from "@/types";
 const PLACEHOLDER = "—";
 
 function formatMetric(result: CalcResult<number>, fractionDigits: number): string {
-  if (!result.ok) return PLACEHOLDER;
+  // Defense-in-depth: the engine contract says it never returns NaN/Infinity,
+  // but the UI guards anyway so a contract drift can never paint a bad number.
+  if (!result.ok || !Number.isFinite(result.value)) return PLACEHOLDER;
   return result.value.toFixed(fractionDigits);
 }
 
@@ -34,19 +36,16 @@ function Metric({ label, unit, value }: MetricProps) {
 
 export function MetricsPanel() {
   const { control } = useFormContext<RecipeDraft>();
-  // useWatch returns a deep-partial view of the form values; normalize it back
-  // to a full RecipeDraft so the pure mapping receives a fully-shaped draft.
-  const watched = useWatch({ control });
+  // Metrics depend only on batch + malts, so scope the subscription to those
+  // slices — basics keystrokes (name/style) must not trigger a recompute. The
+  // form's defaultValues guarantee both are present; the mapping enforces
+  // finiteness, so the raw values can flow straight in.
+  const [batch, malts] = useWatch({ control, name: ["batch", "malts"] });
 
   const draft: RecipeDraft = {
-    basics: { name: watched.basics?.name ?? "", style: watched.basics?.style ?? "" },
-    batch: { volumeL: watched.batch?.volumeL ?? 0 },
-    malts: (watched.malts ?? []).map((m) => ({
-      name: m.name ?? "",
-      amountKg: m.amountKg ?? 0,
-      colorEbc: m.colorEbc ?? 0,
-      extractPercent: m.extractPercent ?? 0,
-    })),
+    basics: { name: "", style: "" },
+    batch,
+    malts,
   };
 
   const { blg, srm } = computeWizardMetrics(draft);

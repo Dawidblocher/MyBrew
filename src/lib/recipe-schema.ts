@@ -23,8 +23,6 @@ export const recipeDraftSchema = z.object({
   malts: z.array(maltEntrySchema),
 });
 
-export const basicsStepSchema = recipeDraftSchema.pick({ basics: true });
-
 export const gristStepSchema = z.object({
   batch: z.object({
     volumeL: z.coerce.number({ error: "Podaj objętość w litrach" }).positive("Objętość musi być większa od zera"),

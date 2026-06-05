@@ -1,7 +1,7 @@
-import { useForm, useFieldArray, type Resolver } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { RecipeDraft } from "@/types";
-import { defaultMaltEntry, defaultRecipeDraft, recipeDraftSchema } from "@/lib/recipe-schema";
+import { defaultRecipeDraft, recipeDraftSchema } from "@/lib/recipe-schema";
 
 export function useWizardRecipe() {
   const form = useForm<RecipeDraft>({
@@ -12,18 +12,5 @@ export function useWizardRecipe() {
     mode: "onTouched",
   });
 
-  const malts = useFieldArray({
-    control: form.control,
-    name: "malts",
-  });
-
-  return {
-    form,
-    malts: {
-      ...malts,
-      appendEmpty: () => {
-        malts.append({ ...defaultMaltEntry });
-      },
-    },
-  };
+  return { form };
 }

@@ -96,6 +96,8 @@ Stand up dependencies, UI primitives, shared types, and the protected route + is
 
 **Contract**: Export `MaltEntry` (amount kg, color EBC, extract %), `BatchParams` (batch/finished volume L), `RecipeBasics` (name, style), and a `RecipeDraft` aggregate. Keep this file self-contained — define only draft types here and do **not** import from `src/lib/calc/`. The F-02 calc input/output types are imported solely inside Phase 4's `recipe-to-calc.ts`, so F-02 is touched at exactly one seam and Phases 1–3 build without it.
 
+> **Addendum (2026-06-05, impl-review):** `MaltEntry` also carries a `name` field (free-text malt label), threaded through the schema, `MaltRow` UI, and tests. It is not used by the BLG/SRM calculation; it identifies malts in the list for the user. Accepted as an in-scope ergonomic addition.
+
 #### 4. Protected page + island mount
 
 **File**: `src/pages/recipes/new.astro` (new)

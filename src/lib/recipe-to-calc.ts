@@ -33,12 +33,14 @@ export type DraftCalcInput = { ok: true; input: BlgInput } | { ok: false; reason
  */
 export function mapDraftToCalcInput(draft: RecipeDraft): DraftCalcInput {
   const volumeL = draft.batch.volumeL;
-  if (!(volumeL > 0)) {
+  // Require a finite positive value: `NaN`/`Infinity` from a cleared or
+  // overflowing numeric input must route to the sentinel, never to the engine.
+  if (!(Number.isFinite(volumeL) && volumeL > 0)) {
     return { ok: false, reason: "Batch volume must be positive." };
   }
 
   const malts = draft.malts
-    .filter((m) => m.amountKg > 0)
+    .filter((m) => Number.isFinite(m.amountKg) && m.amountKg > 0)
     .map((m) => ({
       amountKg: m.amountKg,
       colorEbc: m.colorEbc,

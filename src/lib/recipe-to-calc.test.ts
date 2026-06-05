@@ -34,6 +34,23 @@ describe("mapDraftToCalcInput — insufficient-input guards", () => {
     );
     expect(result.ok).toBe(false);
   });
+
+  it("NaN volume (cleared numeric input) → sentinel", () => {
+    const result = mapDraftToCalcInput(draft({ batch: { volumeL: NaN } }));
+    expect(result.ok).toBe(false);
+  });
+
+  it("Infinity volume → sentinel", () => {
+    const result = mapDraftToCalcInput(draft({ batch: { volumeL: Infinity } }));
+    expect(result.ok).toBe(false);
+  });
+
+  it("only NaN-amount malts → sentinel (no positive-amount malt)", () => {
+    const result = mapDraftToCalcInput(
+      draft({ malts: [{ name: "Cleared", amountKg: NaN, colorEbc: 4, extractPercent: 80 }] }),
+    );
+    expect(result.ok).toBe(false);
+  });
 });
 
 describe("mapDraftToCalcInput — valid mapping", () => {
@@ -76,5 +93,11 @@ describe("computeWizardMetrics", () => {
     expect(srm.ok).toBe(true);
     if (blg.ok) expect(blg.value).toBeGreaterThan(0);
     if (srm.ok) expect(srm.value).toBeGreaterThan(0);
+  });
+
+  it("NaN volume → both metrics return the sentinel (never NaN/Infinity)", () => {
+    const { blg, srm } = computeWizardMetrics(draft({ batch: { volumeL: NaN } }));
+    expect(blg.ok).toBe(false);
+    expect(srm.ok).toBe(false);
   });
 });
