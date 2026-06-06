@@ -7,7 +7,8 @@
  * minimum inputs exist.
  */
 
-import { calcBLG, calcIBU, calcSRM, computeGravity } from "@/lib/calc";
+import { calcIBU, calcSRM, computeGravity } from "@/lib/calc";
+import { blgFromSg } from "@/lib/calc/blg";
 import type { BlgInput, CalcResult, HopAddition } from "@/lib/calc";
 import type { HopEntry, RecipeDraft } from "@/types";
 
@@ -92,7 +93,7 @@ export interface WizardMetrics {
 /**
  * Compute the live BLG, SRM, and IBU for a draft. The insufficient-input
  * sentinel from the mapping propagates to all three metrics so the panel shows
- * `—`. Gravity is computed once for IBU; BLG/SRM use the engine as before.
+ * `—`. Gravity is computed once and shared by BLG and IBU; SRM is independent.
  */
 export function computeWizardMetrics(draft: RecipeDraft): WizardMetrics {
   const mapped = mapDraftToCalcInput(draft);
@@ -105,7 +106,7 @@ export function computeWizardMetrics(draft: RecipeDraft): WizardMetrics {
   const hops = mapDraftHopsToCalc(draft.hops);
 
   return {
-    blg: calcBLG({ malts, volumeL, mashEfficiency }),
+    blg: gravity.ok ? { ok: true, value: blgFromSg(gravity.value.sg) } : gravity,
     srm: calcSRM({ malts, volumeL }),
     ibu: gravity.ok ? calcIBU({ hops, volumeL, sg: gravity.value.sg }) : gravity,
   };

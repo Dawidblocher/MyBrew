@@ -43,6 +43,7 @@ export default function RecipeWizard() {
       const valid = validateWizardStep(mashStepSchema, { mash: form.getValues("mash") }, form, ["mash.efficiencyPct"]);
       if (!valid) return;
     } else if (currentStep === 3) {
+      // TODO(S-04): Wire hops validation to save/finish — Dalej is disabled on last step today.
       const valid = validateWizardStep(hopsStepSchema, { hops: form.getValues("hops") }, form, []);
       if (!valid) return;
     }

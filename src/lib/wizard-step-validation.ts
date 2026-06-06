@@ -20,11 +20,12 @@ export function validateWizardStep<S extends z.ZodType>(
     form.clearErrors(path);
   });
 
+  let focused = false;
   for (const issue of result.error.issues) {
+    if (issue.path.length === 0) continue;
     const path = issue.path.join(".") as FieldPath<RecipeDraft>;
-    if (fieldPaths.includes(path)) {
-      form.setError(path, { type: "manual", message: issue.message }, { shouldFocus: true });
-    }
+    form.setError(path, { type: "manual", message: issue.message }, { shouldFocus: !focused });
+    focused = true;
   }
 
   return false;

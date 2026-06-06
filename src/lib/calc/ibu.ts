@@ -20,6 +20,12 @@ function boilTimeFactor(minutes: number): number {
   return (1 - Math.exp(-0.04 * minutes)) / 4.15;
 }
 
+function clampUtilizationFactor(factor: number | undefined): number {
+  const raw = factor ?? 1;
+  if (!Number.isFinite(raw)) return 1;
+  return Math.min(1, Math.max(0, raw));
+}
+
 /**
  * Compute total IBU as the sum over additions of
  * `AA_decimal × mass_g × utilization × 1000 / volumeL`, where
@@ -45,7 +51,7 @@ export function calcIBU(input: IbuInput): CalcResult<number> {
 
   const bigness = bignessFactor(sg);
   const ibu = validHops.reduce((sum, h) => {
-    const utilization = bigness * boilTimeFactor(h.boilTimeMin) * (h.utilizationFactor ?? 1);
+    const utilization = bigness * boilTimeFactor(h.boilTimeMin) * clampUtilizationFactor(h.utilizationFactor);
     const aaDecimal = h.alphaAcidPercent / 100;
     return sum + (aaDecimal * h.amountG * utilization * 1000) / volumeL;
   }, 0);
