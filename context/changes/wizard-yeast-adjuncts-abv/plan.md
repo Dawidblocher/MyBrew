@@ -267,28 +267,28 @@ Brak migracji danych — model jest in-memory (`RecipeDraft`). Persystencja przy
 
 #### Automated
 
-- [x] 1.1 Type checking przechodzi (rozszerzony `RecipeDraft` spójny ze schematem): `npm run lint`
-- [x] 1.2 Istniejące testy nie regresują: `npm run test`
+- [x] 1.1 Type checking przechodzi (rozszerzony `RecipeDraft` spójny ze schematem): `npm run lint` — 245ce27
+- [x] 1.2 Istniejące testy nie regresują: `npm run test` — 245ce27
 
 ### Phase 2: Seam obliczeń + ABV na żywo
 
 #### Automated
 
-- [x] 2.1 Testy seamu (ABV) przechodzą: `npm run test`
-- [x] 2.2 Type checking / lint przechodzi: `npm run lint`
+- [x] 2.1 Testy seamu (ABV) przechodzą: `npm run test` — 478958c
+- [x] 2.2 Type checking / lint przechodzi: `npm run lint` — 478958c
 
 ### Phase 3: UI kreatora — kroki Drożdże i Dodatki
 
 #### Automated
 
-- [x] 3.1 Lint i build przechodzą: `npm run lint` i `npm run build`
-- [x] 3.2 Testy nie regresują: `npm run test`
+- [x] 3.1 Lint i build przechodzą: `npm run lint` i `npm run build` — f49be34
+- [x] 3.2 Testy nie regresują: `npm run test` — f49be34
 
 #### Manual
 
-- [x] 3.3 Przejście przez wszystkie 6 kroków działa; Wstecz/Dalej poprawne; „Dalej" wyłączone tylko na Dodatkach
-- [x] 3.4 Krok Chmiel waliduje wiersze (alfa > 100 blokuje z błędem) — aktywna gałąź
-- [x] 3.5 Domyślne odfermentowanie 75 daje ABV; zmiana odfermentowania zmienia ABV
-- [x] 3.6 ABV pokazuje `—` gdy brak grawitacji lub odfermentowanie ≤ 0 / > 100
-- [x] 3.7 Dodatki: add/move/remove działa; selektor czytelny; notatki wieloliniowe; metryki bez zmian przy edycji dodatków
-- [x] 3.8 Wszystkie cztery kafelki (BLG/Barwa/IBU/ABV) widoczne i reagują na właściwe pola
+- [x] 3.3 Przejście przez wszystkie 6 kroków działa; Wstecz/Dalej poprawne; „Dalej" wyłączone tylko na Dodatkach — f49be34
+- [x] 3.4 Krok Chmiel waliduje wiersze (alfa > 100 blokuje z błędem) — aktywna gałąź — f49be34
+- [x] 3.5 Domyślne odfermentowanie 75 daje ABV; zmiana odfermentowania zmienia ABV — f49be34
+- [x] 3.6 ABV pokazuje `—` gdy brak grawitacji lub odfermentowanie ≤ 0 / > 100 — f49be34
+- [x] 3.7 Dodatki: add/move/remove działa; selektor czytelny; notatki wieloliniowe; metryki bez zmian przy edycji dodatków — f49be34
+- [x] 3.8 Wszystkie cztery kafelki (BLG/Barwa/IBU/ABV) widoczne i reagują na właściwe pola — f49be34
