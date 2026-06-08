@@ -1,0 +1,244 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import RecipeMetricTiles from "@/components/recipe/RecipeMetricTiles.astro";
+import { createClient } from "@/lib/supabase";
+import { getRecipe } from "@/lib/recipe-queries";
+import type { AdjunctStage, HopStage } from "@/types";
+
+export const prerender = false;
+
+const HOP_STAGE_LABELS: Record<HopStage, string> = {
+  boil: "Gotowanie",
+  whirlpool: "Whirlpool",
+  dryHop: "Chmielenie na zimno",
+};
+
+const ADJUNCT_STAGE_LABELS: Record<AdjunctStage, string> = {
+  mash: "Zacieranie",
+  boil: "Gotowanie",
+  whirlpool: "Whirlpool",
+  fermentation: "Fermentacja",
+};
+
+const { user } = Astro.locals;
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+const id = Astro.params.id;
+
+const record = supabase && user && id ? await getRecipe(supabase, user.id, id) : null;
+
+if (!record) {
+  Astro.response.status = 404;
+}
+
+const { data } = record ?? { data: null };
+---
+
+{
+  !record || !data ? (
+    <Layout title="Nie znaleziono przepisu">
+      <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
+        <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
+          <h1 class="mb-4 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
+            Nie znaleziono przepisu
+          </h1>
+          <p class="text-blue-100/80">Przepis nie istnieje lub nie masz do niego dostępu.</p>
+          <a
+            href="/recipes"
+            class="mt-6 inline-block rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm transition-colors hover:bg-white/20"
+          >
+            Wróć do listy
+          </a>
+        </div>
+      </div>
+    </Layout>
+  ) : (
+    <Layout title={record.name}>
+      <div class="bg-cosmic min-h-screen p-4 sm:p-8">
+        <div class="mx-auto max-w-3xl space-y-6">
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <a href="/recipes" class="text-sm text-blue-100/60 transition-colors hover:text-blue-100">
+                ← Wróć do listy
+              </a>
+              <h1 class="mt-2 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
+                {record.name}
+              </h1>
+              <p class="mt-1 text-blue-100/70">{record.style}</p>
+            </div>
+          </div>
+
+          <RecipeMetricTiles metrics={record} />
+
+          <section class="rounded-2xl border border-white/10 bg-white/10 p-6 text-white backdrop-blur-xl">
+            <h2 class="mb-4 text-lg font-semibold text-blue-100">Podstawy</h2>
+            <dl class="grid gap-3 sm:grid-cols-2">
+              <div>
+                <dt class="text-xs tracking-wide text-blue-100/60 uppercase">Nazwa</dt>
+                <dd class="mt-1">{data.basics.name}</dd>
+              </div>
+              <div>
+                <dt class="text-xs tracking-wide text-blue-100/60 uppercase">Styl</dt>
+                <dd class="mt-1">{data.basics.style}</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="rounded-2xl border border-white/10 bg-white/10 p-6 text-white backdrop-blur-xl">
+            <h2 class="mb-4 text-lg font-semibold text-blue-100">Parametry warki</h2>
+            <dl>
+              <div>
+                <dt class="text-xs tracking-wide text-blue-100/60 uppercase">Objętość</dt>
+                <dd class="mt-1 tabular-nums">{data.batch.volumeL} L</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="rounded-2xl border border-white/10 bg-white/10 p-6 text-white backdrop-blur-xl">
+            <h2 class="mb-4 text-lg font-semibold text-blue-100">Zasyp</h2>
+            {data.malts.length === 0 ? (
+              <p class="text-sm text-blue-100/50">brak</p>
+            ) : (
+              <ul class="space-y-3">
+                {data.malts.map((malt) => (
+                  <li class="rounded-xl border border-white/10 bg-white/5 p-4">
+                    <p class="font-medium">{malt.name}</p>
+                    <dl class="mt-2 grid gap-2 text-sm sm:grid-cols-3">
+                      <div>
+                        <dt class="text-blue-100/60">Ilość</dt>
+                        <dd class="tabular-nums">{malt.amountKg} kg</dd>
+                      </div>
+                      <div>
+                        <dt class="text-blue-100/60">Barwa</dt>
+                        <dd class="tabular-nums">{malt.colorEbc} EBC</dd>
+                      </div>
+                      <div>
+                        <dt class="text-blue-100/60">Ekstrakt</dt>
+                        <dd class="tabular-nums">{malt.extractPercent}%</dd>
+                      </div>
+                    </dl>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+
+          <section class="rounded-2xl border border-white/10 bg-white/10 p-6 text-white backdrop-blur-xl">
+            <h2 class="mb-4 text-lg font-semibold text-blue-100">Zacieranie</h2>
+            <dl class="grid gap-3 sm:grid-cols-2">
+              <div>
+                <dt class="text-xs tracking-wide text-blue-100/60 uppercase">Wydajność</dt>
+                <dd class="mt-1 tabular-nums">{data.mash.efficiencyPct}%</dd>
+              </div>
+              <div>
+                <dt class="text-xs tracking-wide text-blue-100/60 uppercase">Stosunek wody do zboża</dt>
+                <dd class="mt-1 tabular-nums">{data.mash.waterToGrainRatio} L/kg</dd>
+              </div>
+            </dl>
+            <h3 class="mt-4 text-sm font-medium text-blue-100/80">Rasty</h3>
+            {data.mash.rests.length === 0 ? (
+              <p class="mt-2 text-sm text-blue-100/50">brak</p>
+            ) : (
+              <ul class="mt-2 space-y-2">
+                {data.mash.rests.map((rest) => (
+                  <li class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm">
+                    <span class="tabular-nums">{rest.tempC}°C</span>
+                    <span class="text-blue-100/60"> · </span>
+                    <span class="tabular-nums">{rest.durationMin} min</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+
+          <section class="rounded-2xl border border-white/10 bg-white/10 p-6 text-white backdrop-blur-xl">
+            <h2 class="mb-4 text-lg font-semibold text-blue-100">Chmiel</h2>
+            {data.hops.length === 0 ? (
+              <p class="text-sm text-blue-100/50">brak</p>
+            ) : (
+              <ul class="space-y-3">
+                {data.hops.map((hop) => (
+                  <li class="rounded-xl border border-white/10 bg-white/5 p-4">
+                    <p class="font-medium">{hop.name}</p>
+                    <dl class="mt-2 grid gap-2 text-sm sm:grid-cols-2">
+                      <div>
+                        <dt class="text-blue-100/60">Alfa</dt>
+                        <dd class="tabular-nums">{hop.alphaAcidPercent}%</dd>
+                      </div>
+                      <div>
+                        <dt class="text-blue-100/60">Ilość</dt>
+                        <dd class="tabular-nums">{hop.amountG} g</dd>
+                      </div>
+                      <div>
+                        <dt class="text-blue-100/60">Etap</dt>
+                        <dd>{HOP_STAGE_LABELS[hop.stage]}</dd>
+                      </div>
+                      <div>
+                        <dt class="text-blue-100/60">Czas</dt>
+                        <dd class="tabular-nums">{hop.timeMin} min</dd>
+                      </div>
+                    </dl>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+
+          <section class="rounded-2xl border border-white/10 bg-white/10 p-6 text-white backdrop-blur-xl">
+            <h2 class="mb-4 text-lg font-semibold text-blue-100">Drożdże</h2>
+            <dl class="grid gap-3 sm:grid-cols-2">
+              <div>
+                <dt class="text-xs tracking-wide text-blue-100/60 uppercase">Szczep</dt>
+                <dd class="mt-1">{data.yeast.strain || "—"}</dd>
+              </div>
+              <div>
+                <dt class="text-xs tracking-wide text-blue-100/60 uppercase">Typ</dt>
+                <dd class="mt-1">{data.yeast.type || "—"}</dd>
+              </div>
+              <div>
+                <dt class="text-xs tracking-wide text-blue-100/60 uppercase">Atenuacja</dt>
+                <dd class="mt-1 tabular-nums">{data.yeast.attenuationPct}%</dd>
+              </div>
+              <div>
+                <dt class="text-xs tracking-wide text-blue-100/60 uppercase">Temp. fermentacji</dt>
+                <dd class="mt-1 tabular-nums">
+                  {data.yeast.fermTempMinC}–{data.yeast.fermTempMaxC}°C
+                </dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="rounded-2xl border border-white/10 bg-white/10 p-6 text-white backdrop-blur-xl">
+            <h2 class="mb-4 text-lg font-semibold text-blue-100">Dodatki</h2>
+            {data.adjuncts.length === 0 ? (
+              <p class="text-sm text-blue-100/50">brak</p>
+            ) : (
+              <ul class="space-y-3">
+                {data.adjuncts.map((adjunct) => (
+                  <li class="rounded-xl border border-white/10 bg-white/5 p-4">
+                    <p class="font-medium">{adjunct.name || "—"}</p>
+                    <dl class="mt-2 grid gap-2 text-sm sm:grid-cols-2">
+                      <div>
+                        <dt class="text-blue-100/60">Etap</dt>
+                        <dd>{ADJUNCT_STAGE_LABELS[adjunct.stage]}</dd>
+                      </div>
+                      <div>
+                        <dt class="text-blue-100/60">Czas</dt>
+                        <dd class="tabular-nums">{adjunct.timeMin} min</dd>
+                      </div>
+                      {adjunct.notes && (
+                        <div class="sm:col-span-2">
+                          <dt class="text-blue-100/60">Notatki</dt>
+                          <dd>{adjunct.notes}</dd>
+                        </div>
+                      )}
+                    </dl>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        </div>
+      </div>
+    </Layout>
+  )
+}

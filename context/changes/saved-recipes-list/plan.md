@@ -253,27 +253,27 @@ No schema changes — the table, index, RLS, and grants already exist from S-04.
 
 #### Automated
 
-- [x] 2.1 Type checking passes (`npm run lint`)
-- [x] 2.2 Build passes (`npm run build`)
+- [x] 2.1 Type checking passes (`npm run lint`) — 40b8b64
+- [x] 2.2 Build passes (`npm run build`) — 40b8b64
 
 #### Manual
 
-- [x] 2.3 Saved recipes render as cards, newest-first, with correct name/style/metrics/date
-- [x] 2.4 Each card navigates to the matching `/recipes/[id]`
-- [x] 2.5 No-recipes user sees the empty-state CTA that opens the wizard
-- [x] 2.6 Supabase config/query failure shows the error notice (not a false empty list)
-- [x] 2.7 A second user does not see the first user's recipes
+- [x] 2.3 Saved recipes render as cards, newest-first, with correct name/style/metrics/date — 40b8b64
+- [x] 2.4 Each card navigates to the matching `/recipes/[id]` — 40b8b64
+- [x] 2.5 No-recipes user sees the empty-state CTA that opens the wizard — 40b8b64
+- [x] 2.6 Supabase config/query failure shows the error notice (not a false empty list) — 40b8b64
+- [x] 2.7 A second user does not see the first user's recipes — 40b8b64
 
 ### Phase 3: Recipe Detail Page
 
 #### Automated
 
-- [ ] 3.1 Type checking passes (`npm run lint`)
-- [ ] 3.2 Build passes (`npm run build`)
+- [x] 3.1 Type checking passes (`npm run lint`)
+- [x] 3.2 Build passes (`npm run build`)
 
 #### Manual
 
-- [ ] 3.3 Detail page renders all entered sections with correct values and Polish labels
-- [ ] 3.4 Metric tiles match the list card (saved snapshot)
-- [ ] 3.5 Non-existent / malformed / other-user `id` shows the not-found page (no data leak)
-- [ ] 3.6 "Wróć do listy" returns to `/recipes`; no edit/delete controls present
+- [x] 3.3 Detail page renders all entered sections with correct values and Polish labels
+- [x] 3.4 Metric tiles match the list card (saved snapshot)
+- [x] 3.5 Non-existent / malformed / other-user `id` shows the not-found page (no data leak)
+- [x] 3.6 "Wróć do listy" returns to `/recipes`; no edit/delete controls present
