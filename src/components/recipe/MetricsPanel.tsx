@@ -36,9 +36,12 @@ function Metric({ label, unit, value }: MetricProps) {
 
 export function MetricsPanel() {
   const { control } = useFormContext<RecipeDraft>();
-  // Scope the subscription to fields that affect BLG/SRM/IBU — basics keystrokes
-  // (name/style) must not trigger a recompute.
-  const [batch, malts, mash, hops] = useWatch({ control, name: ["batch", "malts", "mash", "hops"] });
+  // Scope the subscription to fields that affect BLG/SRM/IBU/ABV — basics keystrokes
+  // (name/style) and adjuncts must not trigger a recompute.
+  const [batch, malts, mash, hops, yeast] = useWatch({
+    control,
+    name: ["batch", "malts", "mash", "hops", "yeast"],
+  });
 
   const draft: RecipeDraft = {
     basics: { name: "", style: "" },
@@ -46,9 +49,11 @@ export function MetricsPanel() {
     malts,
     mash,
     hops,
+    yeast,
+    adjuncts: [],
   };
 
-  const { blg, srm, ibu } = computeWizardMetrics(draft);
+  const { blg, srm, ibu, abv } = computeWizardMetrics(draft);
 
   return (
     <section
@@ -58,6 +63,7 @@ export function MetricsPanel() {
       <Metric label="BLG" unit="°BLG" value={formatMetric(blg, 1)} />
       <Metric label="Barwa" unit="SRM" value={formatMetric(srm, 1)} />
       <Metric label="IBU" unit="IBU" value={formatMetric(ibu, 0)} />
+      <Metric label="ABV" unit="%" value={formatMetric(abv, 1)} />
     </section>
   );
 }

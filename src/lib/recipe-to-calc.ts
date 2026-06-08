@@ -7,7 +7,7 @@
  * minimum inputs exist.
  */
 
-import { calcIBU, calcSRM, computeGravity } from "@/lib/calc";
+import { calcABV, calcIBU, calcSRM, computeGravity } from "@/lib/calc";
 import { blgFromSg } from "@/lib/calc/blg";
 import type { BlgInput, CalcResult, HopAddition } from "@/lib/calc";
 import type { HopEntry, RecipeDraft } from "@/types";
@@ -26,6 +26,14 @@ export type DraftCalcInput = { ok: true; input: BlgInput } | { ok: false; reason
 
 function mashEfficiencyFromDraft(draft: RecipeDraft): number | null {
   const pct = draft.mash.efficiencyPct;
+  if (!(Number.isFinite(pct) && pct > 0 && pct <= 100)) {
+    return null;
+  }
+  return pct / 100;
+}
+
+function attenuationFromDraft(draft: RecipeDraft): number | null {
+  const pct = draft.yeast.attenuationPct;
   if (!(Number.isFinite(pct) && pct > 0 && pct <= 100)) {
     return null;
   }
@@ -88,26 +96,36 @@ export interface WizardMetrics {
   blg: CalcResult<number>;
   srm: CalcResult<number>;
   ibu: CalcResult<number>;
+  abv: CalcResult<number>;
 }
 
 /**
- * Compute the live BLG, SRM, and IBU for a draft. The insufficient-input
- * sentinel from the mapping propagates to all three metrics so the panel shows
- * `—`. Gravity is computed once and shared by BLG and IBU; SRM is independent.
+ * Compute the live BLG, SRM, IBU, and ABV for a draft. The insufficient-input
+ * sentinel from the mapping propagates to all four metrics so the panel shows
+ * `—`. Gravity is computed once and shared by BLG, IBU, and ABV; SRM is independent.
  */
 export function computeWizardMetrics(draft: RecipeDraft): WizardMetrics {
   const mapped = mapDraftToCalcInput(draft);
   if (!mapped.ok) {
-    return { blg: mapped, srm: mapped, ibu: mapped };
+    return { blg: mapped, srm: mapped, ibu: mapped, abv: mapped };
   }
 
   const { malts, volumeL, mashEfficiency } = mapped.input;
   const gravity = computeGravity({ malts, volumeL, mashEfficiency });
   const hops = mapDraftHopsToCalc(draft.hops);
+  const attenuation = attenuationFromDraft(draft);
+
+  const abv =
+    gravity.ok && attenuation !== null
+      ? calcABV({ og: gravity.value.sg, attenuation })
+      : gravity.ok
+        ? { ok: false, reason: "Odfermentowanie musi być w zakresie (0, 100]." }
+        : gravity;
 
   return {
     blg: gravity.ok ? { ok: true, value: blgFromSg(gravity.value.sg) } : gravity,
     srm: calcSRM({ malts, volumeL }),
     ibu: gravity.ok ? calcIBU({ hops, volumeL, sg: gravity.value.sg }) : gravity,
+    abv,
   };
 }

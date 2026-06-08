@@ -11,6 +11,8 @@ function draft(overrides: Partial<RecipeDraft> = {}): RecipeDraft {
     malts: [{ name: "Pilsner", amountKg: 5, colorEbc: 4, extractPercent: 80 }],
     mash: defaultRecipeDraft.mash,
     hops: defaultRecipeDraft.hops,
+    yeast: defaultRecipeDraft.yeast,
+    adjuncts: defaultRecipeDraft.adjuncts,
     ...overrides,
   };
 }
@@ -104,10 +106,11 @@ describe("mapDraftToCalcInput — valid mapping", () => {
 
 describe("computeWizardMetrics", () => {
   it("propagates the insufficient-input sentinel to all metrics", () => {
-    const { blg, srm, ibu } = computeWizardMetrics(draft({ malts: [] }));
+    const { blg, srm, ibu, abv } = computeWizardMetrics(draft({ malts: [] }));
     expect(blg.ok).toBe(false);
     expect(srm.ok).toBe(false);
     expect(ibu.ok).toBe(false);
+    expect(abv.ok).toBe(false);
   });
 
   it("valid draft → BLG and SRM resolve to real values", () => {
@@ -119,10 +122,11 @@ describe("computeWizardMetrics", () => {
   });
 
   it("NaN volume → all metrics return the sentinel (never NaN/Infinity)", () => {
-    const { blg, srm, ibu } = computeWizardMetrics(draft({ batch: { volumeL: NaN } }));
+    const { blg, srm, ibu, abv } = computeWizardMetrics(draft({ batch: { volumeL: NaN } }));
     expect(blg.ok).toBe(false);
     expect(srm.ok).toBe(false);
     expect(ibu.ok).toBe(false);
+    expect(abv.ok).toBe(false);
   });
 
   it("empty hop list → ibu { ok: false }", () => {
@@ -168,7 +172,58 @@ describe("computeWizardMetrics", () => {
     const over = computeWizardMetrics(draft({ mash: { ...defaultRecipeDraft.mash, efficiencyPct: 150 } }));
     expect(zero.blg.ok).toBe(false);
     expect(zero.ibu.ok).toBe(false);
+    expect(zero.abv.ok).toBe(false);
     expect(over.blg.ok).toBe(false);
     expect(over.ibu.ok).toBe(false);
+    expect(over.abv.ok).toBe(false);
+  });
+});
+
+describe("computeWizardMetrics — ABV", () => {
+  it("default attenuation (75) with valid grist → abv.ok and value > 0", () => {
+    const { abv } = computeWizardMetrics(draft());
+    expect(abv.ok).toBe(true);
+    if (abv.ok) expect(abv.value).toBeGreaterThan(0);
+  });
+
+  it("higher attenuation → higher ABV", () => {
+    const low = computeWizardMetrics(draft({ yeast: { ...defaultRecipeDraft.yeast, attenuationPct: 70 } }));
+    const high = computeWizardMetrics(draft({ yeast: { ...defaultRecipeDraft.yeast, attenuationPct: 85 } }));
+    expect(low.abv.ok).toBe(true);
+    expect(high.abv.ok).toBe(true);
+    if (low.abv.ok && high.abv.ok) {
+      expect(high.abv.value).toBeGreaterThan(low.abv.value);
+    }
+  });
+
+  it("attenuation 0 → abv sentinel despite valid BLG", () => {
+    const { blg, abv } = computeWizardMetrics(draft({ yeast: { ...defaultRecipeDraft.yeast, attenuationPct: 0 } }));
+    expect(blg.ok).toBe(true);
+    expect(abv.ok).toBe(false);
+  });
+
+  it("attenuation above 100 → abv sentinel despite valid BLG", () => {
+    const { blg, abv } = computeWizardMetrics(draft({ yeast: { ...defaultRecipeDraft.yeast, attenuationPct: 101 } }));
+    expect(blg.ok).toBe(true);
+    expect(abv.ok).toBe(false);
+  });
+
+  it("empty grist → abv sentinel", () => {
+    const { abv } = computeWizardMetrics(draft({ malts: [] }));
+    expect(abv.ok).toBe(false);
+  });
+
+  it("adjuncts do not affect ABV", () => {
+    const without = computeWizardMetrics(draft());
+    const withAdjuncts = computeWizardMetrics(
+      draft({
+        adjuncts: [{ name: "Cukier", stage: "boil", timeMin: 10, notes: "test" }],
+      }),
+    );
+    expect(without.abv.ok).toBe(true);
+    expect(withAdjuncts.abv.ok).toBe(true);
+    if (without.abv.ok && withAdjuncts.abv.ok) {
+      expect(withAdjuncts.abv.value).toBe(without.abv.value);
+    }
   });
 });
