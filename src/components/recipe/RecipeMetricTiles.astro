@@ -1,0 +1,39 @@
+---
+import { METRIC_DESCRIPTORS, METRIC_PLACEHOLDER, formatMetricValue } from "@/lib/recipe-metrics";
+import type { RecipeMetricsSnapshot } from "@/types";
+
+interface Props {
+  metrics: RecipeMetricsSnapshot;
+  compact?: boolean;
+}
+
+const { metrics, compact = false } = Astro.props;
+---
+
+<section class:list={["flex flex-col gap-3 sm:flex-row", compact && "gap-2"]}>
+  {
+    METRIC_DESCRIPTORS.map(({ key, label, unit, fractionDigits }) => {
+      const value = formatMetricValue(metrics[key], fractionDigits);
+      const isPlaceholder = value === METRIC_PLACEHOLDER;
+      return (
+        <div
+          class:list={["flex flex-1 flex-col rounded-xl border border-white/10 bg-white/5", compact ? "p-2" : "p-4"]}
+        >
+          <span class="text-xs font-medium tracking-wide text-blue-100/60 uppercase">{label}</span>
+          <span class="mt-1 flex items-baseline gap-1">
+            <span
+              class:list={[
+                "font-bold tabular-nums",
+                compact ? "text-xl" : "text-3xl",
+                isPlaceholder ? "text-white/30" : "text-white",
+              ]}
+            >
+              {value}
+            </span>
+            <span class="text-sm text-blue-100/60">{unit}</span>
+          </span>
+        </div>
+      );
+    })
+  }
+</section>

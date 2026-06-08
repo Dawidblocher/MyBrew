@@ -69,6 +69,13 @@ export interface RecipeMetricsSnapshot {
   abv: number;
 }
 
+export interface RecipeListItem extends RecipeMetricsSnapshot {
+  id: string;
+  name: string;
+  style: string;
+  createdAt: string;
+}
+
 export interface RecipeRecord extends RecipeMetricsSnapshot {
   id: string;
   userId: string;

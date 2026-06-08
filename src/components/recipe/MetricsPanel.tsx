@@ -1,16 +1,15 @@
 import { useFormContext, useWatch } from "react-hook-form";
 import { computeWizardMetrics } from "@/lib/recipe-to-calc";
 import type { CalcResult } from "@/lib/calc";
+import { METRIC_DESCRIPTORS, METRIC_PLACEHOLDER, formatMetricValue } from "@/lib/recipe-metrics";
 import { cn } from "@/lib/utils";
 import type { RecipeDraft } from "@/types";
-
-const PLACEHOLDER = "—";
 
 function formatMetric(result: CalcResult<number>, fractionDigits: number): string {
   // Defense-in-depth: the engine contract says it never returns NaN/Infinity,
   // but the UI guards anyway so a contract drift can never paint a bad number.
-  if (!result.ok || !Number.isFinite(result.value)) return PLACEHOLDER;
-  return result.value.toFixed(fractionDigits);
+  if (!result.ok || !Number.isFinite(result.value)) return METRIC_PLACEHOLDER;
+  return formatMetricValue(result.value, fractionDigits);
 }
 
 interface MetricProps {
@@ -20,7 +19,7 @@ interface MetricProps {
 }
 
 function Metric({ label, unit, value }: MetricProps) {
-  const isPlaceholder = value === PLACEHOLDER;
+  const isPlaceholder = value === METRIC_PLACEHOLDER;
   return (
     <div className="flex flex-1 flex-col rounded-xl border border-white/10 bg-white/5 p-4">
       <span className="text-xs font-medium tracking-wide text-blue-100/60 uppercase">{label}</span>
@@ -53,17 +52,16 @@ export function MetricsPanel() {
     adjuncts: [],
   };
 
-  const { blg, srm, ibu, abv } = computeWizardMetrics(draft);
+  const metrics = computeWizardMetrics(draft);
 
   return (
     <section
       aria-label="Wyliczenia przepisu"
       className="mt-6 flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 sm:flex-row"
     >
-      <Metric label="BLG" unit="°BLG" value={formatMetric(blg, 1)} />
-      <Metric label="Barwa" unit="SRM" value={formatMetric(srm, 1)} />
-      <Metric label="IBU" unit="IBU" value={formatMetric(ibu, 0)} />
-      <Metric label="ABV" unit="%" value={formatMetric(abv, 1)} />
+      {METRIC_DESCRIPTORS.map(({ key, label, unit, fractionDigits }) => (
+        <Metric key={key} label={label} unit={unit} value={formatMetric(metrics[key], fractionDigits)} />
+      ))}
     </section>
   );
 }
