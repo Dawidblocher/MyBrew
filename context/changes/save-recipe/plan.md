@@ -287,8 +287,8 @@ First migration in the project. After merge, the CI build and any deploy environ
 
 #### Automated
 
-- [x] 2.1 Unit tests pass (`npm run test:run`)
-- [x] 2.2 Type checking passes (`npm run lint`)
+- [x] 2.1 Unit tests pass (`npm run test:run`) — 3860699
+- [x] 2.2 Type checking passes (`npm run lint`) — 3860699
 
 ### Phase 3: Save API Route
 
@@ -299,9 +299,9 @@ First migration in the project. After merge, the CI build and any deploy environ
 
 #### Manual
 
-- [ ] 3.3 Valid authenticated POST returns `201 {id}` and creates an owned row
-- [ ] 3.4 Unauthenticated POST returns `401`
-- [ ] 3.5 Invalid bodies (blank style / no positive malt / cleared attenuation) return `400` with expected errors
+- [x] 3.3 Valid authenticated POST returns `201 {id}` and creates an owned row
+- [x] 3.4 Unauthenticated POST returns `401`
+- [x] 3.5 Invalid bodies (blank style / no positive malt / cleared attenuation) return `400` with expected errors
 
 ### Phase 4: Client Save Flow + UX
 
