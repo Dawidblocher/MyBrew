@@ -27,6 +27,25 @@ const hopEntrySchema = z.object({
   timeMin: z.coerce.number({ error: "Podaj czas w minutach" }).min(0, "Czas nie może być ujemny"),
 });
 
+const yeastSchema = z.object({
+  strain: z.string(),
+  type: z.string(),
+  /** Zero is allowed while the draft is in progress; ABV requires attenuation in (0, 100]. */
+  attenuationPct: z.coerce
+    .number({ error: "Podaj odfermentowanie w %" })
+    .min(0, "Odfermentowanie nie może być ujemne")
+    .max(100, "Odfermentowanie nie może przekraczać 100%"),
+  fermTempMinC: z.coerce.number({ error: "Podaj minimalną temperaturę w °C" }),
+  fermTempMaxC: z.coerce.number({ error: "Podaj maksymalną temperaturę w °C" }),
+});
+
+const adjunctEntrySchema = z.object({
+  name: z.string(),
+  stage: z.enum(["mash", "boil", "whirlpool", "fermentation"]),
+  timeMin: z.coerce.number({ error: "Podaj czas w minutach" }).min(0, "Czas nie może być ujemny"),
+  notes: z.string(),
+});
+
 export const recipeDraftSchema = z.object({
   basics: z.object({
     name: z.string().trim().min(1, "Nazwa jest wymagana"),
@@ -49,6 +68,8 @@ export const recipeDraftSchema = z.object({
     rests: z.array(mashRestSchema),
   }),
   hops: z.array(hopEntrySchema),
+  yeast: yeastSchema,
+  adjuncts: z.array(adjunctEntrySchema),
 });
 
 export const gristStepSchema = z.object({
@@ -80,6 +101,8 @@ export const defaultRecipeDraft: RecipeDraft = {
   malts: [],
   mash: { efficiencyPct: 75, waterToGrainRatio: 0, rests: [] },
   hops: [],
+  yeast: { strain: "", type: "", attenuationPct: 75, fermTempMinC: 0, fermTempMaxC: 0 },
+  adjuncts: [],
 };
 
 export const defaultMaltEntry: RecipeDraft["malts"][number] = {
@@ -100,4 +123,11 @@ export const defaultHopEntry: RecipeDraft["hops"][number] = {
   amountG: 0,
   stage: "boil",
   timeMin: 0,
+};
+
+export const defaultAdjunctEntry: RecipeDraft["adjuncts"][number] = {
+  name: "",
+  stage: "boil",
+  timeMin: 0,
+  notes: "",
 };
