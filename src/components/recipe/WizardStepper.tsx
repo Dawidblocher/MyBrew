@@ -13,8 +13,10 @@ interface WizardStepperProps {
   currentIndex: number;
   onBack: () => void;
   onNext: () => void;
+  onSave?: () => void;
   isFirstStep: boolean;
   isLastStep: boolean;
+  isSaving?: boolean;
   children: ReactNode;
 }
 
@@ -23,8 +25,10 @@ export function WizardStepper({
   currentIndex,
   onBack,
   onNext,
+  onSave,
   isFirstStep,
   isLastStep,
+  isSaving = false,
   children,
 }: WizardStepperProps) {
   return (
@@ -67,15 +71,25 @@ export function WizardStepper({
           <ChevronLeft className="size-4" />
           Wstecz
         </Button>
-        <Button
-          type="button"
-          onClick={onNext}
-          disabled={isLastStep}
-          className="bg-purple-500/80 text-white hover:bg-purple-500 disabled:opacity-40"
-        >
-          Dalej
-          <ChevronRight className="size-4" />
-        </Button>
+        {isLastStep ? (
+          <Button
+            type="button"
+            onClick={onSave}
+            disabled={isSaving}
+            className="bg-purple-500/80 text-white hover:bg-purple-500 disabled:opacity-40"
+          >
+            {isSaving ? "Zapisywanie…" : "Zapisz przepis"}
+          </Button>
+        ) : (
+          <Button
+            type="button"
+            onClick={onNext}
+            className="bg-purple-500/80 text-white hover:bg-purple-500 disabled:opacity-40"
+          >
+            Dalej
+            <ChevronRight className="size-4" />
+          </Button>
+        )}
       </div>
     </div>
   );

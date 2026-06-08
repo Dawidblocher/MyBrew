@@ -11,13 +11,18 @@ function FieldError({ message }: { message?: string }) {
 }
 
 export function BasicsStep() {
-  const { control, register } = useFormContext<RecipeDraft>();
+  const { control } = useFormContext<RecipeDraft>();
   const { field: nameField, fieldState: nameFieldState } = useController({
     control,
     name: "basics.name",
   });
+  const { field: styleField, fieldState: styleFieldState } = useController({
+    control,
+    name: "basics.style",
+  });
 
   const nameError = nameFieldState.error?.message;
+  const styleError = styleFieldState.error?.message;
 
   const inputClass = cn(
     "border-white/20 bg-white/10 text-white placeholder:text-white/40",
@@ -52,11 +57,12 @@ export function BasicsStep() {
           <Input
             id="basics-style"
             placeholder="np. American IPA"
-            className={cn(inputClass, "pl-10")}
-            {...register("basics.style")}
+            className={cn(inputClass, "pl-10", styleError && "border-red-400/60")}
+            aria-invalid={Boolean(styleError)}
+            {...styleField}
           />
         </div>
-        <p className="mt-1 text-xs text-blue-100/50">Opcjonalnie — dowolny tekst.</p>
+        <FieldError message={styleError} />
       </div>
     </div>
   );

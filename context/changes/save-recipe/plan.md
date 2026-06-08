@@ -294,14 +294,14 @@ First migration in the project. After merge, the CI build and any deploy environ
 
 #### Automated
 
-- [x] 3.1 Type checking passes (`npm run lint`)
-- [x] 3.2 Build passes (`npm run build`)
+- [x] 3.1 Type checking passes (`npm run lint`) — 0c81468
+- [x] 3.2 Build passes (`npm run build`) — 0c81468
 
 #### Manual
 
-- [x] 3.3 Valid authenticated POST returns `201 {id}` and creates an owned row
-- [x] 3.4 Unauthenticated POST returns `401`
-- [x] 3.5 Invalid bodies (blank style / no positive malt / cleared attenuation) return `400` with expected errors
+- [x] 3.3 Valid authenticated POST returns `201 {id}` and creates an owned row — 0c81468
+- [x] 3.4 Unauthenticated POST returns `401` — 0c81468
+- [x] 3.5 Invalid bodies (blank style / no positive malt / cleared attenuation) return `400` with expected errors — 0c81468
 
 ### Phase 4: Client Save Flow + UX
 
@@ -313,8 +313,8 @@ First migration in the project. After merge, the CI build and any deploy environ
 
 #### Manual
 
-- [ ] 4.4 Completing the wizard + save creates a row and redirects to `/recipes`
-- [ ] 4.5 Save button disabled while in flight (no double-submit)
-- [ ] 4.6 Blank style on leaving step 0 shows a required error
-- [ ] 4.7 Empty grist / cleared attenuation blocks save with inline errors routed to the offending step; no row created
-- [ ] 4.8 Logged-out save attempt redirects to sign-in
+- [x] 4.4 Completing the wizard + save creates a row and redirects to `/recipes`
+- [x] 4.5 Save button disabled while in flight (no double-submit)
+- [x] 4.6 Blank style on leaving step 0 shows a required error
+- [x] 4.7 Empty grist / cleared attenuation blocks save with inline errors routed to the offending step; no row created
+- [x] 4.8 Logged-out save attempt redirects to sign-in
