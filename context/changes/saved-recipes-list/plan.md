@@ -268,12 +268,12 @@ No schema changes — the table, index, RLS, and grants already exist from S-04.
 
 #### Automated
 
-- [x] 3.1 Type checking passes (`npm run lint`)
-- [x] 3.2 Build passes (`npm run build`)
+- [x] 3.1 Type checking passes (`npm run lint`) — bdf3381
+- [x] 3.2 Build passes (`npm run build`) — bdf3381
 
 #### Manual
 
-- [x] 3.3 Detail page renders all entered sections with correct values and Polish labels
-- [x] 3.4 Metric tiles match the list card (saved snapshot)
-- [x] 3.5 Non-existent / malformed / other-user `id` shows the not-found page (no data leak)
-- [x] 3.6 "Wróć do listy" returns to `/recipes`; no edit/delete controls present
+- [x] 3.3 Detail page renders all entered sections with correct values and Polish labels — bdf3381
+- [x] 3.4 Metric tiles match the list card (saved snapshot) — bdf3381
+- [x] 3.5 Non-existent / malformed / other-user `id` shows the not-found page (no data leak) — bdf3381
+- [x] 3.6 "Wróć do listy" returns to `/recipes`; no edit/delete controls present — bdf3381
