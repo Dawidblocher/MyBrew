@@ -1,7 +1,7 @@
 ---
 change_id: save-recipe
 title: Save recipe
-status: implementing
+status: implemented
 created: 2026-06-08
 updated: 2026-06-09
 archived_at: null

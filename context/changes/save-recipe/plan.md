@@ -307,14 +307,14 @@ First migration in the project. After merge, the CI build and any deploy environ
 
 #### Automated
 
-- [x] 4.1 Type checking passes (`npm run lint`)
-- [x] 4.2 Build passes (`npm run build`)
-- [x] 4.3 Unit tests pass (`npm run test:run`)
+- [x] 4.1 Type checking passes (`npm run lint`) — 2d3df35
+- [x] 4.2 Build passes (`npm run build`) — 2d3df35
+- [x] 4.3 Unit tests pass (`npm run test:run`) — 2d3df35
 
 #### Manual
 
-- [x] 4.4 Completing the wizard + save creates a row and redirects to `/recipes`
-- [x] 4.5 Save button disabled while in flight (no double-submit)
-- [x] 4.6 Blank style on leaving step 0 shows a required error
-- [x] 4.7 Empty grist / cleared attenuation blocks save with inline errors routed to the offending step; no row created
-- [x] 4.8 Logged-out save attempt redirects to sign-in
+- [x] 4.4 Completing the wizard + save creates a row and redirects to `/recipes` — 2d3df35
+- [x] 4.5 Save button disabled while in flight (no double-submit) — 2d3df35
+- [x] 4.6 Blank style on leaving step 0 shows a required error — 2d3df35
+- [x] 4.7 Empty grist / cleared attenuation blocks save with inline errors routed to the offending step; no row created — 2d3df35
+- [x] 4.8 Logged-out save attempt redirects to sign-in — 2d3df35
