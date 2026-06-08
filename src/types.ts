@@ -61,3 +61,31 @@ export interface RecipeDraft {
   yeast: YeastParams;
   adjuncts: AdjunctEntry[];
 }
+
+export interface RecipeMetricsSnapshot {
+  blg: number;
+  srm: number;
+  ibu: number;
+  abv: number;
+}
+
+export interface RecipeRecord extends RecipeMetricsSnapshot {
+  id: string;
+  userId: string;
+  name: string;
+  style: string;
+  createdAt: string;
+  data: RecipeDraft;
+}
+
+/** Server-built insert payload (snake_case matches the `recipes` table). */
+export interface RecipeInsert {
+  user_id: string;
+  name: string;
+  style: string;
+  blg: number;
+  srm: number;
+  ibu: number;
+  abv: number;
+  data: RecipeDraft;
+}
