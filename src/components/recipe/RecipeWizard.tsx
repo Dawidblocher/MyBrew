@@ -7,6 +7,8 @@ import { BasicsStep } from "@/components/recipe/steps/BasicsStep";
 import { GristStep } from "@/components/recipe/steps/GristStep";
 import { MashStep } from "@/components/recipe/steps/MashStep";
 import { HopsStep } from "@/components/recipe/steps/HopsStep";
+import { YeastStep } from "@/components/recipe/steps/YeastStep";
+import { AdjunctsStep } from "@/components/recipe/steps/AdjunctsStep";
 import { MetricsPanel } from "@/components/recipe/MetricsPanel";
 import { WizardStepper, type WizardStepConfig } from "@/components/recipe/WizardStepper";
 
@@ -15,9 +17,11 @@ const WIZARD_STEPS: WizardStepConfig[] = [
   { id: "grist", label: "Zasyp i parametry" },
   { id: "mash", label: "Zacieranie" },
   { id: "hops", label: "Chmiel" },
+  { id: "yeast", label: "Drożdże" },
+  { id: "adjuncts", label: "Dodatki" },
 ];
 
-const STEP_COMPONENTS = [BasicsStep, GristStep, MashStep, HopsStep];
+const STEP_COMPONENTS = [BasicsStep, GristStep, MashStep, HopsStep, YeastStep, AdjunctsStep];
 
 export default function RecipeWizard() {
   const { form } = useWizardRecipe();
@@ -43,7 +47,6 @@ export default function RecipeWizard() {
       const valid = validateWizardStep(mashStepSchema, { mash: form.getValues("mash") }, form, ["mash.efficiencyPct"]);
       if (!valid) return;
     } else if (currentStep === 3) {
-      // TODO(S-04): Wire hops validation to save/finish — Dalej is disabled on last step today.
       const valid = validateWizardStep(hopsStepSchema, { hops: form.getValues("hops") }, form, []);
       if (!valid) return;
     }
