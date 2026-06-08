@@ -241,28 +241,28 @@ No schema changes — the table, index, RLS, and grants already exist from S-04.
 
 #### Automated
 
-- [x] 1.1 Unit tests pass (`npm run test:run`)
-- [x] 1.2 Type checking passes (`npm run lint`)
-- [x] 1.3 Build passes (`npm run build`)
+- [x] 1.1 Unit tests pass (`npm run test:run`) — 8da61ea
+- [x] 1.2 Type checking passes (`npm run lint`) — 8da61ea
+- [x] 1.3 Build passes (`npm run build`) — 8da61ea
 
 #### Manual
 
-- [x] 1.4 Wizard `MetricsPanel` unchanged after descriptor extraction (same labels/units/precision)
+- [x] 1.4 Wizard `MetricsPanel` unchanged after descriptor extraction (same labels/units/precision) — 8da61ea
 
 ### Phase 2: Saved Recipes List Page
 
 #### Automated
 
-- [ ] 2.1 Type checking passes (`npm run lint`)
-- [ ] 2.2 Build passes (`npm run build`)
+- [x] 2.1 Type checking passes (`npm run lint`)
+- [x] 2.2 Build passes (`npm run build`)
 
 #### Manual
 
-- [ ] 2.3 Saved recipes render as cards, newest-first, with correct name/style/metrics/date
-- [ ] 2.4 Each card navigates to the matching `/recipes/[id]`
-- [ ] 2.5 No-recipes user sees the empty-state CTA that opens the wizard
-- [ ] 2.6 Supabase config/query failure shows the error notice (not a false empty list)
-- [ ] 2.7 A second user does not see the first user's recipes
+- [x] 2.3 Saved recipes render as cards, newest-first, with correct name/style/metrics/date
+- [x] 2.4 Each card navigates to the matching `/recipes/[id]`
+- [x] 2.5 No-recipes user sees the empty-state CTA that opens the wizard
+- [x] 2.6 Supabase config/query failure shows the error notice (not a false empty list)
+- [x] 2.7 A second user does not see the first user's recipes
 
 ### Phase 3: Recipe Detail Page
 

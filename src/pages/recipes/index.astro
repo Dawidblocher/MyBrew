@@ -1,20 +1,91 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import RecipeMetricTiles from "@/components/recipe/RecipeMetricTiles.astro";
+import { createClient } from "@/lib/supabase";
+import { listRecipes } from "@/lib/recipe-queries";
+import type { RecipeListItem } from "@/types";
+
+const { user } = Astro.locals;
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+
+type PageState = "error" | "empty" | "list";
+let pageState: PageState = "error";
+let items: RecipeListItem[] = [];
+
+if (supabase && user) {
+  const result = await listRecipes(supabase, user.id);
+  if (result.ok) {
+    pageState = result.items.length === 0 ? "empty" : "list";
+    items = result.items;
+  }
+}
+
+const dateFormatter = new Intl.DateTimeFormat("pl-PL", { dateStyle: "medium" });
 ---
 
 <Layout title="Twoje przepisy">
-  <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
-    <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
-      <h1 class="mb-4 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
-        Twoje przepisy
-      </h1>
-      <p class="text-blue-100/80">Zapisano przepis. Pełna lista zapisanych przepisów pojawi się wkrótce.</p>
-      <a
-        href="/recipes/new"
-        class="mt-6 inline-block rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm transition-colors hover:bg-white/20"
-      >
-        Nowy przepis
-      </a>
+  <div class="bg-cosmic min-h-screen p-4 sm:p-8">
+    <div class="mx-auto max-w-6xl">
+      <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <h1 class="bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
+          Twoje przepisy
+        </h1>
+        {
+          pageState !== "error" && (
+            <a
+              href="/recipes/new"
+              class="inline-block rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-center text-sm text-white transition-colors hover:bg-white/20"
+            >
+              Nowy przepis
+            </a>
+          )
+        }
+      </div>
+
+      {
+        pageState === "error" && (
+          <div class="rounded-2xl border border-red-400/30 bg-red-500/10 p-8 text-center text-white backdrop-blur-xl">
+            <p class="text-lg font-medium">Nie udało się wczytać przepisów</p>
+            <p class="mt-2 text-sm text-blue-100/70">
+              Sprawdź połączenie z bazą danych lub skonfiguruj Supabase, a następnie odśwież stronę.
+            </p>
+          </div>
+        )
+      }
+
+      {
+        pageState === "empty" && (
+          <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
+            <p class="text-lg text-blue-100/80">Nie masz jeszcze przepisów</p>
+            <a
+              href="/recipes/new"
+              class="mt-6 inline-block rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm transition-colors hover:bg-white/20"
+            >
+              Nowy przepis
+            </a>
+          </div>
+        )
+      }
+
+      {
+        pageState === "list" && (
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {items.map((item) => (
+              <a
+                href={`/recipes/${item.id}`}
+                class="flex flex-col rounded-2xl border border-white/10 bg-white/10 p-5 text-white backdrop-blur-xl transition-colors hover:border-white/20 hover:bg-white/15"
+              >
+                <h2 class="text-xl font-semibold">{item.name}</h2>
+                <p class="mt-1 text-sm text-blue-100/70">{item.style}</p>
+                <div class="mt-4">
+                  <RecipeMetricTiles metrics={item} compact />
+                </div>
+                <p class="mt-4 text-xs text-blue-100/50">Zapisano: {dateFormatter.format(new Date(item.createdAt))}</p>
+              </a>
+            ))}
+          </div>
+        )
+      }
     </div>
   </div>
 </Layout>
