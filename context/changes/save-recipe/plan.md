@@ -274,14 +274,14 @@ First migration in the project. After merge, the CI build and any deploy environ
 
 #### Automated
 
-- [x] 1.1 Migration applies cleanly to a local DB (`npx supabase db reset`)
-- [x] 1.2 Type checking passes (`npm run lint`)
-- [x] 1.3 Build passes (`npm run build`)
+- [x] 1.1 Migration applies cleanly to a local DB (`npx supabase db reset`) — 9d4869c
+- [x] 1.2 Type checking passes (`npm run lint`) — 9d4869c
+- [x] 1.3 Build passes (`npm run build`) — 9d4869c
 
 #### Manual
 
-- [x] 1.4 `recipes` table exists with RLS enabled and listed policies
-- [x] 1.5 Cross-user query returns nothing (RLS isolation)
+- [x] 1.4 `recipes` table exists with RLS enabled and listed policies — 9d4869c
+- [x] 1.5 Cross-user query returns nothing (RLS isolation) — 9d4869c
 
 ### Phase 2: Save Validation + Server Seam
 

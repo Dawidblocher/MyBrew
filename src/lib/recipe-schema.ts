@@ -93,6 +93,24 @@ export const hopsStepSchema = z.object({
   hops: z.array(hopEntrySchema),
 });
 
+export const saveRecipeSchema = recipeDraftSchema
+  .extend({
+    basics: z.object({
+      name: z.string().trim().min(1, "Nazwa jest wymagana"),
+      style: z.string().trim().min(1, "Styl jest wymagany"),
+    }),
+  })
+  .superRefine((data, ctx) => {
+    const hasPositiveMalt = data.malts.some((m) => Number.isFinite(m.amountKg) && m.amountKg > 0);
+    if (!hasPositiveMalt) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Zasyp musi zawierać co najmniej jeden słód o dodatniej ilości",
+        path: ["malts"],
+      });
+    }
+  });
+
 export type RecipeDraftForm = RecipeDraft;
 
 export const defaultRecipeDraft: RecipeDraft = {
