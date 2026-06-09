@@ -1,24 +1,12 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import RecipeExportActions from "@/components/recipe/RecipeExportActions";
 import RecipeMetricTiles from "@/components/recipe/RecipeMetricTiles.astro";
 import { createClient } from "@/lib/supabase";
 import { getRecipe } from "@/lib/recipe-queries";
-import type { AdjunctStage, HopStage } from "@/types";
+import { ADJUNCT_STAGE_LABELS, HOP_STAGE_LABELS } from "@/lib/recipe-labels";
 
 export const prerender = false;
-
-const HOP_STAGE_LABELS: Record<HopStage, string> = {
-  boil: "Gotowanie",
-  whirlpool: "Whirlpool",
-  dryHop: "Chmielenie na zimno",
-};
-
-const ADJUNCT_STAGE_LABELS: Record<AdjunctStage, string> = {
-  mash: "Zacieranie",
-  boil: "Gotowanie",
-  whirlpool: "Whirlpool",
-  fermentation: "Fermentacja",
-};
 
 const { user } = Astro.locals;
 const supabase = createClient(Astro.request.headers, Astro.cookies);
@@ -65,6 +53,7 @@ const { data } = record ?? { data: null };
               </h1>
               <p class="mt-1 text-blue-100/70">{record.style}</p>
             </div>
+            <RecipeExportActions record={record} client:load />
           </div>
 
           <RecipeMetricTiles metrics={record} />

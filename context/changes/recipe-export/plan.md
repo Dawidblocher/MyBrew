@@ -384,14 +384,14 @@ None — no schema or data changes. Purely additive client-side feature.
 
 #### Automated
 
-- [x] 2.1 Helper unit tests pass: `npm run test:run`
-- [x] 2.2 `npm run build` passes
-- [x] 2.3 `npm run lint` passes
+- [x] 2.1 Helper unit tests pass: `npm run test:run` — 0646b88
+- [x] 2.2 `npm run build` passes — 0646b88
+- [x] 2.3 `npm run lint` passes — 0646b88
 
 #### Manual
 
-- [x] 2.4 `RecipePdf` renders all sections with correct Polish diacritics
-- [x] 2.5 Empty malts/hops/adjuncts render "brak" without crashing
+- [x] 2.4 `RecipePdf` renders all sections with correct Polish diacritics — 0646b88
+- [x] 2.5 Empty malts/hops/adjuncts render "brak" without crashing — 0646b88
 
 ### Phase 3: Export island + page wiring
 
