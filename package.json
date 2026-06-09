@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "deploy": "astro build && wrangler deploy"
+    "deploy": "astro build && wrangler deploy",
+    "db:push-remote": "supabase link --project-ref fiwhelfhdfuuoaajbmoy --yes && supabase db push --yes"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",
@@ -22,6 +23,7 @@
     "@eslint/config-helpers": "^0.6.0",
     "@hookform/resolvers": "^5.4.0",
     "@radix-ui/react-slot": "^1.1.2",
+    "@react-pdf/renderer": "^4.5.1",
     "@supabase/ssr": "^0.10.3",
     "@supabase/supabase-js": "^2.99.1",
     "@tailwindcss/vite": "^4.2.4",
