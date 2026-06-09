@@ -370,42 +370,42 @@ None — no schema or data changes. Purely additive client-side feature.
 
 #### Automated
 
-- [x] 1.1 `@react-pdf/renderer` present in `package.json` and `package-lock.json`
-- [x] 1.2 `public/fonts/Inter-Regular.ttf` and `Inter-Bold.ttf` present and non-empty
-- [x] 1.3 `npm run build` completes without errors
-- [x] 1.4 `npm run lint` passes
+- [x] 1.1 `@react-pdf/renderer` present in `package.json` and `package-lock.json` — c050c1d
+- [x] 1.2 `public/fonts/Inter-Regular.ttf` and `Inter-Bold.ttf` present and non-empty — c050c1d
+- [x] 1.3 `npm run build` completes without errors — c050c1d
+- [x] 1.4 `npm run lint` passes — c050c1d
 
 #### Manual
 
-- [x] 1.5 Smoke island generates a downloadable PDF in-browser
-- [x] 1.6 No fontkit/WASM console errors in the island
+- [x] 1.5 Smoke island generates a downloadable PDF in-browser — c050c1d
+- [x] 1.6 No fontkit/WASM console errors in the island — c050c1d
 
 ### Phase 2: PDF document component + export helpers
 
 #### Automated
 
-- [ ] 2.1 Helper unit tests pass: `npm run test:run`
-- [ ] 2.2 `npm run build` passes
-- [ ] 2.3 `npm run lint` passes
+- [x] 2.1 Helper unit tests pass: `npm run test:run`
+- [x] 2.2 `npm run build` passes
+- [x] 2.3 `npm run lint` passes
 
 #### Manual
 
-- [ ] 2.4 `RecipePdf` renders all sections with correct Polish diacritics
-- [ ] 2.5 Empty malts/hops/adjuncts render "brak" without crashing
+- [x] 2.4 `RecipePdf` renders all sections with correct Polish diacritics
+- [x] 2.5 Empty malts/hops/adjuncts render "brak" without crashing
 
 ### Phase 3: Export island + page wiring
 
 #### Automated
 
-- [ ] 3.1 `npm run build` passes
-- [ ] 3.2 `npm run lint` passes
-- [ ] 3.3 Existing tests still pass: `npm run test:run`
+- [x] 3.1 `npm run build` passes
+- [x] 3.2 `npm run lint` passes
+- [x] 3.3 Existing tests still pass: `npm run test:run`
 
 #### Manual
 
-- [ ] 3.4 Both buttons appear in the detail header, consistently styled
-- [ ] 3.5 "Pobierz JSON" downloads valid `<name>.json` with the full record
-- [ ] 3.6 "Pobierz PDF" shows loading then downloads `<name>.pdf` with all sections + diacritics
-- [ ] 3.7 Filenames sanitized for Polish/odd characters
-- [ ] 3.8 PDF error path shows inline error and re-enables the button
-- [ ] 3.9 No regressions on the detail page (static sections + 404 path)
+- [x] 3.4 Both buttons appear in the detail header, consistently styled
+- [x] 3.5 "Pobierz JSON" downloads valid `<name>.json` with the full record
+- [x] 3.6 "Pobierz PDF" shows loading then downloads `<name>.pdf` with all sections + diacritics
+- [x] 3.7 Filenames sanitized for Polish/odd characters
+- [x] 3.8 PDF error path shows inline error and re-enables the button
+- [x] 3.9 No regressions on the detail page (static sections + 404 path)
