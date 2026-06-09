@@ -397,15 +397,15 @@ None — no schema or data changes. Purely additive client-side feature.
 
 #### Automated
 
-- [x] 3.1 `npm run build` passes
-- [x] 3.2 `npm run lint` passes
-- [x] 3.3 Existing tests still pass: `npm run test:run`
+- [x] 3.1 `npm run build` passes — 48b0a55
+- [x] 3.2 `npm run lint` passes — 48b0a55
+- [x] 3.3 Existing tests still pass: `npm run test:run` — 48b0a55
 
 #### Manual
 
-- [x] 3.4 Both buttons appear in the detail header, consistently styled
-- [x] 3.5 "Pobierz JSON" downloads valid `<name>.json` with the full record
-- [x] 3.6 "Pobierz PDF" shows loading then downloads `<name>.pdf` with all sections + diacritics
-- [x] 3.7 Filenames sanitized for Polish/odd characters
-- [x] 3.8 PDF error path shows inline error and re-enables the button
-- [x] 3.9 No regressions on the detail page (static sections + 404 path)
+- [x] 3.4 Both buttons appear in the detail header, consistently styled — 48b0a55
+- [x] 3.5 "Pobierz JSON" downloads valid `<name>.json` with the full record — 48b0a55
+- [x] 3.6 "Pobierz PDF" shows loading then downloads `<name>.pdf` with all sections + diacritics — 48b0a55
+- [x] 3.7 Filenames sanitized for Polish/odd characters — 48b0a55
+- [x] 3.8 PDF error path shows inline error and re-enables the button — 48b0a55
+- [x] 3.9 No regressions on the detail page (static sections + 404 path) — 48b0a55
