@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import RecipeMetricTiles from "@/components/recipe/RecipeMetricTiles.astro";
+import { DeleteRecipeDialog } from "@/components/recipe/DeleteRecipeDialog";
 import { createClient } from "@/lib/supabase";
 import { listRecipes } from "@/lib/recipe-queries";
 import type { RecipeListItem } from "@/types";
@@ -71,17 +72,45 @@ const dateFormatter = new Intl.DateTimeFormat("pl-PL", { dateStyle: "medium" });
         pageState === "list" && (
           <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((item) => (
-              <a
-                href={`/recipes/${item.id}`}
-                class="flex flex-col rounded-2xl border border-white/10 bg-white/10 p-5 text-white backdrop-blur-xl transition-colors hover:border-white/20 hover:bg-white/15"
-              >
-                <h2 class="text-xl font-semibold">{item.name}</h2>
-                <p class="mt-1 text-sm text-blue-100/70">{item.style}</p>
-                <div class="mt-4">
-                  <RecipeMetricTiles metrics={item} compact />
+              <div class="group relative">
+                <a
+                  href={`/recipes/${item.id}`}
+                  class="flex flex-col rounded-2xl border border-white/10 bg-white/10 p-5 text-white backdrop-blur-xl transition-colors hover:border-white/20 hover:bg-white/15"
+                >
+                  <h2 class="text-xl font-semibold">{item.name}</h2>
+                  <p class="mt-1 text-sm text-blue-100/70">{item.style}</p>
+                  <div class="mt-4">
+                    <RecipeMetricTiles metrics={item} compact />
+                  </div>
+                  <p class="mt-4 text-xs text-blue-100/50">
+                    Zapisano: {dateFormatter.format(new Date(item.createdAt))}
+                  </p>
+                </a>
+                <div class="absolute top-3 right-3 flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+                  <a
+                    href={`/recipes/${item.id}/edit`}
+                    class="rounded-lg p-1.5 text-blue-200/70 transition-colors hover:bg-white/20 hover:text-blue-200"
+                    aria-label="Edytuj przepis"
+                    onclick="event.stopPropagation()"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+                      <path d="m15 5 4 4" />
+                    </svg>
+                  </a>
+                  <DeleteRecipeDialog recipeId={item.id} recipeName={item.name} variant="icon" client:load />
                 </div>
-                <p class="mt-4 text-xs text-blue-100/50">Zapisano: {dateFormatter.format(new Date(item.createdAt))}</p>
-              </a>
+              </div>
             ))}
           </div>
         )

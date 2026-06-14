@@ -470,28 +470,28 @@ code (PUT would return 500 without the column).
 
 #### Automated
 
-- [x] 2.1 Type checking passes (`npm run lint`)
-- [x] 2.2 Build passes (`npm run build`)
+- [x] 2.1 Type checking passes (`npm run lint`) — 544a742
+- [x] 2.2 Build passes (`npm run build`) — 544a742
 
 #### Manual
 
-- [x] 2.3 `/recipes/[id]/edit` loads wizard with all 6 steps pre-populated
-- [x] 2.4 Live metrics show correct values on load (not "—")
-- [x] 2.5 Saving edit redirects to `/recipes/[id]` with updated values + "Ostatnio edytowano" date
-- [x] 2.6 Another user's edit URL returns the not-found page
-- [x] 2.7 Edit with blank style / cleared attenuation blocked with inline errors
+- [x] 2.3 `/recipes/[id]/edit` loads wizard with all 6 steps pre-populated — 544a742
+- [x] 2.4 Live metrics show correct values on load (not "—") — 544a742
+- [x] 2.5 Saving edit redirects to `/recipes/[id]` with updated values + "Ostatnio edytowano" date — 544a742
+- [x] 2.6 Another user's edit URL returns the not-found page — 544a742
+- [x] 2.7 Edit with blank style / cleared attenuation blocked with inline errors — 544a742
 
 ### Phase 3: Delete UI + Action Wiring
 
 #### Automated
 
-- [ ] 3.1 Type checking passes (`npm run lint`)
-- [ ] 3.2 Build passes (`npm run build`)
+- [x] 3.1 Type checking passes (`npm run lint`)
+- [x] 3.2 Build passes (`npm run build`)
 
 #### Manual
 
-- [ ] 3.3 Detail page "Edytuj" navigates to the edit wizard
-- [ ] 3.4 Detail page "Usuń przepis" Dialog works; confirming deletes + redirects to `/recipes`
-- [ ] 3.5 "Ostatnio edytowano" shows after edit; absent on unmodified recipes
-- [ ] 3.6 List card hover reveals pencil + trash icons; both work correctly
-- [ ] 3.7 Deleting from list card removes only that recipe; others remain
+- [x] 3.3 Detail page "Edytuj" navigates to the edit wizard
+- [x] 3.4 Detail page "Usuń przepis" Dialog works; confirming deletes + redirects to `/recipes`
+- [x] 3.5 "Ostatnio edytowano" shows after edit; absent on unmodified recipes
+- [x] 3.6 List card hover reveals pencil + trash icons; both work correctly
+- [x] 3.7 Deleting from list card removes only that recipe; others remain

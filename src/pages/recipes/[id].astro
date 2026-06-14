@@ -2,6 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import RecipeExportActions from "@/components/recipe/RecipeExportActions";
 import RecipeMetricTiles from "@/components/recipe/RecipeMetricTiles.astro";
+import { DeleteRecipeDialog } from "@/components/recipe/DeleteRecipeDialog";
 import { createClient } from "@/lib/supabase";
 import { getRecipe } from "@/lib/recipe-queries";
 import { ADJUNCT_STAGE_LABELS, HOP_STAGE_LABELS } from "@/lib/recipe-labels";
@@ -52,8 +53,23 @@ const { data } = record ?? { data: null };
                 {record.name}
               </h1>
               <p class="mt-1 text-blue-100/70">{record.style}</p>
+              <p class="mt-1 text-xs text-blue-100/40">
+                Ostatnio edytowano:{" "}
+                {new Intl.DateTimeFormat("pl-PL", { dateStyle: "medium", timeStyle: "short" }).format(
+                  new Date(record.updatedAt),
+                )}
+              </p>
             </div>
-            <RecipeExportActions record={record} client:load />
+            <div class="flex flex-wrap items-center gap-2">
+              <RecipeExportActions record={record} client:load />
+              <a
+                href={`/recipes/${id}/edit`}
+                class="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-sm text-white transition-colors hover:bg-white/20"
+              >
+                Edytuj
+              </a>
+              <DeleteRecipeDialog recipeId={id ?? ""} recipeName={record.name} client:load />
+            </div>
           </div>
 
           <RecipeMetricTiles metrics={record} />
