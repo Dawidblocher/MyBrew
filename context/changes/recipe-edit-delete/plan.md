@@ -485,13 +485,13 @@ code (PUT would return 500 without the column).
 
 #### Automated
 
-- [x] 3.1 Type checking passes (`npm run lint`)
-- [x] 3.2 Build passes (`npm run build`)
+- [x] 3.1 Type checking passes (`npm run lint`) — 225a367
+- [x] 3.2 Build passes (`npm run build`) — 225a367
 
 #### Manual
 
-- [x] 3.3 Detail page "Edytuj" navigates to the edit wizard
-- [x] 3.4 Detail page "Usuń przepis" Dialog works; confirming deletes + redirects to `/recipes`
-- [x] 3.5 "Ostatnio edytowano" shows after edit; absent on unmodified recipes
-- [x] 3.6 List card hover reveals pencil + trash icons; both work correctly
-- [x] 3.7 Deleting from list card removes only that recipe; others remain
+- [x] 3.3 Detail page "Edytuj" navigates to the edit wizard — 225a367
+- [x] 3.4 Detail page "Usuń przepis" Dialog works; confirming deletes + redirects to `/recipes` — 225a367
+- [x] 3.5 "Ostatnio edytowano" shows after edit; absent on unmodified recipes — 225a367
+- [x] 3.6 List card hover reveals pencil + trash icons; both work correctly — 225a367
+- [x] 3.7 Deleting from list card removes only that recipe; others remain — 225a367

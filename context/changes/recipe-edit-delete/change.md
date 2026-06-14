@@ -1,7 +1,7 @@
 ---
 change_id: recipe-edit-delete
 title: Edycja i usuwanie przepisu (S-07)
-status: implementing
+status: implemented
 created: 2026-06-14
 updated: 2026-06-14
 archived_at: null
