@@ -13,6 +13,7 @@ export interface RecipeListRow {
 
 export interface RecipeRecordRow extends RecipeListRow {
   user_id: string;
+  updated_at: string;
   data: RecipeDraft;
 }
 
@@ -33,6 +34,7 @@ export function mapRowToRecord(row: RecipeRecordRow): RecipeRecord {
   return {
     ...mapRowToListItem(row),
     userId: row.user_id,
+    updatedAt: row.updated_at,
     data: row.data,
   };
 }

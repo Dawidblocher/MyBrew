@@ -3,7 +3,7 @@ project: Beer Recipe Builder
 version: 1
 status: draft
 created: 2026-05-28
-updated: 2026-05-28
+updated: 2026-06-14
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -37,6 +37,7 @@ Tworzenie przepisu na piwo wymaga wielu ręcznych obliczeń (BLG, ABV, SRM, IBU)
 | S-04 | save-recipe | zapisać ukończony przepis z czterema metrykami | F-01, S-03 | FR-011 | proposed |
 | S-05 | saved-recipes-list | zobaczyć listę zapisanych przepisów (tylko do odczytu) z metrykami | F-01, S-04 | FR-012 | proposed |
 | S-06 | recipe-export | wyeksportować zapisany przepis jako PDF lub JSON | S-05 | FR-013 | proposed |
+| S-07 | recipe-edit-delete | edytować istniejący przepis (pełny kreator) i trwale go usunąć z potwierdzeniem | S-05 | — | planned |
 
 ## Streams
 
@@ -46,6 +47,7 @@ Pomoc nawigacyjna — grupuje pozycje dzielące ten sam łańcuch zależności. 
 |---|---|---|---|
 | A | Kreator i obliczenia na żywo | `F-02` → `S-01` → `S-02` → `S-03` | Ścieżka konieczna do gwiazdy przewodniej; priorytet przy celu `speed`. |
 | B | Trwałość, lista i eksport | `F-01` → `S-04` → `S-05` → `S-06` | `F-01` można budować równolegle do całego Stream A; `S-04` dołącza do Stream A w `S-03`. |
+| C | Edycja i usuwanie | `S-05` → `S-07` | Odgałęzienie od Stream B po S-05; można budować równolegle do S-06. |
 
 ## Baseline
 
@@ -162,6 +164,19 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **Risk:** Nice-to-have poza ścieżką konieczną; przy celu `speed` świadomie ostatni — nie blokuje MVP.
 - **Status:** proposed
 
+### S-07: Edycja i usuwanie przepisu
+
+- **Outcome:** użytkownik może otworzyć zapisany przepis w trybie edycji (pełny kreator wypełniony istniejącymi danymi), zmodyfikować dowolne pola i zapisać zmiany; może też trwale usunąć przepis po potwierdzeniu w oknie dialogowym.
+- **Change ID:** recipe-edit-delete
+- **PRD refs:** — (post-v1; wcześniej parkowane jako poza zakresem v1)
+- **Prerequisites:** S-05
+- **Parallel with:** S-06
+- **Blockers:** —
+- **Unknowns:**
+  - Czy edycja powinna ponownie uruchomić kreator krok-po-kroku, czy otworzyć widok jednostronicowy ze wszystkimi polami naraz? — Owner: user. Block: no.
+- **Risk:** Reużywa logiki kreatora (S-01–S-03) w trybie "wypełnij z istniejących danych" — ryzyko dryfu między kształtem formularza a zapisanym schematem, minimalizowane przez współdzielone typy z F-01. Usuwanie jest nieodwracalne — wymagać wyraźnego potwierdzenia użytkownika przed operacją.
+- **Status:** planned
+
 ## Backlog Handoff
 
 | Roadmap ID | Change ID | Suggested issue title | Ready for `/10x-plan` | Notes |
@@ -174,6 +189,7 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 | S-04 | save-recipe | Zapis ukończonego przepisu z metrykami | no | Wymaga F-01, S-03 |
 | S-05 | saved-recipes-list | Lista zapisanych przepisów (tylko do odczytu) | no | Wymaga F-01, S-04 |
 | S-06 | recipe-export | Eksport przepisu jako PDF/JSON | no | Wymaga S-05; nice-to-have |
+| S-07 | recipe-edit-delete | Edycja i usuwanie przepisu | no | Wymaga S-05; można równolegle do S-06 |
 
 ## Open Roadmap Questions
 
@@ -181,7 +197,6 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 
 ## Parked
 
-- **Edycja i usuwanie przepisów** — Why parked: PRD §Non-Goals — poza zakresem v1 (tylko create + save + read-only).
 - **Współdzielenie przepisów między użytkownikami** — Why parked: PRD §Non-Goals — model jednodostępowy per konto.
 - **Zarządzanie fermentacją i harmonogram dnia warzenia** — Why parked: PRD §Non-Goals — MVP obejmuje tylko projektowanie i obliczenia.
 - **Przepisy generowane przez AI / sugestie składników wg stylu** — Why parked: PRD §Non-Goals — użytkownik tworzy przepisy ręcznie.

@@ -17,6 +17,7 @@ const listRow: RecipeListRow = {
 const recordRow: RecipeRecordRow = {
   ...listRow,
   user_id: "user-123",
+  updated_at: "2026-06-14T08:00:00.000Z",
   data: defaultRecipeDraft,
 };
 
@@ -51,6 +52,13 @@ describe("mapRowToRecord", () => {
     expect(record.userId).toBe("user-123");
     expect(record.data).toEqual(defaultRecipeDraft);
     expect(record).not.toHaveProperty("user_id");
+  });
+
+  it("maps updated_at to updatedAt", () => {
+    const record = mapRowToRecord(recordRow);
+
+    expect(record.updatedAt).toBe("2026-06-14T08:00:00.000Z");
+    expect(record).not.toHaveProperty("updated_at");
   });
 
   it("includes list item fields from the row", () => {

@@ -1,6 +1,6 @@
 import type { createClient } from "@/lib/supabase";
 import { mapRowToListItem, mapRowToRecord, type RecipeListRow, type RecipeRecordRow } from "@/lib/recipe-mappers";
-import type { RecipeListItem, RecipeRecord } from "@/types";
+import type { RecipeInsert, RecipeListItem, RecipeRecord } from "@/types";
 
 type SupabaseClient = NonNullable<ReturnType<typeof createClient>>;
 
@@ -23,4 +23,31 @@ export async function getRecipe(supabase: SupabaseClient, userId: string, id: st
 
   if (response.error || !response.data) return null;
   return mapRowToRecord(response.data as RecipeRecordRow);
+}
+
+type RecipeUpdatePayload = Omit<RecipeInsert, "user_id">;
+
+export async function updateRecipe(
+  supabase: SupabaseClient,
+  userId: string,
+  id: string,
+  payload: RecipeUpdatePayload,
+): Promise<{ ok: true } | { ok: false; notFound: boolean }> {
+  const { data, error } = await supabase
+    .from("recipes")
+    .update({ ...payload, updated_at: new Date().toISOString() })
+    .eq("id", id)
+    .eq("user_id", userId)
+    .select("id")
+    .maybeSingle();
+
+  if (error) return { ok: false, notFound: false };
+  if (!data) return { ok: false, notFound: true };
+  return { ok: true };
+}
+
+export async function deleteRecipe(supabase: SupabaseClient, userId: string, id: string): Promise<{ ok: boolean }> {
+  const { error } = await supabase.from("recipes").delete().eq("id", id).eq("user_id", userId);
+
+  return { ok: !error };
 }

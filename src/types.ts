@@ -82,6 +82,7 @@ export interface RecipeRecord extends RecipeMetricsSnapshot {
   name: string;
   style: string;
   createdAt: string;
+  updatedAt: string;
   data: RecipeDraft;
 }
 
