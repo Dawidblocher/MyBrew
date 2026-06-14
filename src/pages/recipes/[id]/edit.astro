@@ -1,0 +1,47 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import RecipeWizard from "@/components/recipe/RecipeWizard";
+import { createClient } from "@/lib/supabase";
+import { getRecipe } from "@/lib/recipe-queries";
+
+export const prerender = false;
+
+const { user } = Astro.locals;
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+const id = Astro.params.id;
+
+const record = supabase && user && id ? await getRecipe(supabase, user.id, id) : null;
+
+if (!record) {
+  Astro.response.status = 404;
+}
+---
+
+{
+  !record ? (
+    <Layout title="Nie znaleziono przepisu">
+      <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
+        <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
+          <h1 class="mb-4 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
+            Nie znaleziono przepisu
+          </h1>
+          <p class="text-blue-100/80">Przepis nie istnieje lub nie masz do niego dostępu.</p>
+          <a
+            href="/recipes"
+            class="mt-6 inline-block rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm transition-colors hover:bg-white/20"
+          >
+            Wróć do listy
+          </a>
+        </div>
+      </div>
+    </Layout>
+  ) : (
+    <Layout title={`Edytuj: ${record.name}`}>
+      <div class="bg-cosmic min-h-screen p-4 md:p-8">
+        <div class="mx-auto max-w-4xl">
+          <RecipeWizard client:load recipeId={id} initialData={record.data} />
+        </div>
+      </div>
+    </Layout>
+  )
+}

@@ -453,33 +453,33 @@ code (PUT would return 500 without the column).
 
 #### Automated
 
-- [x] 1.1 Migration applies cleanly (`npx supabase db reset` or `npx supabase migration up`)
-- [x] 1.2 Unit tests pass (`npm run test:run`)
-- [x] 1.3 Type checking passes (`npm run lint`)
-- [x] 1.4 Build passes (`npm run build`)
+- [x] 1.1 Migration applies cleanly (`npx supabase db reset` or `npx supabase migration up`) — ff069af
+- [x] 1.2 Unit tests pass (`npm run test:run`) — ff069af
+- [x] 1.3 Type checking passes (`npm run lint`) — ff069af
+- [x] 1.4 Build passes (`npm run build`) — ff069af
 
 #### Manual
 
-- [ ] 1.5 `recipes` table has `updated_at` column + UPDATE + DELETE RLS policies active
-- [ ] 1.6 `PUT /api/recipes/<id>` as owner returns 200 `{ id }` and updates the row
-- [ ] 1.7 `DELETE /api/recipes/<id>` as owner returns 204 and removes the row
-- [ ] 1.8 Second-user PUT returns 404; second-user DELETE leaves the original row intact
-- [ ] 1.9 PUT with blank style / no positive malt returns 400 with `errors`
+- [x] 1.5 `recipes` table has `updated_at` column + UPDATE + DELETE RLS policies active — ff069af
+- [x] 1.6 `PUT /api/recipes/<id>` as owner returns 200 `{ id }` and updates the row — ff069af
+- [x] 1.7 `DELETE /api/recipes/<id>` as owner returns 204 and removes the row — ff069af
+- [x] 1.8 Second-user PUT returns 404; second-user DELETE leaves the original row intact — ff069af
+- [x] 1.9 PUT with blank style / no positive malt returns 400 with `errors` — ff069af
 
 ### Phase 2: Wizard Edit Mode + Edit Page
 
 #### Automated
 
-- [ ] 2.1 Type checking passes (`npm run lint`)
-- [ ] 2.2 Build passes (`npm run build`)
+- [x] 2.1 Type checking passes (`npm run lint`)
+- [x] 2.2 Build passes (`npm run build`)
 
 #### Manual
 
-- [ ] 2.3 `/recipes/[id]/edit` loads wizard with all 6 steps pre-populated
-- [ ] 2.4 Live metrics show correct values on load (not "—")
-- [ ] 2.5 Saving edit redirects to `/recipes/[id]` with updated values + "Ostatnio edytowano" date
-- [ ] 2.6 Another user's edit URL returns the not-found page
-- [ ] 2.7 Edit with blank style / cleared attenuation blocked with inline errors
+- [x] 2.3 `/recipes/[id]/edit` loads wizard with all 6 steps pre-populated
+- [x] 2.4 Live metrics show correct values on load (not "—")
+- [x] 2.5 Saving edit redirects to `/recipes/[id]` with updated values + "Ostatnio edytowano" date
+- [x] 2.6 Another user's edit URL returns the not-found page
+- [x] 2.7 Edit with blank style / cleared attenuation blocked with inline errors
 
 ### Phase 3: Delete UI + Action Wiring
 

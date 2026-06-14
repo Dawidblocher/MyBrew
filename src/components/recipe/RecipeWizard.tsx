@@ -43,8 +43,13 @@ function isFormFieldPath(field: string): field is FieldPath<RecipeDraft> {
   return !field.startsWith("metrics.");
 }
 
-export default function RecipeWizard() {
-  const { form } = useWizardRecipe();
+interface RecipeWizardProps {
+  recipeId?: string;
+  initialData?: RecipeDraft;
+}
+
+export default function RecipeWizard({ recipeId, initialData }: RecipeWizardProps = {}) {
+  const { form } = useWizardRecipe(initialData);
   const [currentStep, setCurrentStep] = useState(0);
   const [isSaving, setIsSaving] = useState(false);
   const [saveErrors, setSaveErrors] = useState<SaveValidationError[]>([]);
@@ -120,19 +125,25 @@ export default function RecipeWizard() {
 
     setIsSaving(true);
     try {
-      const response = await fetch("/api/recipes", {
-        method: "POST",
+      const isEdit = Boolean(recipeId);
+      const response = await fetch(isEdit ? `/api/recipes/${recipeId}` : "/api/recipes", {
+        method: isEdit ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(draft),
       });
 
-      if (response.status === 201) {
-        window.location.href = "/recipes";
+      if (response.status === 201 || response.status === 200) {
+        window.location.href = isEdit ? `/recipes/${recipeId}` : "/recipes";
         return;
       }
 
       if (response.status === 401) {
         window.location.href = "/auth/signin";
+        return;
+      }
+
+      if (response.status === 404) {
+        window.location.href = "/recipes";
         return;
       }
 
@@ -157,7 +168,7 @@ export default function RecipeWizard() {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/10 p-8 text-white backdrop-blur-xl">
       <h1 className="mb-6 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-2xl font-bold text-transparent">
-        Nowy przepis
+        {recipeId ? "Edytuj przepis" : "Nowy przepis"}
       </h1>
 
       <FormProvider {...form}>

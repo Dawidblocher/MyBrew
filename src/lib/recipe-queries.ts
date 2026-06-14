@@ -32,17 +32,19 @@ export async function updateRecipe(
   userId: string,
   id: string,
   payload: RecipeUpdatePayload,
-): Promise<{ ok: true } | { ok: false; notFound: boolean }> {
+): Promise<{ ok: true } | { ok: false; notFound: boolean; dbError?: string }> {
   const { data, error } = await supabase
     .from("recipes")
     .update({ ...payload, updated_at: new Date().toISOString() })
     .eq("id", id)
     .eq("user_id", userId)
-    .select("id")
-    .maybeSingle();
+    .select("id");
 
-  if (error) return { ok: false, notFound: false };
-  if (!data) return { ok: false, notFound: true };
+  if (error) {
+    console.error("recipes update failed:", error);
+    return { ok: false, notFound: false, dbError: error.message };
+  }
+  if (data.length === 0) return { ok: false, notFound: true };
   return { ok: true };
 }
 
