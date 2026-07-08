@@ -333,23 +333,23 @@ Brak migracji DB ani zmian runtime. `vitest.config.ts` i CI bez zmian (glob `src
 
 #### Automated
 
-- [x] 3.1 Testy round-tripu i integralności przechodzą: `npm run test:run`
-- [x] 3.2 Type-check: `npm run build`
-- [x] 3.3 Lint: `npm run lint`
+- [x] 3.1 Testy round-tripu i integralności przechodzą: `npm run test:run` — 916abd8
+- [x] 3.2 Type-check: `npm run build` — 916abd8
+- [x] 3.3 Lint: `npm run lint` — 916abd8
 
 #### Manual
 
-- [x] 3.4 Zmiana kształtu insertu czerwieni round-trip
-- [x] 3.5 Deep-equal łapie różnicę w zagnieżdżonym polu `data`
+- [x] 3.4 Zmiana kształtu insertu czerwieni round-trip — 916abd8
+- [x] 3.5 Deep-equal łapie różnicę w zagnieżdżonym polu `data` — 916abd8
 
 ### Phase 4: Cookbook wzorców + synchronizacja statusu
 
 #### Automated
 
-- [ ] 4.1 Cały suite przechodzi: `npm run test:run`
-- [ ] 4.2 Lint/format czysty: `npm run lint` / `npm run format`
+- [x] 4.1 Cały suite przechodzi: `npm run test:run`
+- [x] 4.2 Lint/format czysty: `npm run lint` / `npm run format`
 
 #### Manual
 
-- [ ] 4.3 §6 cookbook opisuje wzorce użyteczne dla przyszłych faz
-- [ ] 4.4 Statusy spójne między `test-plan.md` i `change.md`
+- [x] 4.3 §6 cookbook opisuje wzorce użyteczne dla przyszłych faz
+- [x] 4.4 Statusy spójne między `test-plan.md` i `change.md`

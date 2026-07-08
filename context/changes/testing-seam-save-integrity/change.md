@@ -1,7 +1,7 @@
 ---
 change_id: testing-seam-save-integrity
 title: "Testy: integralność seamu i zapisu (Plan testów — Faza 1)"
-status: implementing
+status: complete
 created: 2026-07-08
 updated: 2026-07-08
 archived_at: null
