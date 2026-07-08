@@ -307,27 +307,27 @@ Brak migracji DB ani zmian runtime. `vitest.config.ts` i CI bez zmian (glob `src
 
 #### Automated
 
-- [x] 1.1 Type-check przechodzi: `npm run build`
-- [x] 1.2 Lint czysty: `npm run lint`
-- [x] 1.3 Istniejące testy przechodzą po refaktorze: `npm run test:run`
+- [x] 1.1 Type-check przechodzi: `npm run build` — 43a951a
+- [x] 1.2 Lint czysty: `npm run lint` — 43a951a
+- [x] 1.3 Istniejące testy przechodzą po refaktorze: `npm run test:run` — 43a951a
 
 #### Manual
 
-- [x] 1.4 `fixtures.ts` produkuje draft przechodzący `saveRecipeSchema` z 4 metrykami `{ok:true}`
-- [x] 1.5 Fake klienta zwraca wstawiony wiersz przez `getRecipe`
+- [x] 1.4 `fixtures.ts` produkuje draft przechodzący `saveRecipeSchema` z 4 metrykami `{ok:true}` — 43a951a
+- [x] 1.5 Fake klienta zwraca wstawiony wiersz przez `getRecipe` — 43a951a
 
 ### Phase 2: Testy integralności i parytetu seamu (Ryzyko #1)
 
 #### Automated
 
-- [ ] 2.1 Nowe testy seamu przechodzą: `npm run test:run`
-- [ ] 2.2 Type-check: `npm run build`
-- [ ] 2.3 Lint: `npm run lint`
+- [x] 2.1 Nowe testy seamu przechodzą: `npm run test:run`
+- [x] 2.2 Type-check: `npm run build`
+- [x] 2.3 Lint: `npm run lint`
 
 #### Manual
 
-- [ ] 2.4 Ręczna regresja czerwieni test parytetu/konwersji
-- [ ] 2.5 Scenariusz extract=0 czerwieni się na metryce, nie na seamie
+- [x] 2.4 Ręczna regresja czerwieni test parytetu/konwersji
+- [x] 2.5 Scenariusz extract=0 czerwieni się na metryce, nie na seamie
 
 ### Phase 3: Testy round-tripu i integralności zapisu (Ryzyko #3)
 
