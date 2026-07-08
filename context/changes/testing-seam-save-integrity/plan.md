@@ -346,10 +346,10 @@ Brak migracji DB ani zmian runtime. `vitest.config.ts` i CI bez zmian (glob `src
 
 #### Automated
 
-- [x] 4.1 Cały suite przechodzi: `npm run test:run`
-- [x] 4.2 Lint/format czysty: `npm run lint` / `npm run format`
+- [x] 4.1 Cały suite przechodzi: `npm run test:run` — c3ab393
+- [x] 4.2 Lint/format czysty: `npm run lint` / `npm run format` — c3ab393
 
 #### Manual
 
-- [x] 4.3 §6 cookbook opisuje wzorce użyteczne dla przyszłych faz
-- [x] 4.4 Statusy spójne między `test-plan.md` i `change.md`
+- [x] 4.3 §6 cookbook opisuje wzorce użyteczne dla przyszłych faz — c3ab393
+- [x] 4.4 Statusy spójne między `test-plan.md` i `change.md` — c3ab393
