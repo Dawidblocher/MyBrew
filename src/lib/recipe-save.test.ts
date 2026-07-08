@@ -38,6 +38,35 @@ describe("buildRecipeInsert", () => {
     expect(styleError?.message).toContain("Styl");
   });
 
+  it("blank name → validation error with field basics.name", () => {
+    const result = buildRecipeInsert(draftWithHops({ basics: { name: "   ", style: "American IPA" } }), "user-123");
+
+    expect(result.ok).toBe(false);
+    if (result.ok) return;
+
+    const nameError = result.errors.find((e) => e.field === "basics.name");
+    expect(nameError?.message).toContain("Nazwa");
+  });
+
+  it("no qualifying hops → metrics.ibu validation error", () => {
+    const result = buildRecipeInsert(draftWithHops({ hops: [] }), "user-123");
+
+    expect(result.ok).toBe(false);
+    if (result.ok) return;
+
+    const ibuError = result.errors.find((e) => e.field === "metrics.ibu");
+    expect(ibuError).toBeDefined();
+  });
+
+  it("empty yeast.strain → save ok (product-incomplete but Zod-valid)", () => {
+    const result = buildRecipeInsert(draftWithHops({ yeast: { ...defaultRecipeDraft.yeast, strain: "" } }), "user-123");
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+
+    expect(result.insert.data.yeast.strain).toBe("");
+  });
+
   it("no positive malt → validation error", () => {
     const result = buildRecipeInsert(
       draftWithHops({ malts: [{ name: "Empty", amountKg: 0, colorEbc: 4, extractPercent: 80 }] }),

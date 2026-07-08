@@ -320,27 +320,27 @@ Brak migracji DB ani zmian runtime. `vitest.config.ts` i CI bez zmian (glob `src
 
 #### Automated
 
-- [x] 2.1 Nowe testy seamu przechodzą: `npm run test:run`
-- [x] 2.2 Type-check: `npm run build`
-- [x] 2.3 Lint: `npm run lint`
+- [x] 2.1 Nowe testy seamu przechodzą: `npm run test:run` — 20401ea
+- [x] 2.2 Type-check: `npm run build` — 20401ea
+- [x] 2.3 Lint: `npm run lint` — 20401ea
 
 #### Manual
 
-- [x] 2.4 Ręczna regresja czerwieni test parytetu/konwersji
-- [x] 2.5 Scenariusz extract=0 czerwieni się na metryce, nie na seamie
+- [x] 2.4 Ręczna regresja czerwieni test parytetu/konwersji — 20401ea
+- [x] 2.5 Scenariusz extract=0 czerwieni się na metryce, nie na seamie — 20401ea
 
 ### Phase 3: Testy round-tripu i integralności zapisu (Ryzyko #3)
 
 #### Automated
 
-- [ ] 3.1 Testy round-tripu i integralności przechodzą: `npm run test:run`
-- [ ] 3.2 Type-check: `npm run build`
-- [ ] 3.3 Lint: `npm run lint`
+- [x] 3.1 Testy round-tripu i integralności przechodzą: `npm run test:run`
+- [x] 3.2 Type-check: `npm run build`
+- [x] 3.3 Lint: `npm run lint`
 
 #### Manual
 
-- [ ] 3.4 Zmiana kształtu insertu czerwieni round-trip
-- [ ] 3.5 Deep-equal łapie różnicę w zagnieżdżonym polu `data`
+- [x] 3.4 Zmiana kształtu insertu czerwieni round-trip
+- [x] 3.5 Deep-equal łapie różnicę w zagnieżdżonym polu `data`
 
 ### Phase 4: Cookbook wzorców + synchronizacja statusu
 
