@@ -1,30 +1,8 @@
 import { describe, expect, it } from "vitest";
 
+import { boilHop, draft } from "@/lib/__tests__/fixtures";
 import { computeWizardMetrics, mapDraftToCalcInput } from "@/lib/recipe-to-calc";
 import { defaultRecipeDraft } from "@/lib/recipe-schema";
-import type { HopEntry, RecipeDraft } from "@/types";
-
-function draft(overrides: Partial<RecipeDraft> = {}): RecipeDraft {
-  return {
-    basics: { name: "Test", style: "" },
-    batch: { volumeL: 20 },
-    malts: [{ name: "Pilsner", amountKg: 5, colorEbc: 4, extractPercent: 80 }],
-    mash: defaultRecipeDraft.mash,
-    hops: defaultRecipeDraft.hops,
-    yeast: defaultRecipeDraft.yeast,
-    adjuncts: defaultRecipeDraft.adjuncts,
-    ...overrides,
-  };
-}
-
-const boilHop = (overrides: Partial<HopEntry> = {}): HopEntry => ({
-  name: "Magnum",
-  alphaAcidPercent: 5,
-  amountG: 28,
-  stage: "boil",
-  timeMin: 60,
-  ...overrides,
-});
 
 describe("mapDraftToCalcInput — insufficient-input guards", () => {
   it("empty malt list → sentinel", () => {
