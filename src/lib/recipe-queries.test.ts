@@ -3,7 +3,9 @@ import { describe, expect, it } from "vitest";
 import { createFakeSupabase } from "@/lib/__tests__/fake-supabase";
 import { draftWithHops } from "@/lib/__tests__/fixtures";
 import type { RecipeRecordRow } from "@/lib/recipe-mappers";
-import { getRecipe, listRecipes } from "@/lib/recipe-queries";
+import { deleteRecipe, getRecipe, listRecipes, updateRecipe } from "@/lib/recipe-queries";
+import { buildRecipeInsert } from "@/lib/recipe-save";
+import type { RecipeInsert } from "@/types";
 
 const USER_A = "user-a";
 const USER_B = "user-b";
@@ -34,6 +36,14 @@ const SEED: RecipeRecordRow[] = [
   seedRow({ id: RECIPE_A_ID, user_id: USER_A, name: "A's IPA" }),
   seedRow({ id: RECIPE_B_ID, user_id: USER_B, name: "B's Stout" }),
 ];
+
+/** Same shape the PUT handler passes after stripping `user_id` from `buildRecipeInsert`. */
+function updatePayload(name: string): Omit<RecipeInsert, "user_id"> {
+  const built = buildRecipeInsert(draftWithHops({ basics: { name, style: "American IPA" } }), "ignored");
+  if (!built.ok) throw new Error("fixture draft failed validation");
+  const { user_id: _userId, ...payload } = built.insert;
+  return payload;
+}
 
 describe("recipe-queries cross-user isolation", () => {
   it("listRecipes returns only the caller's recipes", async () => {
@@ -76,5 +86,58 @@ describe("recipe-queries cross-user isolation", () => {
         name: "A's IPA",
       }),
     );
+  });
+});
+
+describe("recipe-queries cross-user mutations", () => {
+  it("updateRecipe does not modify another user's recipe", async () => {
+    const fake = createFakeSupabase(SEED);
+    const victimBefore = fake._rows.find((row) => row.id === RECIPE_B_ID);
+    expect(victimBefore).toBeDefined();
+    if (!victimBefore) throw new Error("expected seeded recipe B");
+    const victimSnapshot = structuredClone(victimBefore);
+    const payload = updatePayload("Attacker's rewrite");
+
+    const result = await updateRecipe(fake, USER_A, RECIPE_B_ID, payload);
+
+    expect(result).toEqual({ ok: false, notFound: true });
+    const victimAfter = fake._rows.find((row) => row.id === RECIPE_B_ID);
+    expect(victimAfter).toBeDefined();
+    if (!victimAfter) throw new Error("expected recipe B to remain");
+    expect(victimAfter.name).toBe(victimSnapshot.name);
+    expect(victimAfter.data).toEqual(victimSnapshot.data);
+  });
+
+  it("updateRecipe modifies the caller's own recipe", async () => {
+    const fake = createFakeSupabase(SEED);
+    const payload = updatePayload("A's revised IPA");
+
+    const result = await updateRecipe(fake, USER_A, RECIPE_A_ID, payload);
+
+    expect(result).toEqual({ ok: true });
+    const ownRow = fake._rows.find((row) => row.id === RECIPE_A_ID);
+    expect(ownRow).toBeDefined();
+    if (!ownRow) throw new Error("expected recipe A to remain");
+    expect(ownRow.name).toBe("A's revised IPA");
+    expect(ownRow.data.basics.name).toBe("A's revised IPA");
+  });
+
+  it("deleteRecipe leaves another user's recipe in place", async () => {
+    const fake = createFakeSupabase(SEED);
+
+    const result = await deleteRecipe(fake, USER_A, RECIPE_B_ID);
+
+    expect(result).toEqual({ ok: true });
+    expect(fake._rows.some((row) => row.id === RECIPE_B_ID)).toBe(true);
+  });
+
+  it("deleteRecipe removes only the caller's own recipe", async () => {
+    const fake = createFakeSupabase(SEED);
+
+    const result = await deleteRecipe(fake, USER_A, RECIPE_A_ID);
+
+    expect(result).toEqual({ ok: true });
+    expect(fake._rows.some((row) => row.id === RECIPE_A_ID)).toBe(false);
+    expect(fake._rows.some((row) => row.id === RECIPE_B_ID)).toBe(true);
   });
 });
