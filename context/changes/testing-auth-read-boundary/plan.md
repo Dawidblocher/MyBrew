@@ -329,14 +329,14 @@ Brak migracji danych lub schematu. Włączenie Phase 4 wymaga ręcznego dodania 
 
 #### Automated
 
-- [x] 4.1 CI uruchamia tylko projekt gościa z sekretami Supabase
-- [x] 4.2 Offline test suite przechodzi: `npm run test:run`
-- [x] 4.3 E2E projektu gościa przechodzi: `npx playwright test --project=guest`
-- [x] 4.4 Type-check przechodzi: `npm run build`
-- [x] 4.5 Lint jest czysty: `npm run lint`
+- [x] 4.1 CI uruchamia tylko projekt gościa z sekretami Supabase — abf86c1
+- [x] 4.2 Offline test suite przechodzi: `npm run test:run` — abf86c1
+- [x] 4.3 E2E projektu gościa przechodzi: `npx playwright test --project=guest` — abf86c1
+- [x] 4.4 Type-check przechodzi: `npm run build` — abf86c1
+- [x] 4.5 Lint jest czysty: `npm run lint` — abf86c1
 
 #### Manual
 
-- [x] 4.6 Sekrety Supabase są skonfigurowane w GitHub
-- [x] 4.7 Workflow nie używa poświadczeń konta E2E
-- [x] 4.8 Dokumentacja rozróżnia Ryzyko #4 i otwarte Ryzyko #2
+- [x] 4.6 Sekrety Supabase są skonfigurowane w GitHub — abf86c1
+- [x] 4.7 Workflow nie używa poświadczeń konta E2E — abf86c1
+- [x] 4.8 Dokumentacja rozróżnia Ryzyko #4 i otwarte Ryzyko #2 — abf86c1

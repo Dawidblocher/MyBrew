@@ -1,9 +1,12 @@
 ---
 change_id: testing-auth-read-boundary
 title: "Testy: granica auth na odczyt (Plan testów — Faza 2, Ryzyko #4)"
-status: implementing
+status: implemented
 created: 2026-08-01
 updated: 2026-08-01
+
+
+
 archived_at: null
 ---
 
