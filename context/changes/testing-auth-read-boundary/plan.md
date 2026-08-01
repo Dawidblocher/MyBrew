@@ -289,26 +289,26 @@ Brak migracji danych lub schematu. Włączenie Phase 4 wymaga ręcznego dodania 
 
 #### Automated
 
-- [x] 1.1 Nowe testy query seamu przechodzą: `npm run test:run`
-- [x] 1.2 Type-check przechodzi: `npm run build`
-- [x] 1.3 Lint jest czysty: `npm run lint`
+- [x] 1.1 Nowe testy query seamu przechodzą: `npm run test:run` — 26f82fe
+- [x] 1.2 Type-check przechodzi: `npm run build` — 26f82fe
+- [x] 1.3 Lint jest czysty: `npm run lint` — 26f82fe
 
 #### Manual
 
-- [x] 1.4 Usunięcie filtra właściciela czerwieni test cross-user
+- [x] 1.4 Usunięcie filtra właściciela czerwieni test cross-user — 26f82fe
 
 ### Phase 2: Czysta decyzja ochrony ścieżek middleware
 
 #### Automated
 
-- [ ] 2.1 Test polityki ścieżek przechodzi bez stubów `astro:*`: `npm run test:run`
-- [ ] 2.2 Type-check przechodzi: `npm run build`
-- [ ] 2.3 Lint jest czysty: `npm run lint`
+- [x] 2.1 Test polityki ścieżek przechodzi bez stubów `astro:*`: `npm run test:run`
+- [x] 2.2 Type-check przechodzi: `npm run build`
+- [x] 2.3 Lint jest czysty: `npm run lint`
 
 #### Manual
 
-- [ ] 2.4 Błędne dopasowanie ścieżki czerwieni test `/recipes/new`
-- [ ] 2.5 API pozostaje poza polityką middleware
+- [x] 2.4 Błędne dopasowanie ścieżki czerwieni test `/recipes/new`
+- [x] 2.5 API pozostaje poza polityką middleware
 
 ### Phase 3: Playwright — granica sesji gościa
 
