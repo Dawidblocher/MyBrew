@@ -314,29 +314,29 @@ Brak migracji danych lub schematu. Włączenie Phase 4 wymaga ręcznego dodania 
 
 #### Automated
 
-- [x] 3.1 Projekt gościa przechodzi lokalnie: `npx playwright test --project=guest`
-- [x] 3.2 Pełny lokalny suite Playwright przechodzi: `npm run test:e2e`
-- [x] 3.3 Type-check przechodzi: `npm run build`
-- [x] 3.4 Lint jest czysty: `npm run lint`
+- [x] 3.1 Projekt gościa przechodzi lokalnie: `npx playwright test --project=guest` — 63eff4d
+- [x] 3.2 Pełny lokalny suite Playwright przechodzi: `npm run test:e2e` — 63eff4d
+- [x] 3.3 Type-check przechodzi: `npm run build` — 63eff4d
+- [x] 3.4 Lint jest czysty: `npm run lint` — 63eff4d
 
 #### Manual
 
-- [x] 3.5 Projekt gościa nie wymaga poświadczeń E2E
-- [x] 3.6 Usunięcie `getUser()` czerwieni test 401
-- [x] 3.7 Usunięcie ochrony `/recipes` czerwieni test redirectu
+- [x] 3.5 Projekt gościa nie wymaga poświadczeń E2E — 63eff4d
+- [x] 3.6 Usunięcie `getUser()` czerwieni test 401 — 63eff4d
+- [x] 3.7 Usunięcie ochrony `/recipes` czerwieni test redirectu — 63eff4d
 
 ### Phase 4: CI, cookbook i synchronizacja statusów
 
 #### Automated
 
-- [ ] 4.1 CI uruchamia tylko projekt gościa z sekretami Supabase
-- [ ] 4.2 Offline test suite przechodzi: `npm run test:run`
-- [ ] 4.3 E2E projektu gościa przechodzi: `npx playwright test --project=guest`
-- [ ] 4.4 Type-check przechodzi: `npm run build`
-- [ ] 4.5 Lint jest czysty: `npm run lint`
+- [x] 4.1 CI uruchamia tylko projekt gościa z sekretami Supabase
+- [x] 4.2 Offline test suite przechodzi: `npm run test:run`
+- [x] 4.3 E2E projektu gościa przechodzi: `npx playwright test --project=guest`
+- [x] 4.4 Type-check przechodzi: `npm run build`
+- [x] 4.5 Lint jest czysty: `npm run lint`
 
 #### Manual
 
-- [ ] 4.6 Sekrety Supabase są skonfigurowane w GitHub
-- [ ] 4.7 Workflow nie używa poświadczeń konta E2E
-- [ ] 4.8 Dokumentacja rozróżnia Ryzyko #4 i otwarte Ryzyko #2
+- [x] 4.6 Sekrety Supabase są skonfigurowane w GitHub
+- [x] 4.7 Workflow nie używa poświadczeń konta E2E
+- [x] 4.8 Dokumentacja rozróżnia Ryzyko #4 i otwarte Ryzyko #2
