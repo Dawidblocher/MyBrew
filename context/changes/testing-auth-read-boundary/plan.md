@@ -301,29 +301,29 @@ Brak migracji danych lub schematu. Włączenie Phase 4 wymaga ręcznego dodania 
 
 #### Automated
 
-- [x] 2.1 Test polityki ścieżek przechodzi bez stubów `astro:*`: `npm run test:run`
-- [x] 2.2 Type-check przechodzi: `npm run build`
-- [x] 2.3 Lint jest czysty: `npm run lint`
+- [x] 2.1 Test polityki ścieżek przechodzi bez stubów `astro:*`: `npm run test:run` — 95c492f
+- [x] 2.2 Type-check przechodzi: `npm run build` — 95c492f
+- [x] 2.3 Lint jest czysty: `npm run lint` — 95c492f
 
 #### Manual
 
-- [x] 2.4 Błędne dopasowanie ścieżki czerwieni test `/recipes/new`
-- [x] 2.5 API pozostaje poza polityką middleware
+- [x] 2.4 Błędne dopasowanie ścieżki czerwieni test `/recipes/new` — 95c492f
+- [x] 2.5 API pozostaje poza polityką middleware — 95c492f
 
 ### Phase 3: Playwright — granica sesji gościa
 
 #### Automated
 
-- [ ] 3.1 Projekt gościa przechodzi lokalnie: `npx playwright test --project=guest`
-- [ ] 3.2 Pełny lokalny suite Playwright przechodzi: `npm run test:e2e`
-- [ ] 3.3 Type-check przechodzi: `npm run build`
-- [ ] 3.4 Lint jest czysty: `npm run lint`
+- [x] 3.1 Projekt gościa przechodzi lokalnie: `npx playwright test --project=guest`
+- [x] 3.2 Pełny lokalny suite Playwright przechodzi: `npm run test:e2e`
+- [x] 3.3 Type-check przechodzi: `npm run build`
+- [x] 3.4 Lint jest czysty: `npm run lint`
 
 #### Manual
 
-- [ ] 3.5 Projekt gościa nie wymaga poświadczeń E2E
-- [ ] 3.6 Usunięcie `getUser()` czerwieni test 401
-- [ ] 3.7 Usunięcie ochrony `/recipes` czerwieni test redirectu
+- [x] 3.5 Projekt gościa nie wymaga poświadczeń E2E
+- [x] 3.6 Usunięcie `getUser()` czerwieni test 401
+- [x] 3.7 Usunięcie ochrony `/recipes` czerwieni test redirectu
 
 ### Phase 4: CI, cookbook i synchronizacja statusów
 
