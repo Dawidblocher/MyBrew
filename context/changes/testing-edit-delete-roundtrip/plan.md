@@ -311,24 +311,24 @@ Nie dotyczy — zmiana nie rusza schematu bazy ani kodu produkcyjnego.
 
 #### Automated
 
-- [x] 3.1 Testy przechodzą i opisują rzeczywiste zachowanie
-- [x] 3.2 Lint i typy
+- [x] 3.1 Testy przechodzą i opisują rzeczywiste zachowanie — 26000cc
+- [x] 3.2 Lint i typy — 26000cc
 
 #### Manual
 
-- [x] 3.3 Zaobserwowane zachowanie potwierdzone odwróceniem asercji
-- [x] 3.4 Wybrane pola potwierdzone jako nieuczestniczące w obliczeniach metryk
+- [x] 3.3 Zaobserwowane zachowanie potwierdzone odwróceniem asercji — 26000cc
+- [x] 3.4 Wybrane pola potwierdzone jako nieuczestniczące w obliczeniach metryk — 26000cc
 
 ### Phase 4: Trwałość usuwania i strażnik właściciela
 
 #### Automated
 
-- [ ] 4.1 Testy przechodzą
-- [ ] 4.2 Lint i typy
+- [x] 4.1 Testy przechodzą
+- [x] 4.2 Lint i typy
 
 #### Manual
 
-- [ ] 4.3 Test trwałości zapala się po usunięciu filtra `user_id` z `getRecipe`
+- [x] 4.3 Test trwałości zapala się po usunięciu filtra `user_id` z `listRecipes`
 
 ### Phase 5: Cookbook i domknięcie zmiany
 

@@ -11,6 +11,7 @@ const USER_A = "user-a";
 const USER_B = "user-b";
 
 const RECIPE_A_ID = "recipe-a";
+const RECIPE_A2_ID = "recipe-a-2";
 const RECIPE_B_ID = "recipe-b";
 
 const SEED: RecipeRecordRow[] = [
@@ -103,6 +104,27 @@ describe("recipe-queries cross-user mutations", () => {
     expect(ownRow.data.basics.name).toBe("A's revised IPA");
   });
 
+  /**
+   * Query-layer payload contract guard. The PUT handler strips `user_id` before
+   * calling `updateRecipe` (`src/pages/api/recipes/[id].ts`), but this suite
+   * cannot import that route (no `astro:env/server` stub). This locks that a
+   * normal update payload leaves ownership untouched — not that the HTTP strip works.
+   */
+  it("updateRecipe leaves the row's user_id unchanged", async () => {
+    const fake = createFakeSupabase(SEED);
+    const payload = updatePayload("A's revised IPA");
+
+    const result = await updateRecipe(fake, USER_A, RECIPE_A_ID, payload);
+
+    expect(result).toEqual({ ok: true });
+    const ownRow = fake._rows.find((row) => row.id === RECIPE_A_ID);
+    expect(ownRow).toBeDefined();
+    if (!ownRow) throw new Error("expected recipe A to remain");
+    expect(ownRow.user_id).toBe(USER_A);
+    const record = await getRecipe(fake, USER_A, RECIPE_A_ID);
+    expect(record?.userId).toBe(USER_A);
+  });
+
   it("deleteRecipe leaves another user's recipe in place", async () => {
     const fake = createFakeSupabase(SEED);
 
@@ -113,12 +135,26 @@ describe("recipe-queries cross-user mutations", () => {
   });
 
   it("deleteRecipe removes only the caller's own recipe", async () => {
-    const fake = createFakeSupabase(SEED);
+    const recipeA2 = recipeRow({
+      id: RECIPE_A2_ID,
+      user_id: USER_A,
+      data: { basics: { name: "A's Lager" } },
+    });
+    const fake = createFakeSupabase([...SEED, recipeA2]);
 
     const result = await deleteRecipe(fake, USER_A, RECIPE_A_ID);
 
     expect(result).toEqual({ ok: true });
     expect(fake._rows.some((row) => row.id === RECIPE_A_ID)).toBe(false);
     expect(fake._rows.some((row) => row.id === RECIPE_B_ID)).toBe(true);
+
+    expect(await getRecipe(fake, USER_A, RECIPE_A_ID)).toBeNull();
+    const listed = await listRecipes(fake, USER_A);
+    expect(listed).toEqual({
+      ok: true,
+      items: [expect.objectContaining({ id: RECIPE_A2_ID, name: "A's Lager" })],
+    });
+    if (!listed.ok) throw new Error("expected ok list");
+    expect(listed.items.map((item) => item.id)).not.toContain(RECIPE_A_ID);
   });
 });
