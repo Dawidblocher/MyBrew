@@ -1,10 +1,10 @@
 ---
 change_id: wizard-basics-grist-blg-srm
 title: Kreator — podstawy i zasyp z BLG/SRM na żywo
-status: impl_reviewed
+status: archived
 created: 2026-05-31
-updated: 2026-06-05
-archived_at: null
+updated: 2026-08-02
+archived_at: 2026-08-02T13:21:00Z
 ---
 
 ## Notes
