@@ -1,10 +1,10 @@
 ---
 change_id: calc-engine-harness
 title: Szkielet silnika obliczeń + harness testów poprawności
-status: implemented
+status: archived
 created: 2026-06-04
-updated: 2026-06-04
-archived_at: null
+updated: 2026-08-02
+archived_at: 2026-08-02T13:21:00Z
 ---
 
 ## Notes

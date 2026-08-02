@@ -3,7 +3,7 @@ project: Beer Recipe Builder
 version: 1
 status: draft
 created: 2026-05-28
-updated: 2026-06-14
+updated: 2026-08-02
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -87,7 +87,7 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Sekwencjonowane pierwsze, bo guardrail poprawności (NFR) musi być weryfikowalny zanim pojawi się pierwsza metryka; ryzyko: rozrost w "zbuduj wszystkie formuły naraz" — zakres ograniczony do szkieletu + harness, formuły wchodzą per slice.
-- **Status:** ready
+- **Status:** done
 
 ## Slices
 
@@ -205,4 +205,5 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 
 ## Done
 
-(Pusta przy pierwszej generacji. `/10x-archive` dopisuje tu pozycję — i przełącza `Status` na `done` — gdy archiwizowana zmiana ma `Change ID` zgodny z pozycją roadmapy.)
+- **F-02: (foundation) struktura modułu obliczeń, kontrakt wyjścia czterech metryk (BLG/ABV/SRM/IBU), typy wejść metryk oraz harness testów potwierdzający poprawność formuł dla standardowych danych są na miejscu (bez implementacji wszystkich formuł — te lądują w slice'ach, które ich potrzebują).** — Archived 2026-08-02 → `context/archive/2026-06-04-calc-engine-harness/`. Lesson: —.
+
