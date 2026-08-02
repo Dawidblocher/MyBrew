@@ -1,26 +1,26 @@
-import { expect, type Locator, type Page } from "@playwright/test";
-
-/**
- * The sign-in form is a `client:load` React island over server-rendered markup.
- * Hydration can land after the first fill and reset the controlled input, so
- * retry until the value sticks.
- */
-async function fillWhenHydrated(field: Locator, value: string) {
-  await expect(async () => {
-    await field.fill(value);
-    await expect(field).toHaveValue(value);
-  }).toPass();
-}
+import { expect, type Page } from "@playwright/test";
 
 /**
  * Sign in through the form, confirm the session on a protected route, then
  * persist browser storage for later Playwright projects.
+ *
+ * The sign-in form is a `client:load` React island over server-rendered markup.
+ * Hydration can clear one controlled field after the other was filled, so both
+ * must be verified sticky immediately before submit.
  */
 export async function signInAndSaveState(page: Page, email: string, password: string, storageStatePath: string) {
   await page.goto("/auth/signin");
 
-  await fillWhenHydrated(page.getByLabel("Email", { exact: true }), email);
-  await fillWhenHydrated(page.getByLabel("Password", { exact: true }), password);
+  const emailField = page.getByLabel("Email", { exact: true });
+  const passwordField = page.getByLabel("Password", { exact: true });
+
+  await expect(async () => {
+    await emailField.fill(email);
+    await passwordField.fill(password);
+    await expect(emailField).toHaveValue(email);
+    await expect(passwordField).toHaveValue(password);
+  }).toPass();
+
   await page.getByRole("button", { name: "Sign in" }).click();
 
   await page.waitForURL("/");

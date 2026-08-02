@@ -350,35 +350,35 @@ Brak migracji danych i schematu. Uruchomienie Fazy 4 wymaga ręcznego utworzenia
 
 #### Automated
 
-- [x] 2.1 Oba setupy produkują dwa różne pliki `storageState`
-- [x] 2.2 Istniejące projekty zalogowane przechodzą bez zmiennych konta B: `npx playwright test --project=chromium`
-- [x] 2.3 Projekt gościa nadal przechodzi: `npx playwright test --project=guest`
-- [x] 2.4 Type-check przechodzi: `npm run build`
-- [x] 2.5 Lint jest czysty: `npm run lint`
+- [x] 2.1 Oba setupy produkują dwa różne pliki `storageState` — 58666d3
+- [x] 2.2 Istniejące projekty zalogowane przechodzą bez zmiennych konta B: `npx playwright test --project=chromium` — 58666d3
+- [x] 2.3 Projekt gościa nadal przechodzi: `npx playwright test --project=guest` — 58666d3
+- [x] 2.4 Type-check przechodzi: `npm run build` — 58666d3
+- [x] 2.5 Lint jest czysty: `npm run lint` — 58666d3
 
 #### Manual
 
-- [x] 2.6 Pliki stanu zawierają różne tokeny sesji
-- [x] 2.7 Brak `E2E_USERNAME_B` psuje wyłącznie tor cross-user
-- [x] 2.8 Identyczny e-mail obu kont zatrzymuje setup z jawnym błędem
+- [x] 2.6 Pliki stanu zawierają różne tokeny sesji — 58666d3
+- [x] 2.7 Brak `E2E_USERNAME_B` psuje wyłącznie tor cross-user — 58666d3
+- [x] 2.8 Identyczny e-mail obu kont zatrzymuje setup z jawnym błędem — 58666d3
 
 ### Phase 3: Speca IDOR cross-user
 
 #### Automated
 
-- [ ] 3.1 Speca przechodzi lokalnie: `npx playwright test --project=crossuser`
-- [ ] 3.2 Import fixture'ów przez alias `@/` rozwiązuje się pod Playwrightem
-- [ ] 3.3 Projekt gościa i offline suite nadal przechodzą
-- [ ] 3.4 Type-check przechodzi: `npm run build`
-- [ ] 3.5 Lint jest czysty: `npm run lint`
+- [x] 3.1 Speca przechodzi lokalnie: `npx playwright test --project=crossuser`
+- [x] 3.2 Import fixture'ów przez alias `@/` rozwiązuje się pod Playwrightem
+- [x] 3.3 Projekt gościa i offline suite nadal przechodzą
+- [x] 3.4 Type-check przechodzi: `npm run build`
+- [x] 3.5 Lint jest czysty: `npm run lint`
 
 #### Manual
 
-- [ ] 3.6 Po przebiegu brak pozostałości danych testowych w bazie
-- [ ] 3.7 Usunięcie filtra własności z `updateRecipe` czerwieni asercję nazwy na stronie B
-- [ ] 3.8 Usunięcie filtra własności z `deleteRecipe` czerwieni atak DELETE
-- [ ] 3.9 Podmiana stanu B na stan A czerwieni testy ataku
-- [ ] 3.10 Niepoprawny payload ataku daje 400 zamiast 404
+- [x] 3.6 Po przebiegu brak pozostałości danych testowych w bazie
+- [x] 3.7 Usunięcie filtra własności z `updateRecipe` czerwieni asercję nazwy na stronie B
+- [x] 3.8 Usunięcie filtra własności z `deleteRecipe` czerwieni atak DELETE
+- [x] 3.9 Podmiana stanu B na stan A czerwieni testy ataku
+- [x] 3.10 Niepoprawny payload ataku daje 400 zamiast 404
 
 ### Phase 4: CI, cookbook i synchronizacja statusów
 
