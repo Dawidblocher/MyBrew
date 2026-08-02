@@ -113,7 +113,7 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Rozszerza silnik o IBU (zależne od harmonogramu chmielu); ryzyko niespójności formuły IBU — pokryte harnessem z F-02.
-- **Status:** proposed
+- **Status:** done
 
 ### S-03: Kreator — drożdże i dodatki z ABV na żywo (gwiazda przewodnia)
 
@@ -211,6 +211,8 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **S-04: użytkownik może zapisać ukończony przepis wraz z czterema obliczonymi metrykami; zapis jest blokowany lub ostrzega, gdy brakuje pól wymaganych (nazwa, styl, minimalny zasyp).** — Archived 2026-08-02 → `context/archive/2026-06-08-save-recipe/`. Lesson: —.
 - **S-05: użytkownik może zobaczyć listę swoich zapisanych przepisów (tylko do odczytu) z widocznymi czterema metrykami; brak akcji edycji i usuwania w v1.** — Archived 2026-08-02 → `context/archive/2026-06-09-saved-recipes-list/`. Lesson: —.
 - **S-01: użytkownik może rozpocząć nowy przepis w kreatorze, wpisać podstawy (nazwa, styl) oraz skonfigurować parametry warki i dynamiczną listę słodów (dodaj/przesuń/usuń), i widzi na żywo aktualizowane BLG oraz SRM.** — Archived 2026-08-02 → `context/archive/2026-05-31-wizard-basics-grist-blg-srm/`. Lesson: —.
+- **S-02: użytkownik może skonfigurować wydajność zacierania, stosunek wody do słodu i dynamiczną listę przerw zacierania oraz dynamiczną listę dodatków chmielu (etap, czas), i widzi na żywo aktualizowane IBU.** — Archived 2026-08-02 → `context/archive/2026-06-05-wizard-mash-hops-ibu/`. Lesson: —.
+
 
 
 
