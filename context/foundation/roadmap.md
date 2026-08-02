@@ -175,7 +175,7 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **Unknowns:**
   - Czy edycja powinna ponownie uruchomić kreator krok-po-kroku, czy otworzyć widok jednostronicowy ze wszystkimi polami naraz? — Owner: user. Block: no.
 - **Risk:** Reużywa logiki kreatora (S-01–S-03) w trybie "wypełnij z istniejących danych" — ryzyko dryfu między kształtem formularza a zapisanym schematem, minimalizowane przez współdzielone typy z F-01. Usuwanie jest nieodwracalne — wymagać wyraźnego potwierdzenia użytkownika przed operacją.
-- **Status:** planned
+- **Status:** done
 
 ## Backlog Handoff
 
@@ -206,4 +206,6 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 ## Done
 
 - **F-02: (foundation) struktura modułu obliczeń, kontrakt wyjścia czterech metryk (BLG/ABV/SRM/IBU), typy wejść metryk oraz harness testów potwierdzający poprawność formuł dla standardowych danych są na miejscu (bez implementacji wszystkich formuł — te lądują w slice'ach, które ich potrzebują).** — Archived 2026-08-02 → `context/archive/2026-06-04-calc-engine-harness/`. Lesson: —.
+- **S-07: użytkownik może otworzyć zapisany przepis w trybie edycji (pełny kreator wypełniony istniejącymi danymi), zmodyfikować dowolne pola i zapisać zmiany; może też trwale usunąć przepis po potwierdzeniu w oknie dialogowym.** — Archived 2026-08-02 → `context/archive/2026-06-14-recipe-edit-delete/`. Lesson: —.
+
 
