@@ -137,7 +137,7 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Łączy kreator z warstwą trwałości; ryzyko rozjazdu kształtu danych kreatora i schematu — minimalizowane przez współdzielone typy z F-01.
-- **Status:** proposed
+- **Status:** done
 
 ### S-05: Lista zapisanych przepisów (tylko do odczytu)
 
@@ -208,6 +208,8 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **F-02: (foundation) struktura modułu obliczeń, kontrakt wyjścia czterech metryk (BLG/ABV/SRM/IBU), typy wejść metryk oraz harness testów potwierdzający poprawność formuł dla standardowych danych są na miejscu (bez implementacji wszystkich formuł — te lądują w slice'ach, które ich potrzebują).** — Archived 2026-08-02 → `context/archive/2026-06-04-calc-engine-harness/`. Lesson: —.
 - **S-07: użytkownik może otworzyć zapisany przepis w trybie edycji (pełny kreator wypełniony istniejącymi danymi), zmodyfikować dowolne pola i zapisać zmiany; może też trwale usunąć przepis po potwierdzeniu w oknie dialogowym.** — Archived 2026-08-02 → `context/archive/2026-06-14-recipe-edit-delete/`. Lesson: —.
 - **S-06: użytkownik może wyeksportować zapisany przepis jako PDF lub JSON.** — Archived 2026-08-02 → `context/archive/2026-06-10-recipe-export/`. Lesson: —.
+- **S-04: użytkownik może zapisać ukończony przepis wraz z czterema obliczonymi metrykami; zapis jest blokowany lub ostrzega, gdy brakuje pól wymaganych (nazwa, styl, minimalny zasyp).** — Archived 2026-08-02 → `context/archive/2026-06-08-save-recipe/`. Lesson: —.
+
 
 
 
