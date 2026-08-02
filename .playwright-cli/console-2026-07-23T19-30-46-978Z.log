@@ -1,0 +1,4 @@
+[     212ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:4321/auth/signin:0
+[     309ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:4321/node_modules/.vite/deps/chunk-XFEUJNJL.js?v=9ca8270d:20102
+[   24682ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:4321/auth/signin?error=internal%20error%3B%20reference%20%3D%20l95hef3hk1c1jfb4t5eme9nn:0
+[   24710ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:4321/node_modules/.vite/deps/chunk-XFEUJNJL.js?v=9ca8270d:20102

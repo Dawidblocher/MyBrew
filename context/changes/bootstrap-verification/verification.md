@@ -40,10 +40,10 @@ Solo hobbyist building a beer recipe wizard web app with auth in 3 weeks of afte
 
 ## Pre-scaffold verification
 
-| Signal        | Value                                              | Severity    | Notes                                                          |
-| ------------- | -------------------------------------------------- | ----------- | -------------------------------------------------------------- |
-| npm package   | not run                                            | —           | cmd_template uses `git clone`, not an npm create-* CLI         |
-| GitHub repo   | not run                                            | —           | `gh` CLI not installed; recency check unavailable              |
+| Signal      | Value   | Severity | Notes                                                   |
+| ----------- | ------- | -------- | ------------------------------------------------------- |
+| npm package | not run | —        | cmd_template uses `git clone`, not an npm create-\* CLI |
+| GitHub repo | not run | —        | `gh` CLI not installed; recency check unavailable       |
 
 ## Scaffold log
 
@@ -57,6 +57,7 @@ Solo hobbyist building a beer recipe wizard web app with auth in 3 weeks of afte
 **.bootstrap-scaffold cleanup**: deleted
 
 Files moved:
+
 - `.github/` (directory)
 - `.husky/` (directory)
 - `.vscode/` (directory)
@@ -114,27 +115,28 @@ None.
 
 ## Hints recorded but not acted on
 
-| Hint                       | Value                              |
-| -------------------------- | ---------------------------------- |
-| bootstrapper_confidence    | first-class                        |
-| quality_override           | false                              |
-| path_taken                 | standard                           |
-| self_check_answers         | null                               |
-| team_size                  | solo                               |
-| deployment_target          | cloudflare-pages                   |
-| ci_provider                | github-actions                     |
-| ci_default_flow            | auto-deploy-on-merge               |
-| has_auth                   | true                               |
-| has_payments               | false                              |
-| has_realtime               | false                              |
-| has_ai                     | false                              |
-| has_background_jobs        | false                              |
+| Hint                    | Value                |
+| ----------------------- | -------------------- |
+| bootstrapper_confidence | first-class          |
+| quality_override        | false                |
+| path_taken              | standard             |
+| self_check_answers      | null                 |
+| team_size               | solo                 |
+| deployment_target       | cloudflare-pages     |
+| ci_provider             | github-actions       |
+| ci_default_flow         | auto-deploy-on-merge |
+| has_auth                | true                 |
+| has_payments            | false                |
+| has_realtime            | false                |
+| has_ai                  | false                |
+| has_background_jobs     | false                |
 
 ## Next steps
 
 Next: a future skill will set up agent context (CLAUDE.md, AGENTS.md). For now, your project is scaffolded and verified — happy hacking.
 
 Useful manual steps in the meantime:
+
 - `git init` (if you have not already) to start your own repo history.
 - Review any `.scaffold` siblings the conflict policy created and decide which version of each file to keep.
 - Address audit findings per your project's risk tolerance — the full breakdown is in this log.

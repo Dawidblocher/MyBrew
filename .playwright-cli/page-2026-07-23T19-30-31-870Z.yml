@@ -1,0 +1,32 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: Not signed in
+      - generic [ref=e6]:
+        - link "Sign in" [ref=e7] [cursor=pointer]:
+          - /url: /auth/signin
+        - link "Sign up" [ref=e8] [cursor=pointer]:
+          - /url: /auth/signup
+    - generic [ref=e9]:
+      - heading "10x Astro Starter" [level=1] [ref=e10]
+      - paragraph [ref=e11]: A production-ready starter with authentication, modern tooling, and a cosmic developer experience.
+      - generic [ref=e12]:
+        - link "Sign In" [ref=e13] [cursor=pointer]:
+          - /url: /auth/signin
+        - link "Sign Up" [ref=e14] [cursor=pointer]:
+          - /url: /auth/signup
+    - generic [ref=e15]:
+      - generic [ref=e16]:
+        - heading "Authentication Ready" [level=3] [ref=e20]
+        - paragraph [ref=e21]: Built-in Supabase auth with sign in, sign up, and protected routes out of the box.
+      - generic [ref=e22]:
+        - heading "Modern Stack" [level=3] [ref=e27]
+        - paragraph [ref=e28]: Astro 5, React 19, Tailwind 4, and TypeScript — the latest tools, ready to go.
+      - generic [ref=e29]:
+        - heading "Developer Experience" [level=3] [ref=e33]
+        - paragraph [ref=e34]: ESLint, Prettier, and pre-commit hooks keep your codebase clean from day one.
+  - generic [ref=e37]:
+    - button [ref=e38]
+    - button [ref=e44]
+    - button [ref=e48]
+    - button [ref=e53]

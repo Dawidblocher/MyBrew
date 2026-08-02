@@ -78,6 +78,7 @@ Rozszerzyć `RecipeDraft` o `yeast` i `adjuncts`, dodać typy etapu dodatków, s
 **Intent**: Dodać encje drożdży i dodatków do modelu draftu kreatora.
 
 **Contract**:
+
 - `AdjunctStage = "mash" | "boil" | "whirlpool" | "fermentation"`.
 - `YeastParams = { strain: string; type: string; attenuationPct: number; fermTempMinC: number; fermTempMaxC: number }`.
 - `AdjunctEntry = { name: string; stage: AdjunctStage; timeMin: number; notes: string }`.
@@ -90,6 +91,7 @@ Rozszerzyć `RecipeDraft` o `yeast` i `adjuncts`, dodać typy etapu dodatków, s
 **Intent**: Odzwierciedlić nowe pola w `recipeDraftSchema` i dodać domyślne wpisy. Brak schematów per-krok dla drożdży/dodatków (brak gate'u walidacji — decyzja).
 
 **Contract**:
+
 - `yeastSchema` (`z.object`): `strain` (`z.string()`), `type` (`z.string()`), `attenuationPct` (`z.coerce.number` 0–100, łagodne — zero dozwolone w trakcie pracy, jak `mash.efficiencyPct`), `fermTempMinC`/`fermTempMaxC` (`z.coerce.number`, mogą być ujemne lub nie — przyjąć `z.coerce.number` bez ograniczenia dolnego dla temperatury; komunikaty po polsku).
 - `adjunctEntrySchema` (`z.object`): `name` (`z.string()`), `stage` (`z.enum(["mash", "boil", "whirlpool", "fermentation"])`), `timeMin` (`z.coerce.number` ≥ 0), `notes` (`z.string()`).
 - `recipeDraftSchema` rozszerzone o `yeast: yeastSchema` i `adjuncts: z.array(adjunctEntrySchema)`.
@@ -124,6 +126,7 @@ Wpiąć odfermentowanie z draftu w seam, dodać ABV do `WizardMetrics` (współd
 **Intent**: Policzyć ABV ze współdzielonej grawitacji i odfermentowania drożdży, z poprawną propagacją sentinela.
 
 **Contract**:
+
 - Helper `attenuationFromDraft(draft): number | null` — `pct = draft.yeast.attenuationPct`; zwraca `pct / 100` gdy `Number.isFinite(pct) && pct > 0 && pct <= 100`, inaczej `null` (wzorzec z `mashEfficiencyFromDraft`).
 - `WizardMetrics` rozszerzone o `abv: CalcResult<number>`.
 - W `computeWizardMetrics`: gdy `mapped` nie OK → `abv` dostaje ten sam sentinel (`{ blg: mapped, srm: mapped, ibu: mapped, abv: mapped }`). Gdy grawitacja OK: `attenuation = attenuationFromDraft(draft)`; `abv = (gravity.ok && attenuation !== null) ? calcABV({ og: gravity.value.sg, attenuation }) : (gravity.ok ? { ok: false, reason: "Odfermentowanie musi być w zakresie (0, 100]." } : gravity)`.

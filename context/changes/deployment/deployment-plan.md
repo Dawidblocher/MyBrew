@@ -17,11 +17,13 @@ These are small correctness fixes that need to land before the first deploy.
 Per CLAUDE.md convention ("API routes must export `const prerender = false`"). Currently missing from all three routes.
 
 Files to update:
+
 - `src/pages/api/auth/signin.ts`
 - `src/pages/api/auth/signup.ts`
 - `src/pages/api/auth/signout.ts`
 
 Add as the first exported constant in each file:
+
 ```ts
 export const prerender = false;
 ```
@@ -62,6 +64,7 @@ npx wrangler login
 ```
 
 Opens browser OAuth flow. Stores token in `~/.wrangler/config/`. Verify with:
+
 ```bash
 npx wrangler whoami
 ```
@@ -110,6 +113,7 @@ npx wrangler secret put SUPABASE_KEY
 ```
 
 Each command prompts for the value interactively (not echoed to terminal). Confirm via:
+
 ```bash
 npx wrangler secret list
 ```
@@ -142,6 +146,7 @@ In the Supabase dashboard → Authentication → URL Configuration:
 ### 5a. Create Cloudflare API token [ ]
 
 In Cloudflare dashboard → Profile → API Tokens:
+
 - Create token with template: "Edit Cloudflare Workers"
 - Scope: All accounts / All zones (or restrict to specific account)
 - Copy the token — it's shown only once
@@ -149,6 +154,7 @@ In Cloudflare dashboard → Profile → API Tokens:
 ### 5b. Add secrets to GitHub repository [ ]
 
 In GitHub → Settings → Secrets and variables → Actions, add:
+
 - `CLOUDFLARE_API_TOKEN` — the token from 5a
 - `CLOUDFLARE_ACCOUNT_ID` — from `npx wrangler whoami`
 
@@ -159,25 +165,25 @@ In GitHub → Settings → Secrets and variables → Actions, add:
 Add a deploy job that runs after CI passes, only on pushes to `master`:
 
 ```yaml
-  deploy:
-    needs: ci
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run build
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-      - run: npx wrangler deploy
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+deploy:
+  needs: ci
+  runs-on: ubuntu-latest
+  if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+  steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: npm
+    - run: npm ci
+    - run: npm run build
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+    - run: npx wrangler deploy
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 ```
 
 **Edge case — deploy runs on PRs:** The `if: github.event_name == 'push'` guard ensures only pushes to master trigger deploy, not PR builds. The `needs: ci` ensures lint+build must pass first.
@@ -191,6 +197,7 @@ Add a deploy job that runs after CI passes, only on pushes to `master`:
 ### 6a. Live smoke test [ ]
 
 After CI deploy completes:
+
 1. Open the Workers URL in a browser
 2. Verify the home page loads
 3. Sign up with a real email → confirm email receives correctly
@@ -204,6 +211,7 @@ npx wrangler tail --format json
 ```
 
 Watch for errors during the smoke test. Look for:
+
 - Supabase connection errors (missing secrets, wrong URL)
 - 500 responses on auth routes
 - CPU time warnings
@@ -213,6 +221,7 @@ Watch for errors during the smoke test. Look for:
 ### 6c. Rollback drill (optional, recommended) [ ]
 
 Verify rollback works before you need it:
+
 ```bash
 npx wrangler deployments list
 npx wrangler rollback [VERSION_ID]
@@ -224,27 +233,27 @@ Note: rollback reverts Worker code only — does not revert any Supabase schema 
 
 ## Edge Cases Summary
 
-| Risk | Mitigation built into plan |
-|---|---|
-| Secrets leaked via `import.meta.env` | `astro:env/server` already used — noted in Phase 3b |
-| Auth redirect broken in production | Supabase Site URL config in Phase 4a |
-| Email confirmation UX wrong in prod | Verified in Phase 4b |
-| Bundle size exceeds 3 MB free limit | Dry-run check noted in Phase 2c |
-| Deploy triggers on PRs | `github.event_name == 'push'` guard in Phase 5c |
-| Cold start / Supabase latency | Accepted for MVP, noted in Phase 6b |
-| `prerender` missing on API routes | Fixed in Phase 1a |
-| Workers project name is scaffold default | Fixed in Phase 1b |
+| Risk                                     | Mitigation built into plan                          |
+| ---------------------------------------- | --------------------------------------------------- |
+| Secrets leaked via `import.meta.env`     | `astro:env/server` already used — noted in Phase 3b |
+| Auth redirect broken in production       | Supabase Site URL config in Phase 4a                |
+| Email confirmation UX wrong in prod      | Verified in Phase 4b                                |
+| Bundle size exceeds 3 MB free limit      | Dry-run check noted in Phase 2c                     |
+| Deploy triggers on PRs                   | `github.event_name == 'push'` guard in Phase 5c     |
+| Cold start / Supabase latency            | Accepted for MVP, noted in Phase 6b                 |
+| `prerender` missing on API routes        | Fixed in Phase 1a                                   |
+| Workers project name is scaffold default | Fixed in Phase 1b                                   |
 
 ---
 
 ## Critical Files Modified
 
-| File | Change |
-|---|---|
-| `src/pages/api/auth/signin.ts` | Add `export const prerender = false` |
-| `src/pages/api/auth/signup.ts` | Add `export const prerender = false` |
+| File                            | Change                               |
+| ------------------------------- | ------------------------------------ |
+| `src/pages/api/auth/signin.ts`  | Add `export const prerender = false` |
+| `src/pages/api/auth/signup.ts`  | Add `export const prerender = false` |
 | `src/pages/api/auth/signout.ts` | Add `export const prerender = false` |
-| `wrangler.jsonc` | Rename `"name"` field |
-| `package.json` | Add `"deploy"` script |
-| `.dev.vars.example` | Create new file (committed) |
-| `.github/workflows/ci.yml` | Add `deploy` job |
+| `wrangler.jsonc`                | Rename `"name"` field                |
+| `package.json`                  | Add `"deploy"` script                |
+| `.dev.vars.example`             | Create new file (committed)          |
+| `.github/workflows/ci.yml`      | Add `deploy` job                     |

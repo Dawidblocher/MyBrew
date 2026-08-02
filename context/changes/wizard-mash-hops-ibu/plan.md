@@ -10,7 +10,7 @@ S-01 (`wizard-basics-grist-blg-srm`) i F-02 (`calc-engine-harness`) są **zaimpl
 
 - **Kreator** (`src/components/recipe/RecipeWizard.tsx`) to 2-krokowy flow: `WIZARD_STEPS` + `STEP_COMPONENTS` (linie 11–16), indeks kroku w `useState`, walidacja per-krok w `handleNext` (linie 26–43), wszystko w `FormProvider` (linie 57–70).
 - **Stan formularza**: `react-hook-form` przez `useWizardRecipe` (`src/components/hooks/useWizardRecipe.ts`), `zodResolver(recipeDraftSchema)`, `defaultValues: defaultRecipeDraft`, `mode: "onTouched"`.
-- **Wzorzec listy dynamicznej**: `MaltList.tsx` (`useFieldArray` z `append`/`move`/`remove`, linia 10) + `MaltRow.tsx` (pola przez `register(\`malts.${index}.field\`)`, callbacki `onMoveUp/onMoveDown/onRemove` z rodzica). Domyślny wpis: `defaultMaltEntry` (`recipe-schema.ts` linie 41–46).
+- **Wzorzec listy dynamicznej**: `MaltList.tsx` (`useFieldArray` z `append`/`move`/`remove`, linia 10) + `MaltRow.tsx` (pola przez `register(\`malts.${index}.field\`)`, callbacki `onMoveUp/onMoveDown/onRemove`z rodzica). Domyślny wpis:`defaultMaltEntry` (`recipe-schema.ts` linie 41–46).
 - **Seam obliczeń**: `recipe-to-calc.ts` — `DEFAULT_MASH_EFFICIENCY = 0.75` (linia 19, oznaczone jako tymczasowe do S-02), `mapDraftToCalcInput` zwraca `BlgInput` (linie 34–58), `computeWizardMetrics` zwraca tylko `{ blg, srm }` (linie 70–81).
 - **Silnik**: `src/lib/calc/` — `calcIBU` (Tinseth) w `ibu.ts` jest pełny i otestowany; `computeMetrics` (`index.ts` linie 45–56) liczy grawitację raz przez `computeGravity` i podaje `sg` do `calcIBU`/`calcABV`. Kontrakt `HopAddition` (`types.ts` linie 43–50) ma tylko `alphaAcidPercent`, `amountG`, `boilTimeMin` — **brak pola etapu**.
 - **Panel metryk**: `MetricsPanel.tsx` — `useWatch` na `["batch", "malts"]` (linia 43), derived state bez `useEffect`/debounce, `formatMetric` pokazuje `—` gdy `!result.ok` (linie 9–14).
@@ -119,6 +119,7 @@ Rozszerzyć `RecipeDraft` o `mash` i `hops`, dodać schematy Zod (pełny + per-k
 **Intent**: Dodać encje zacierania i chmielu do modelu draftu kreatora.
 
 **Contract**:
+
 - `HopStage = "boil" | "whirlpool" | "dryHop"`.
 - `MashRest = { tempC: number; durationMin: number }`.
 - `HopEntry = { name: string; alphaAcidPercent: number; amountG: number; stage: HopStage; timeMin: number }`.
@@ -132,6 +133,7 @@ Rozszerzyć `RecipeDraft` o `mash` i `hops`, dodać schematy Zod (pełny + per-k
 **Intent**: Odzwierciedlić nowe pola w `recipeDraftSchema`, dodać schematy walidacji kroków i domyślne wpisy list.
 
 **Contract**:
+
 - `mashRestSchema` (temp i czas jako `z.coerce.number`, nieujemne), `hopEntrySchema` (alfa% 0–100, ilość ≥ 0, czas ≥ 0, `stage` jako `z.enum`).
 - `recipeDraftSchema` rozszerzone o `mash` (efficiencyPct 0–100, waterToGrainRatio ≥ 0, `rests` array) i `hops` array; pola łagodne na poziomie draftu (zero dozwolone w trakcie pracy, jak `batch.volumeL`).
 - `mashStepSchema` — wymaga `mash.efficiencyPct` dodatniej (`positive`), reszta łagodna.
@@ -175,6 +177,7 @@ Wpiąć wydajność z inputu i listę chmielu w seam `recipe-to-calc.ts`, dodać
 **Intent**: Zastąpić stałą wydajność wartością z `draft.mash.efficiencyPct`, zmapować `draft.hops` na `HopAddition[]` z `utilizationFactor` wg etapu, i policzyć IBU współdzieląc grawitację.
 
 **Contract**:
+
 - Usunąć/zdezaktualizować `DEFAULT_MASH_EFFICIENCY`; wydajność = `mash.efficiencyPct / 100`, z guardem `(0, 1]` (poza zakresem → sentinel dla BLG/IBU).
 - Stała `WHIRLPOOL_UTILIZATION_FACTOR = 0.25` (nazwana, udokumentowana jako przybliżenie); `boil → 1.0`, `dryHop → wykluczony` z listy IBU.
 - Mapowanie hopów: `{ alphaAcidPercent, amountG, boilTimeMin: timeMin, utilizationFactor }`, z pominięciem dry hop oraz wpisów niekompletnych (alfa/ilość/czas ≤ 0).

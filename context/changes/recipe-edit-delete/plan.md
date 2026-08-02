@@ -101,6 +101,7 @@ and deletes; add `updated_at` so the detail page can show when a recipe was last
 changed.
 
 **Contract**: Steps in order:
+
 1. `ALTER TABLE public.recipes ADD COLUMN updated_at timestamptz;`
 2. `UPDATE public.recipes SET updated_at = created_at;` (backfill existing rows)
 3. `ALTER TABLE public.recipes ALTER COLUMN updated_at SET NOT NULL;`
@@ -140,6 +141,7 @@ that surface explicit not-found and error states so the API routes return correc
 HTTP statuses.
 
 **Contract**:
+
 - `updateRecipe(supabase, userId, id, payload)` where `payload` is
   `{ name, style, blg, srm, ibu, abv, data }` (no `user_id`). Calls
   `.update({ ...payload, updated_at: new Date().toISOString() }).eq("id", id).eq("user_id", userId).select("id").maybeSingle()`.
@@ -228,6 +230,7 @@ save call from POST to PUT, redirect to the detail page on success, and show an
 `initialData` to `useWizardRecipe(initialData)`.
 
 In `handleSave`:
+
 - If `recipeId` is set: `fetch("/api/recipes/${recipeId}", { method: "PUT", … })`;
   on 200 → `window.location.href = "/recipes/${recipeId}"`.
 - If not: existing `POST /api/recipes` path, on 201 → `window.location.href = "/recipes"`.
@@ -344,6 +347,7 @@ container with an inner content link and a positioned hover icon toolbar, to all
 embedding the edit link and delete island without invalid nested anchors.
 
 **Contract**: Each card becomes:
+
 ```
 <div class="group relative rounded-2xl border border-white/10 bg-white/10 ...">
   <a href="/recipes/${item.id}" class="block p-...">
@@ -361,6 +365,7 @@ embedding the edit link and delete island without invalid nested anchors.
   </div>
 </div>
 ```
+
 The outer glassy card styles (currently on the `<a>`) move to the `<div>`. The inner `<a>` takes `class="block"` and the same padding. `Pencil` and `Trash2` come from `lucide-react` (already a project dependency).
 
 ### Success Criteria:

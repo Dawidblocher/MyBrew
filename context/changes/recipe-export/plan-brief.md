@@ -26,17 +26,17 @@ and `npm run lint` pass and the browser island bundles cleanly.
 
 ## Key Decisions Made
 
-| Decision              | Choice                                   | Why (1 sentence)                                                        | Source   |
-| --------------------- | ---------------------------------------- | ---------------------------------------------------------------------- | -------- |
-| PDF library           | `@react-pdf/renderer` (client-only)      | Edge-safe in a browser island; JSX-described, React-team-friendly.     | Research |
-| Generation location   | Client island, no API route              | Edge runtime can't run Node PDF APIs; data is already on the page.      | Research |
-| Mount point           | `[id].astro` header island               | Full record already loaded server-side; only place with `data`.        | Research |
-| Format scope (v1)     | Both PDF + JSON now                       | Architecture for both already settled; marginal cost low.              | Plan     |
-| PDF trigger           | Imperative `pdf().toBlob()` on click     | No PDF work until requested; one shared handler style; plain Button.   | Plan     |
-| Export UI             | Two buttons (no dropdown)                | No dropdown primitive exists yet; most discoverable, least scope.      | Plan     |
-| Font                  | Self-hosted Inter (Regular + Bold)       | Full Polish Latin-Extended coverage; matches app look; OFL.           | Plan     |
-| PDF layout            | Full recipe (all sections)               | Genuinely useful printout; data already in props.                     | Plan     |
-| Font acquisition      | Plan specifies files; fetched at implement | Keeps plan clean; binary assets land at implement time.              | Plan     |
+| Decision            | Choice                                     | Why (1 sentence)                                                     | Source   |
+| ------------------- | ------------------------------------------ | -------------------------------------------------------------------- | -------- |
+| PDF library         | `@react-pdf/renderer` (client-only)        | Edge-safe in a browser island; JSX-described, React-team-friendly.   | Research |
+| Generation location | Client island, no API route                | Edge runtime can't run Node PDF APIs; data is already on the page.   | Research |
+| Mount point         | `[id].astro` header island                 | Full record already loaded server-side; only place with `data`.      | Research |
+| Format scope (v1)   | Both PDF + JSON now                        | Architecture for both already settled; marginal cost low.            | Plan     |
+| PDF trigger         | Imperative `pdf().toBlob()` on click       | No PDF work until requested; one shared handler style; plain Button. | Plan     |
+| Export UI           | Two buttons (no dropdown)                  | No dropdown primitive exists yet; most discoverable, least scope.    | Plan     |
+| Font                | Self-hosted Inter (Regular + Bold)         | Full Polish Latin-Extended coverage; matches app look; OFL.          | Plan     |
+| PDF layout          | Full recipe (all sections)                 | Genuinely useful printout; data already in props.                    | Plan     |
+| Font acquisition    | Plan specifies files; fetched at implement | Keeps plan clean; binary assets land at implement time.              | Plan     |
 
 ## Scope
 
@@ -59,11 +59,11 @@ module load in `src/lib/pdf-fonts.ts`; helpers (filename, download, JSON) live i
 
 ## Phases at a Glance
 
-| Phase                                 | What it delivers                                        | Key risk                                              |
-| ------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------- |
-| 1. Dependency, fonts & bundling       | Library installed, Inter self-hosted + registered, clean build | fontkit/WASM bundling in an Astro client island |
-| 2. PDF component + export helpers      | `RecipePdf` (full layout) + `src/lib` helpers (tested) | Polish diacritics; faithful section mapping          |
-| 3. Export island + page wiring         | Two-button island mounted on the detail page           | Download UX, loading/error state, filename sanitize  |
+| Phase                             | What it delivers                                               | Key risk                                            |
+| --------------------------------- | -------------------------------------------------------------- | --------------------------------------------------- |
+| 1. Dependency, fonts & bundling   | Library installed, Inter self-hosted + registered, clean build | fontkit/WASM bundling in an Astro client island     |
+| 2. PDF component + export helpers | `RecipePdf` (full layout) + `src/lib` helpers (tested)         | Polish diacritics; faithful section mapping         |
+| 3. Export island + page wiring    | Two-button island mounted on the detail page                   | Download UX, loading/error state, filename sanitize |
 
 **Prerequisites:** S-05 detail page exists (it does); ability to download the two
 Inter TTFs into `public/fonts/` during implementation.

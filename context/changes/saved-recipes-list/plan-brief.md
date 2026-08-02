@@ -16,15 +16,15 @@ The save slice (S-04) is fully done: the `recipes` table, its `(user_id, created
 
 ## Key Decisions Made
 
-| Decision | Choice | Why (1 sentence) | Source |
-| --- | --- | --- | --- |
-| Read mechanism | Server-side SSR query (no API route) | RLS + per-request client makes SSR reads self-scoping; matches the `dashboard.astro` pattern | Plan |
-| List layout | Responsive card grid | Matches the existing glassy-card aesthetic; metrics read well as a 4-tile row | Plan |
-| Card fields | Name + style + 4 metrics + save date | Date distinguishes recipe iterations and reflects the created_at ordering | Plan |
-| Empty/error states | Empty-state CTA + distinct error notice | Guides first-run users into the wizard; never masks a failure as "empty" | Plan |
-| Entry interaction | Cards link to a detail page | User wants to drill into the full recipe, not just metrics | Plan |
-| Detail depth | Full recipe, all sections read-only | The natural payoff of a detail link; all data already in the `data` JSONB | Plan |
-| Metrics on read | Show saved snapshot columns (no recompute) | Preserves the exact numbers shown at save time; keeps reads decoupled from the calc engine | Plan |
+| Decision           | Choice                                     | Why (1 sentence)                                                                             | Source |
+| ------------------ | ------------------------------------------ | -------------------------------------------------------------------------------------------- | ------ |
+| Read mechanism     | Server-side SSR query (no API route)       | RLS + per-request client makes SSR reads self-scoping; matches the `dashboard.astro` pattern | Plan   |
+| List layout        | Responsive card grid                       | Matches the existing glassy-card aesthetic; metrics read well as a 4-tile row                | Plan   |
+| Card fields        | Name + style + 4 metrics + save date       | Date distinguishes recipe iterations and reflects the created_at ordering                    | Plan   |
+| Empty/error states | Empty-state CTA + distinct error notice    | Guides first-run users into the wizard; never masks a failure as "empty"                     | Plan   |
+| Entry interaction  | Cards link to a detail page                | User wants to drill into the full recipe, not just metrics                                   | Plan   |
+| Detail depth       | Full recipe, all sections read-only        | The natural payoff of a detail link; all data already in the `data` JSONB                    | Plan   |
+| Metrics on read    | Show saved snapshot columns (no recompute) | Preserves the exact numbers shown at save time; keeps reads decoupled from the calc engine   | Plan   |
 
 ## Scope
 
@@ -38,11 +38,11 @@ Two SSR Astro pages under `src/pages/recipes/`. `index.astro` calls `listRecipes
 
 ## Phases at a Glance
 
-| Phase | What it delivers | Key risk |
-| --- | --- | --- |
-| 1. Read layer | Query module, pure mapper (+tests), metric descriptors, metric-tiles component | Descriptor extraction accidentally changing `MetricsPanel` output |
-| 2. List page | Real `/recipes` card grid with empty + error states | Falsely showing "empty" on a query/config failure |
-| 3. Detail page | `/recipes/[id]` full read-only recipe + not-found handling | Leaking existence of another user's recipe |
+| Phase          | What it delivers                                                               | Key risk                                                          |
+| -------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| 1. Read layer  | Query module, pure mapper (+tests), metric descriptors, metric-tiles component | Descriptor extraction accidentally changing `MetricsPanel` output |
+| 2. List page   | Real `/recipes` card grid with empty + error states                            | Falsely showing "empty" on a query/config failure                 |
+| 3. Detail page | `/recipes/[id]` full read-only recipe + not-found handling                     | Leaking existence of another user's recipe                        |
 
 **Prerequisites:** S-04 done (table, RLS, types, save flow) — satisfied.
 **Estimated effort:** ~1 session across 3 phases.

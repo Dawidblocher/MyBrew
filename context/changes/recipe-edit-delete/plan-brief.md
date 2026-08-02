@@ -26,24 +26,26 @@ steps and live metrics active from load — and on save redirects back to the de
 page with updated values and a "Ostatnio edytowano" timestamp. Clicking "Usuń"
 opens a Dialog naming the recipe; confirming permanently removes it and redirects
 to `/recipes`. The same actions are accessible as hover icons on list cards (pencil
-+ trash). A second user cannot affect another user's recipes.
+
+- trash). A second user cannot affect another user's recipes.
 
 ## Key Decisions Made
 
-| Decision | Choice | Why (1 sentence) | Source |
-|---|---|---|---|
-| Edit UI: wizard vs single-page | Wizard (re-use existing) | Zero duplicate form code — all 6 steps, validation, and live metrics already exist; edit mode = passing `initialData` prop. | Plan |
-| Delete confirmation | shadcn Dialog | Matches glassy UI aesthetic; native `window.confirm()` cannot render Polish copy or match app styling. | Plan |
-| Edit/delete entry points | Detail page + list card hover icons | Detail page is the natural review-before-act location; icon buttons on cards avoid cluttering the list at rest. | Plan |
-| Post-edit navigation | `/recipes/[id]` detail page | User immediately sees the updated result; returning to the list loses the "just edited" context. | Plan |
-| Post-delete navigation | `/recipes` list | Recipe is gone — the list is the only valid destination. | Plan |
-| `updated_at` column | Yes, backfilled from `created_at` | Enables "Ostatnio edytowano" on the detail page; costs one migration + one column. | Plan |
-| `updated_at` UI placement | Detail page only | Cards already carry name/style/4 metrics/date; a second date competes for space. | Plan |
-| Card action style | Icon buttons on hover | Cards stay clean at rest; `focus-within` fallback covers keyboard and touch. | Plan |
+| Decision                       | Choice                              | Why (1 sentence)                                                                                                            | Source |
+| ------------------------------ | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------ |
+| Edit UI: wizard vs single-page | Wizard (re-use existing)            | Zero duplicate form code — all 6 steps, validation, and live metrics already exist; edit mode = passing `initialData` prop. | Plan   |
+| Delete confirmation            | shadcn Dialog                       | Matches glassy UI aesthetic; native `window.confirm()` cannot render Polish copy or match app styling.                      | Plan   |
+| Edit/delete entry points       | Detail page + list card hover icons | Detail page is the natural review-before-act location; icon buttons on cards avoid cluttering the list at rest.             | Plan   |
+| Post-edit navigation           | `/recipes/[id]` detail page         | User immediately sees the updated result; returning to the list loses the "just edited" context.                            | Plan   |
+| Post-delete navigation         | `/recipes` list                     | Recipe is gone — the list is the only valid destination.                                                                    | Plan   |
+| `updated_at` column            | Yes, backfilled from `created_at`   | Enables "Ostatnio edytowano" on the detail page; costs one migration + one column.                                          | Plan   |
+| `updated_at` UI placement      | Detail page only                    | Cards already carry name/style/4 metrics/date; a second date competes for space.                                            | Plan   |
+| Card action style              | Icon buttons on hover               | Cards stay clean at rest; `focus-within` fallback covers keyboard and touch.                                                | Plan   |
 
 ## Scope
 
 **In scope:**
+
 - DB migration: `updated_at` column + UPDATE + DELETE RLS policies + grants
 - `PUT /api/recipes/[id]` and `DELETE /api/recipes/[id]` routes
 - Wizard edit mode (`recipeId` + `initialData` props; PUT on save)
@@ -53,6 +55,7 @@ to `/recipes`. The same actions are accessible as hover icons on list cards (pen
 - List card restructure + hover icon toolbar (pencil + trash)
 
 **Out of scope:**
+
 - Save-draft / partial edit (same strict validation gate as create)
 - Undo/restore after delete
 - Bulk delete, search, pagination
@@ -71,11 +74,11 @@ island handles the Dialog + fetch + redirect client-side; the edit link is a pla
 
 ## Phases at a Glance
 
-| Phase | What it delivers | Key risk |
-|---|---|---|
-| 1. DB + RLS + API Routes | Migration (updated_at, RLS, grants) + service functions + PUT/DELETE routes | Migration must be applied before code deploy — PUT returns 500 without the column |
-| 2. Wizard Edit Mode + Edit Page | `RecipeWizard` edit props + `useWizardRecipe` initial data + `/recipes/[id]/edit.astro` | Wizard form `defaultValues` must be set at hook instantiation — not patched post-mount — or live metrics won't populate on load |
-| 3. Delete UI + Action Wiring | shadcn Dialog install + `DeleteRecipeDialog` island + detail/list wiring + card restructure | Card restructure (from `<a>` wrapper to `div` + inner link) changes the existing list DOM — visual regression risk on card styles |
+| Phase                           | What it delivers                                                                            | Key risk                                                                                                                          |
+| ------------------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| 1. DB + RLS + API Routes        | Migration (updated_at, RLS, grants) + service functions + PUT/DELETE routes                 | Migration must be applied before code deploy — PUT returns 500 without the column                                                 |
+| 2. Wizard Edit Mode + Edit Page | `RecipeWizard` edit props + `useWizardRecipe` initial data + `/recipes/[id]/edit.astro`     | Wizard form `defaultValues` must be set at hook instantiation — not patched post-mount — or live metrics won't populate on load   |
+| 3. Delete UI + Action Wiring    | shadcn Dialog install + `DeleteRecipeDialog` island + detail/list wiring + card restructure | Card restructure (from `<a>` wrapper to `div` + inner link) changes the existing list DOM — visual regression risk on card styles |
 
 **Prerequisites:** S-05 fully implemented (list + detail pages in place) — ✓ done.
 **Estimated effort:** ~2–3 sessions across 3 phases.

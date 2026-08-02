@@ -1,4 +1,5 @@
 <!-- IMPL-REVIEW-REPORT -->
+
 # Implementation Review: Kreator — podstawy i zasyp z BLG/SRM na żywo (S-01)
 
 - **Plan**: context/changes/wizard-basics-grist-blg-srm/plan.md
@@ -9,14 +10,14 @@
 
 ## Verdicts
 
-| Dimension | Verdict |
-|-----------|---------|
-| Plan Adherence | WARNING |
-| Scope Discipline | WARNING |
-| Safety & Quality | WARNING |
-| Architecture | WARNING |
-| Pattern Consistency | PASS |
-| Success Criteria | PASS |
+| Dimension           | Verdict |
+| ------------------- | ------- |
+| Plan Adherence      | WARNING |
+| Scope Discipline    | WARNING |
+| Safety & Quality    | WARNING |
+| Architecture        | WARNING |
+| Pattern Consistency | PASS    |
+| Success Criteria    | PASS    |
 
 Success criteria evidence: `npm run test:run` → 51/51 pass; `npm run lint` → clean (only a non-error astro-eslint-parser warning); `npm run build` → success.
 

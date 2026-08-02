@@ -16,17 +16,17 @@ Użytkownik przechodzi Podstawy → Zasyp → **Zacieranie** → **Chmiel**, kon
 
 ## Key Decisions Made
 
-| Decision | Choice | Why | Source |
-| --- | --- | --- | --- |
-| Struktura kroków | Dwa osobne: Zacieranie + Chmiel | Czytelniejszy podział, zgodny z modelem kroków | Plan |
-| Etap chmielu vs IBU | Mnożnik wykorzystania: boil 1.0 / whirlpool 0.25 / dry hop 0 | Wierne IBU bez fałszywego wkładu dry hop | Plan |
-| Przerwy zacierania + woda/słód | Dane-tylko (bez wpływu na obliczenia) | Żaden wzór ich nie konsumuje; FR-006 wymaga zebrania | Plan |
-| Wydajność zacierania | Procent 0–100, domyślnie 75% | Naturalne dla brewera; mapowane na ułamek | Plan |
-| Pola chmielu | nazwa + alfa% + ilość(g) + etap + czas(min) | Pełny opis dodatku dla IBU i wyświetlania | Plan |
-| Walidacja kroków | Łagodna; wymagana tylko wydajność > 0 | Spójne z S-01 (puste listy dozwolone) | Plan |
-| SG dla IBU | OG z zasypu+wydajności | Zgodne z istniejącym `computeMetrics` | Plan |
-| Realizacja etapu | `utilizationFactor` w silniku (nie skalowanie czasu) | Tinseth nieliniowy w czasie; mnożnik na utilization | Plan |
-| Selektor etapu | Natywny stylowany `<select>` | Bez nowej zależności Radix Select | Plan |
+| Decision                       | Choice                                                       | Why                                                  | Source |
+| ------------------------------ | ------------------------------------------------------------ | ---------------------------------------------------- | ------ |
+| Struktura kroków               | Dwa osobne: Zacieranie + Chmiel                              | Czytelniejszy podział, zgodny z modelem kroków       | Plan   |
+| Etap chmielu vs IBU            | Mnożnik wykorzystania: boil 1.0 / whirlpool 0.25 / dry hop 0 | Wierne IBU bez fałszywego wkładu dry hop             | Plan   |
+| Przerwy zacierania + woda/słód | Dane-tylko (bez wpływu na obliczenia)                        | Żaden wzór ich nie konsumuje; FR-006 wymaga zebrania | Plan   |
+| Wydajność zacierania           | Procent 0–100, domyślnie 75%                                 | Naturalne dla brewera; mapowane na ułamek            | Plan   |
+| Pola chmielu                   | nazwa + alfa% + ilość(g) + etap + czas(min)                  | Pełny opis dodatku dla IBU i wyświetlania            | Plan   |
+| Walidacja kroków               | Łagodna; wymagana tylko wydajność > 0                        | Spójne z S-01 (puste listy dozwolone)                | Plan   |
+| SG dla IBU                     | OG z zasypu+wydajności                                       | Zgodne z istniejącym `computeMetrics`                | Plan   |
+| Realizacja etapu               | `utilizationFactor` w silniku (nie skalowanie czasu)         | Tinseth nieliniowy w czasie; mnożnik na utilization  | Plan   |
+| Selektor etapu                 | Natywny stylowany `<select>`                                 | Bez nowej zależności Radix Select                    | Plan   |
 
 ## Scope
 
@@ -40,12 +40,12 @@ Cztery fazy w kolejności zależności: **silnik** (pole `utilizationFactor` w `
 
 ## Phases at a Glance
 
-| Phase | What it delivers | Key risk |
-| --- | --- | --- |
-| 1. Silnik | `utilizationFactor` + Tinseth + golden vectors | Regresja istniejących wektorów IBU (mitygacja: test zgodności) |
-| 2. Model + schemat | `mash`/`hops` w `RecipeDraft`, Zod, defaults | Rozjazd typ ↔ schemat |
-| 3. Seam + metryki | wydajność z inputu, IBU na żywo w panelu | Poprawne źródło SG i propagacja sentinela |
-| 4. UI kroków | kroki Zacieranie/Chmiel + walidacja | Selektor etapu i wpięcie walidacji per-krok |
+| Phase              | What it delivers                               | Key risk                                                       |
+| ------------------ | ---------------------------------------------- | -------------------------------------------------------------- |
+| 1. Silnik          | `utilizationFactor` + Tinseth + golden vectors | Regresja istniejących wektorów IBU (mitygacja: test zgodności) |
+| 2. Model + schemat | `mash`/`hops` w `RecipeDraft`, Zod, defaults   | Rozjazd typ ↔ schemat                                          |
+| 3. Seam + metryki  | wydajność z inputu, IBU na żywo w panelu       | Poprawne źródło SG i propagacja sentinela                      |
+| 4. UI kroków       | kroki Zacieranie/Chmiel + walidacja            | Selektor etapu i wpięcie walidacji per-krok                    |
 
 **Prerequisites:** S-01 i F-02 w kodzie (spełnione).
 **Estimated effort:** ~1–2 sesje, 4 fazy.

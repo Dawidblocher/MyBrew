@@ -18,14 +18,14 @@ The project is already built with the `@astrojs/cloudflare` adapter and targets 
 
 ## Platform Comparison
 
-| Platform | CLI-first | Managed/Serverless | Agent-readable docs | Stable deploy API | MCP / Integration | Total |
-|---|---|---|---|---|---|---|
-| **Cloudflare** | Pass | Pass | Pass | Pass | Pass | 5/5 |
-| **Vercel** | Pass | Pass | Pass | Pass | Partial | 4.5/5 |
-| **Netlify** | Pass | Pass | Partial | Pass | Pass | 4.5/5 |
-| **Fly.io** | Pass | Partial | Partial | Pass | Fail | 3/5 |
-| **Render** | Pass | Pass | Partial | Partial | Partial | 3.5/5 |
-| **Railway** | Pass | Pass | Partial | Partial | Fail | 3/5 |
+| Platform       | CLI-first | Managed/Serverless | Agent-readable docs | Stable deploy API | MCP / Integration | Total |
+| -------------- | --------- | ------------------ | ------------------- | ----------------- | ----------------- | ----- |
+| **Cloudflare** | Pass      | Pass               | Pass                | Pass              | Pass              | 5/5   |
+| **Vercel**     | Pass      | Pass               | Pass                | Pass              | Partial           | 4.5/5 |
+| **Netlify**    | Pass      | Pass               | Partial             | Pass              | Pass              | 4.5/5 |
+| **Fly.io**     | Pass      | Partial            | Partial             | Pass              | Fail              | 3/5   |
+| **Render**     | Pass      | Pass               | Partial             | Partial           | Partial           | 3.5/5 |
+| **Railway**    | Pass      | Pass               | Partial             | Partial           | Fail              | 3/5   |
 
 ### Shortlisted Platforms
 
@@ -73,39 +73,45 @@ The team deployed their Astro 6 beer recipe builder on Cloudflare Pages. Initial
 
 ## Risk Register
 
-| Risk | Source | Likelihood | Impact | Mitigation |
-|---|---|---|---|---|
-| npm package incompatible with workerd runtime | Devil's advocate | M | M | Check compatibility before adding deps; use `node_compat = true` in wrangler.toml for basic polyfills |
-| Worker bundle exceeds 3 MB free-tier limit | Devil's advocate | L | M | Monitor bundle size in CI; upgrade to $5/mo paid plan if needed |
-| Supabase cold connection latency (200-400ms first request) | Devil's advocate | M | L | Configure Hyperdrive for connection pooling; accept latency for low-traffic MVP |
-| PDF export library incompatible with workerd | Pre-mortem | M | M | Use client-side PDF generation (jsPDF, browser print-to-PDF) instead of server-side; FR-013 is nice-to-have |
-| Secrets leaked via import.meta.env inlining | Unknown unknowns | L | H | Use `astro:env/server` exclusively for secrets; enable Cloudflare secret scanning |
-| CPU limit exceeded on complex calculations | Unknown unknowns | L | L | Keep brewing calculations in React (client-side); server only persists results |
-| Preview URLs publicly accessible | Unknown unknowns | M | L | Acceptable for MVP; add Cloudflare Access before sharing sensitive staging data |
-| DB migration not reversible on code rollback | Unknown unknowns | L | H | Test migrations locally with `supabase db reset`; keep migrations backward-compatible |
-| Prerender relative fetch bug breaks auth pages | Research finding | M | M | Set `export const prerender = false` on all auth-related pages (already done in project) |
+| Risk                                                       | Source           | Likelihood | Impact | Mitigation                                                                                                  |
+| ---------------------------------------------------------- | ---------------- | ---------- | ------ | ----------------------------------------------------------------------------------------------------------- |
+| npm package incompatible with workerd runtime              | Devil's advocate | M          | M      | Check compatibility before adding deps; use `node_compat = true` in wrangler.toml for basic polyfills       |
+| Worker bundle exceeds 3 MB free-tier limit                 | Devil's advocate | L          | M      | Monitor bundle size in CI; upgrade to $5/mo paid plan if needed                                             |
+| Supabase cold connection latency (200-400ms first request) | Devil's advocate | M          | L      | Configure Hyperdrive for connection pooling; accept latency for low-traffic MVP                             |
+| PDF export library incompatible with workerd               | Pre-mortem       | M          | M      | Use client-side PDF generation (jsPDF, browser print-to-PDF) instead of server-side; FR-013 is nice-to-have |
+| Secrets leaked via import.meta.env inlining                | Unknown unknowns | L          | H      | Use `astro:env/server` exclusively for secrets; enable Cloudflare secret scanning                           |
+| CPU limit exceeded on complex calculations                 | Unknown unknowns | L          | L      | Keep brewing calculations in React (client-side); server only persists results                              |
+| Preview URLs publicly accessible                           | Unknown unknowns | M          | L      | Acceptable for MVP; add Cloudflare Access before sharing sensitive staging data                             |
+| DB migration not reversible on code rollback               | Unknown unknowns | L          | H      | Test migrations locally with `supabase db reset`; keep migrations backward-compatible                       |
+| Prerender relative fetch bug breaks auth pages             | Research finding | M          | M      | Set `export const prerender = false` on all auth-related pages (already done in project)                    |
 
 ## Getting Started
 
 1. **Verify wrangler is installed and authenticated:**
+
    ```bash
    npx wrangler --version
    npx wrangler login
    ```
 
 2. **Confirm local dev works with the existing setup:**
+
    ```bash
    npm run dev
    ```
+
    The Astro dev server with `@astrojs/cloudflare` already uses workerd runtime locally via Vite's Cloudflare integration.
 
 3. **Deploy to Cloudflare Pages:**
+
    ```bash
    npx wrangler pages deploy dist/
    ```
+
    Or configure Git integration in the Cloudflare dashboard for auto-deploy on push.
 
 4. **Set production secrets:**
+
    ```bash
    npx wrangler secret put SUPABASE_URL
    npx wrangler secret put SUPABASE_KEY
@@ -120,6 +126,7 @@ The team deployed their Astro 6 beer recipe builder on Cloudflare Pages. Initial
 ## Out of Scope
 
 The following were not evaluated in this research:
+
 - Docker image configuration
 - CI/CD pipeline setup (covered separately by GitHub Actions in `.github/workflows/ci.yml`)
 - Production-scale architecture (multi-region, HA, DR)

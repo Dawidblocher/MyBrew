@@ -1,4 +1,5 @@
 <!-- IMPL-REVIEW-REPORT -->
+
 # Implementation Review: Kreator — zacieranie i chmiel z IBU na żywo (S-02)
 
 - **Plan**: context/changes/wizard-mash-hops-ibu/plan.md
@@ -9,14 +10,14 @@
 
 ## Verdicts
 
-| Dimension | Verdict |
-|-----------|---------|
-| Plan Adherence | WARNING ⚠️ |
-| Scope Discipline | WARNING ⚠️ |
-| Safety & Quality | PASS ✅ |
-| Architecture | PASS ✅ |
-| Pattern Consistency | PASS ✅ |
-| Success Criteria | PASS ✅ |
+| Dimension           | Verdict    |
+| ------------------- | ---------- |
+| Plan Adherence      | WARNING ⚠️ |
+| Scope Discipline    | WARNING ⚠️ |
+| Safety & Quality    | PASS ✅    |
+| Architecture        | PASS ✅    |
+| Pattern Consistency | PASS ✅    |
+| Success Criteria    | PASS ✅    |
 
 ## Findings
 

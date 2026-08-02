@@ -194,6 +194,7 @@ export helpers in `src/lib/`.
 the logic is unit-testable (Vitest `environment: "node"` covers `src/lib/**`).
 
 **Contract**: Exports:
+
 - `sanitizeFilename(name: string): string` — strips/normalizes filesystem-illegal
   characters, trims, falls back to `"przepis"` when empty.
 - `triggerBlobDownload(blob: Blob, filename: string): void` — creates an object
@@ -211,6 +212,7 @@ that mirrors the on-screen detail page, in Polish, using the registered Inter fo
 returning `<Document><Page size="A4" wrap>…</Page></Document>`. Imports
 `src/lib/pdf-fonts.ts` (guarantees registration) and sets `fontFamily: "Inter"` on
 the page style. Sections, matching `[id].astro`:
+
 - Header: `record.name`, `record.style`.
 - Metric summary row: BLG / ABV / SRM / IBU (from `record` — `RecipeMetricsSnapshot` fields).
 - Podstawy (`data.basics`), Parametry warki (`data.batch.volumeL`).
@@ -273,6 +275,7 @@ and mount it on the detail page.
 per-action loading/error/disabled state, without rendering any PDF until clicked.
 
 **Contract**: `export default function RecipeExportActions({ record }: { record: RecipeRecord })`.
+
 - **JSON button** ("Pobierz JSON"): on click → `buildRecipeJsonBlob(record)` →
   `triggerBlobDownload(blob, sanitizeFilename(record.name) + ".json")`.
 - **PDF button** ("Pobierz PDF"): on click → set loading → dynamically import the

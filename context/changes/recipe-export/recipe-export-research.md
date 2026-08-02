@@ -35,11 +35,11 @@ Encja przepisu jest już typowana (`src/types.ts`, F-01). Eksport = `JSON.string
 
 ## PDF — porównanie dojrzałych bibliotek
 
-| Biblioteka | Podejście | Edge / CF Workers (serwer) | Klient (przeglądarka) | Najlepsze do | Dojrzałość |
-|---|---|---|---|---|---|
-| **jsPDF** (+ `jspdf-autotable`) | Imperatywne API | częściowe | tak | Proste, ustrukturyzowane dokumenty (tabele składników, metryki) | ~2M pobrań/tydz., bardzo dojrzała |
-| **pdf-lib** | Niskopoziomowe, czysty JS | tak (bez natywnych zależności) | tak | Programowy layout; działa wszędzie, też na Workers | ~1.5M pobrań/tydz., dojrzała |
-| **@react-pdf/renderer** | Komponenty JSX → PDF | nie (`renderToBuffer`/`renderToStream` są Node-only; fontkit WASM) | tak (build przeglądarkowy) | Komponentowe, brandowane layouty | ~500–860K pobrań/tydz., dojrzała |
+| Biblioteka                      | Podejście                 | Edge / CF Workers (serwer)                                         | Klient (przeglądarka)      | Najlepsze do                                                    | Dojrzałość                        |
+| ------------------------------- | ------------------------- | ------------------------------------------------------------------ | -------------------------- | --------------------------------------------------------------- | --------------------------------- |
+| **jsPDF** (+ `jspdf-autotable`) | Imperatywne API           | częściowe                                                          | tak                        | Proste, ustrukturyzowane dokumenty (tabele składników, metryki) | ~2M pobrań/tydz., bardzo dojrzała |
+| **pdf-lib**                     | Niskopoziomowe, czysty JS | tak (bez natywnych zależności)                                     | tak                        | Programowy layout; działa wszędzie, też na Workers              | ~1.5M pobrań/tydz., dojrzała      |
+| **@react-pdf/renderer**         | Komponenty JSX → PDF      | nie (`renderToBuffer`/`renderToStream` są Node-only; fontkit WASM) | tak (build przeglądarkowy) | Komponentowe, brandowane layouty                                | ~500–860K pobrań/tydz., dojrzała  |
 
 Uwagi:
 

@@ -1,0 +1,66 @@
+[     175ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:4321/auth/signin:0
+[     288ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:4321/node_modules/.vite/deps/chunk-XFEUJNJL.js?v=c808239c:20102
+[  217328ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/:0
+[  218527ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:4321/@vite/client:1598
+[  220438ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:4321/favicon.ico:0
+[  223747ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/:0
+[  279038ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4321/:0
+[  280141ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:4321/@vite/client:1598
+[  285439ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:4321/@vite/client:1598
+[  837474ms] [ERROR] WebSocket connection to 'ws://localhost:4321/?token=FvQrHItVi1dM' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:4321/@vite/client:1478
+[  844619ms] [ERROR] WebSocket connection to 'ws://localhost:4321/?token=FvQrHItVi1dM' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:4321/@vite/client:1488
+[  844620ms] [ERROR] [vite] failed to connect to websocket.
+your current setup:
+  (browser) localhost:4321/ <--[HTTP]--> localhost:4321/ (server)
+  (browser) localhost:4321/ <--[WebSocket (failing)]--> localhost:4321/ (server)
+Check out your Vite / network configuration and https://vite.dev/config/server-options.html#server-hmr . @ http://localhost:4321/@vite/client:1498
+[  844620ms] [ERROR] [vite] TypeError: Cannot read properties of undefined (reading 'send')
+    at Object.send (http://localhost:4321/@vite/client:449:7)
+    at Object.send (http://localhost:4321/@vite/client:1514:16)
+    at Object.send (http://localhost:4321/@vite/client:318:23)
+    at Object.send (http://localhost:4321/@vite/client:396:30) @ http://localhost:4321/@vite/client:1542
+[  844620ms] [ERROR] [vite] TypeError: Cannot read properties of undefined (reading 'send')
+    at Object.send (http://localhost:4321/@vite/client:449:7)
+    at Object.send (http://localhost:4321/@vite/client:1514:16)
+    at Object.send (http://localhost:4321/@vite/client:318:23)
+    at Object.send (http://localhost:4321/@vite/client:396:30) @ http://localhost:4321/@vite/client:1542
+[  844621ms] [ERROR] [vite] TypeError: Cannot read properties of undefined (reading 'send')
+    at Object.send (http://localhost:4321/@vite/client:449:7)
+    at Object.send (http://localhost:4321/@vite/client:1514:16)
+    at Object.send (http://localhost:4321/@vite/client:318:23)
+    at Object.send (http://localhost:4321/@vite/client:396:30) @ http://localhost:4321/@vite/client:1542
+[  844621ms] [ERROR] [vite] TypeError: Cannot read properties of undefined (reading 'send')
+    at Object.send (http://localhost:4321/@vite/client:449:7)
+    at Object.send (http://localhost:4321/@vite/client:1514:16)
+    at Object.send (http://localhost:4321/@vite/client:318:23)
+    at Object.send (http://localhost:4321/@vite/client:396:30) @ http://localhost:4321/@vite/client:1542
+[  844621ms] [ERROR] [vite] TypeError: Cannot read properties of undefined (reading 'send')
+    at Object.send (http://localhost:4321/@vite/client:449:7)
+    at Object.send (http://localhost:4321/@vite/client:1514:16)
+    at Object.send (http://localhost:4321/@vite/client:318:23)
+    at Object.send (http://localhost:4321/@vite/client:396:30) @ http://localhost:4321/@vite/client:1542
+[  844621ms] [ERROR] [vite] TypeError: Cannot read properties of undefined (reading 'send')
+    at Object.send (http://localhost:4321/@vite/client:449:7)
+    at Object.send (http://localhost:4321/@vite/client:1514:16)
+    at Object.send (http://localhost:4321/@vite/client:318:23)
+    at Object.send (http://localhost:4321/@vite/client:396:30) @ http://localhost:4321/@vite/client:1542
+[  844621ms] [ERROR] [vite] TypeError: Cannot read properties of undefined (reading 'send')
+    at Object.send (http://localhost:4321/@vite/client:449:7)
+    at Object.send (http://localhost:4321/@vite/client:1514:16)
+    at Object.send (http://localhost:4321/@vite/client:318:23)
+    at Object.send (http://localhost:4321/@vite/client:396:30) @ http://localhost:4321/@vite/client:1542
+[  844621ms] [ERROR] [vite] TypeError: Cannot read properties of undefined (reading 'send')
+    at Object.send (http://localhost:4321/@vite/client:449:7)
+    at Object.send (http://localhost:4321/@vite/client:1514:16)
+    at Object.send (http://localhost:4321/@vite/client:318:23)
+    at Object.send (http://localhost:4321/@vite/client:396:30) @ http://localhost:4321/@vite/client:1542
+[  844622ms] [ERROR] [vite] TypeError: Cannot read properties of undefined (reading 'send')
+    at Object.send (http://localhost:4321/@vite/client:449:7)
+    at Object.send (http://localhost:4321/@vite/client:1514:16)
+    at Object.send (http://localhost:4321/@vite/client:318:23)
+    at Object.send (http://localhost:4321/@vite/client:396:30) @ http://localhost:4321/@vite/client:1542
+[  844622ms] [ERROR] [vite] TypeError: Cannot read properties of undefined (reading 'send')
+    at Object.send (http://localhost:4321/@vite/client:449:7)
+    at Object.send (http://localhost:4321/@vite/client:1514:16)
+    at Object.send (http://localhost:4321/@vite/client:318:23)
+    at Object.send (http://localhost:4321/@vite/client:396:30) @ http://localhost:4321/@vite/client:1542

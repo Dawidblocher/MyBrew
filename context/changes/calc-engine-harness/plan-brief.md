@@ -16,17 +16,17 @@ Astro 6 SSR starter with Supabase auth and the S-01 wizard built through Phase 3
 
 ## Key Decisions Made
 
-| Decision | Choice | Why | Source |
-| --- | --- | --- | --- |
-| Formula scope | Implement all four (BLG/SRM/IBU/ABV) + full harness now | One-shot complete engine; every slice just consumes it (conscious override of roadmap's per-slice intent) | Plan |
-| Insufficient-input contract | Discriminated `CalcResult<T>` | Type-safe, carries a `reason`, scales to 4 metrics + aggregate; UI maps to `—` | Plan |
-| Engine input | Dedicated calc input types, decoupled from `RecipeDraft` | Engine independent of UI/DB; reusable at save/export; unit-testable | Plan |
-| Module layout | One file per metric + `types.ts` + `index.ts` barrel | Clean per-metric ownership, single entry point matching S-01's imports | Plan |
-| Correctness oracle | Golden vectors (cited, tolerance-asserted) + invariants | Vectors prove the formula; invariants catch regression classes | Plan |
-| Units & precision | Canonical metric, full-precision output | One source of truth, no precision loss; UI formats | Plan |
-| Aggregate behavior | Per-metric independent results | Partial recipe yields available metrics — matches progressive wizard | Plan |
-| Test/CI wiring | `npm test` + CI gate + lint-clean test files | Correctness actually gates merges | Plan |
-| Formula standards | BLG `259−259/SG`; SRM Morey; IBU Tinseth; ABV `(OG−FG)×131.25` | De-facto home-brew standards; gravity computed once and shared | Plan |
+| Decision                    | Choice                                                         | Why                                                                                                       | Source |
+| --------------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ------ |
+| Formula scope               | Implement all four (BLG/SRM/IBU/ABV) + full harness now        | One-shot complete engine; every slice just consumes it (conscious override of roadmap's per-slice intent) | Plan   |
+| Insufficient-input contract | Discriminated `CalcResult<T>`                                  | Type-safe, carries a `reason`, scales to 4 metrics + aggregate; UI maps to `—`                            | Plan   |
+| Engine input                | Dedicated calc input types, decoupled from `RecipeDraft`       | Engine independent of UI/DB; reusable at save/export; unit-testable                                       | Plan   |
+| Module layout               | One file per metric + `types.ts` + `index.ts` barrel           | Clean per-metric ownership, single entry point matching S-01's imports                                    | Plan   |
+| Correctness oracle          | Golden vectors (cited, tolerance-asserted) + invariants        | Vectors prove the formula; invariants catch regression classes                                            | Plan   |
+| Units & precision           | Canonical metric, full-precision output                        | One source of truth, no precision loss; UI formats                                                        | Plan   |
+| Aggregate behavior          | Per-metric independent results                                 | Partial recipe yields available metrics — matches progressive wizard                                      | Plan   |
+| Test/CI wiring              | `npm test` + CI gate + lint-clean test files                   | Correctness actually gates merges                                                                         | Plan   |
+| Formula standards           | BLG `259−259/SG`; SRM Morey; IBU Tinseth; ABV `(OG−FG)×131.25` | De-facto home-brew standards; gravity computed once and shared                                            | Plan   |
 
 ## Scope
 
@@ -40,12 +40,12 @@ Per-metric pure modules under `src/lib/calc/`: `gravity.ts` (shared OG/SG root),
 
 ## Phases at a Glance
 
-| Phase | What it delivers | Key risk |
-| --- | --- | --- |
-| 1. Infra + contract types | Vitest wired (config, scripts, CI gate, lint-clean tests), `types.ts` + barrel, smoke test | Vitest↔Vite-7/strict-ESLint integration friction |
-| 2. Gravity + BLG + SRM | Shared gravity, BLG, SRM + golden vectors/invariants | Sourcing trustworthy reference values; metric↔imperial conversion in Morey |
-| 3. IBU + ABV | Tinseth IBU, attenuation ABV + golden vectors/invariants | Tinseth utilization details; FG-from-attenuation correctness |
-| 4. Aggregate + barrel | `computeMetrics` (independent results), finalized exports, partial-input tests, API note | Aggregate diverging from per-metric results |
+| Phase                     | What it delivers                                                                           | Key risk                                                                   |
+| ------------------------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| 1. Infra + contract types | Vitest wired (config, scripts, CI gate, lint-clean tests), `types.ts` + barrel, smoke test | Vitest↔Vite-7/strict-ESLint integration friction                           |
+| 2. Gravity + BLG + SRM    | Shared gravity, BLG, SRM + golden vectors/invariants                                       | Sourcing trustworthy reference values; metric↔imperial conversion in Morey |
+| 3. IBU + ABV              | Tinseth IBU, attenuation ABV + golden vectors/invariants                                   | Tinseth utilization details; FG-from-attenuation correctness               |
+| 4. Aggregate + barrel     | `computeMetrics` (independent results), finalized exports, partial-input tests, API note   | Aggregate diverging from per-metric results                                |
 
 **Prerequisites:** none — auth/frontend exist in baseline; this is a leaf foundation module. (S-01 depends on _this_, not vice versa.)
 **Estimated effort:** ~2–3 after-hours sessions across 4 phases.

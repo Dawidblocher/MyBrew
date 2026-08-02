@@ -111,7 +111,7 @@ integracji, którego wymaga obecny kod. Do implementacji brakuje 2 rzeczy:
   `20260609110000_grant_recipes.sql` (nowy plik z git status).
 - **Typy w `src/types.ts` zgodne z DB**: `RecipeRecord` (linie 79-86) zawiera
   metryki + `data: RecipeDraft`; `RecipeDraft` (55-63) = `basics, batch, malts,
-  mash, hops, yeast, adjuncts`. Docs twierdzi „Encja przepisu jest już typowana
+mash, hops, yeast, adjuncts`. Docs twierdzi „Encja przepisu jest już typowana
   w `src/types.ts` (F-01)" — **potwierdzone**.
 - **Pełny przepis jest pobieralny**: `getRecipe` robi `select("*")` i mapuje do
   `RecipeRecord` (`src/lib/recipe-queries.ts:21-26`, mappery
@@ -165,7 +165,7 @@ integracji, którego wymaga obecny kod. Do implementacji brakuje 2 rzeczy:
 
 1. **Zakres formatów dla v1** (otwarte pytanie z roadmapy): oba (PDF + JSON) czy
    tylko JSON na start? JSON jest niemal zerowym nakładem; PDF wymaga biblioteki
-   + fontów. Owner: user.
+   - fontów. Owner: user.
 2. **Wersja i źródło fontów**: które TTF (Inter/Roboto/Open Sans) self-hostować
    w `public/fonts/` dla pełnego wsparcia `ą ć ę ł ń ó ś ż`? (Preferencja docs:
    self-hosting zamiast Google Fonts URL.)

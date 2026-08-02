@@ -16,6 +16,7 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.env.test
 
 # cloudflare
 .dev.vars
@@ -30,3 +31,14 @@ pnpm-debug.log*
 .agents/
 
 .cursor/
+.claude/
+
+
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+/playwright/.auth/*

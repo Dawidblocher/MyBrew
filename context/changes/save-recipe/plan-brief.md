@@ -16,19 +16,19 @@ Clicking "Zapisz przepis" on the last step inserts a `recipes` row owned by `aut
 
 ## Key Decisions Made
 
-| Decision | Choice | Why (1 sentence) | Source |
-| --- | --- | --- | --- |
-| F-01 prerequisite | Absorb into this plan (Phase 1) | save-recipe can't function without the schema/RLS/types | Plan |
-| Storage shape | Single `recipes` table: JSONB draft + denormalized columns | Trivial save/read for create + read-only-list v1; no over-build | Plan |
-| Metric authority | Recompute server-side; ignore client values | Single source of truth; honors "no silent wrong numbers" | Plan |
-| Metric storage | Four dedicated numeric columns | List view (S-05) reads them directly, no JSON parsing | Plan |
-| Required-field handling | Hard block (no partial save) | No edit in v1, so incomplete rows are unfixable | Plan |
-| Minimum grist | ≥1 malt with positive amount | Aligns with the existing calc seam rule | Plan |
-| Metric computability | Required to save | Never persist/list a `—` metric | Plan |
-| Style | Required at save AND at Basics step | Honors PRD; surfaces requirement early | Plan |
-| API auth | In-handler `supabase.auth.getUser()` | `/api/*` isn't middleware-protected; RLS is the backstop | Plan |
-| Post-save destination | Redirect to `/recipes` (+ minimal placeholder page) | Matches the product loop; avoids a dead redirect before S-05 | Plan |
-| Save affordance | Replace last-step "Dalej" with "Zapisz przepis" | Natural end-of-wizard action; disable during request | Plan |
+| Decision                | Choice                                                     | Why (1 sentence)                                                | Source |
+| ----------------------- | ---------------------------------------------------------- | --------------------------------------------------------------- | ------ |
+| F-01 prerequisite       | Absorb into this plan (Phase 1)                            | save-recipe can't function without the schema/RLS/types         | Plan   |
+| Storage shape           | Single `recipes` table: JSONB draft + denormalized columns | Trivial save/read for create + read-only-list v1; no over-build | Plan   |
+| Metric authority        | Recompute server-side; ignore client values                | Single source of truth; honors "no silent wrong numbers"        | Plan   |
+| Metric storage          | Four dedicated numeric columns                             | List view (S-05) reads them directly, no JSON parsing           | Plan   |
+| Required-field handling | Hard block (no partial save)                               | No edit in v1, so incomplete rows are unfixable                 | Plan   |
+| Minimum grist           | ≥1 malt with positive amount                               | Aligns with the existing calc seam rule                         | Plan   |
+| Metric computability    | Required to save                                           | Never persist/list a `—` metric                                 | Plan   |
+| Style                   | Required at save AND at Basics step                        | Honors PRD; surfaces requirement early                          | Plan   |
+| API auth                | In-handler `supabase.auth.getUser()`                       | `/api/*` isn't middleware-protected; RLS is the backstop        | Plan   |
+| Post-save destination   | Redirect to `/recipes` (+ minimal placeholder page)        | Matches the product loop; avoids a dead redirect before S-05    | Plan   |
+| Save affordance         | Replace last-step "Dalej" with "Zapisz przepis"            | Natural end-of-wizard action; disable during request            | Plan   |
 
 ## Scope
 
@@ -42,12 +42,12 @@ Bottom-up: **Phase 1** DB + RLS + types → **Phase 2** shared stricter schema +
 
 ## Phases at a Glance
 
-| Phase | What it delivers | Key risk |
-| --- | --- | --- |
-| 1. Persistence foundation | `recipes` table + RLS + persistence types | First migration; RLS policy correctness — verified by cross-user isolation |
-| 2. Validation + seam | `saveRecipeSchema` + tested `buildRecipeInsert` | Gate drift from calc seam — covered by unit tests |
-| 3. Save API route | `POST /api/recipes` (JSON+Zod, auth, recompute, insert) | New API pattern + in-handler auth — verified manually |
-| 4. Client save flow | Save button, redirect, errors, style gate, `/recipes` stub | Mapping server errors back to steps; double-submit — guarded by disabled state |
+| Phase                     | What it delivers                                           | Key risk                                                                       |
+| ------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| 1. Persistence foundation | `recipes` table + RLS + persistence types                  | First migration; RLS policy correctness — verified by cross-user isolation     |
+| 2. Validation + seam      | `saveRecipeSchema` + tested `buildRecipeInsert`            | Gate drift from calc seam — covered by unit tests                              |
+| 3. Save API route         | `POST /api/recipes` (JSON+Zod, auth, recompute, insert)    | New API pattern + in-handler auth — verified manually                          |
+| 4. Client save flow       | Save button, redirect, errors, style gate, `/recipes` stub | Mapping server errors back to steps; double-submit — guarded by disabled state |
 
 **Prerequisites:** S-03 (wizard complete — in code). F-01 absorbed here. Local Supabase (Docker) for migration verification.
 **Estimated effort:** ~2 sessions across 4 phases; Phases 1–3 small, Phase 4 holds most UI work.

@@ -21,8 +21,9 @@ last_updated_by: Dawid Blocher
 
 ## Research Question
 
-Faza 1 planu testów (`context/foundation/test-plan.md` §3): *Integralność seamu i zapisu*.
+Faza 1 planu testów (`context/foundation/test-plan.md` §3): _Integralność seamu i zapisu_.
 Udowodnić, że:
+
 - **Ryzyko #1** — wizard draft → silnik (`recipe-to-calc.ts`) mapuje poprawnie dla
   wszystkich stanów kreatora; seam nie gubi ani nie zniekształca pola po zmianie modelu draft.
 - **Ryzyko #3** — round-trip zapisu (draft → Zod → DB → odczyt) nie gubi danych;
@@ -87,6 +88,7 @@ RecipeDraft
 ```
 
 **Konsumenci produkcyjni (tylko dwaj):**
+
 - `src/components/recipe/MetricsPanel.tsx:55` — `computeWizardMetrics(draft)` (live preview)
 - `src/lib/recipe-save.ts:34` — `computeWizardMetrics(draft)` (walidacja + snapshot metryk przy zapisie)
 
@@ -95,13 +97,14 @@ posiada recompute.
 
 **Transformacje pole-po-polu (`mapDraftToCalcInput`, `recipe-to-calc.ts:63-91`):**
 
-| Draft | Engine | Reguła | Linie |
-|---|---|---|---|
-| `batch.volumeL` | `volumeL` | pass-through; guard `isFinite && >0` | 64-69 |
-| `mash.efficiencyPct` | `mashEfficiency` | `/100`; guard `(0,100]` | 27-33, 71-74 |
-| `malts[]` | `malts[]` | filtr `amountKg>0 && isFinite`; map `{amountKg,colorEbc,extractPercent}`; drop `name` | 76-86 |
+| Draft                | Engine           | Reguła                                                                                | Linie        |
+| -------------------- | ---------------- | ------------------------------------------------------------------------------------- | ------------ |
+| `batch.volumeL`      | `volumeL`        | pass-through; guard `isFinite && >0`                                                  | 64-69        |
+| `mash.efficiencyPct` | `mashEfficiency` | `/100`; guard `(0,100]`                                                               | 27-33, 71-74 |
+| `malts[]`            | `malts[]`        | filtr `amountKg>0 && isFinite`; map `{amountKg,colorEbc,extractPercent}`; drop `name` | 76-86        |
 
 **Prywatne mappery:**
+
 - `mashEfficiencyFromDraft` (`recipe-to-calc.ts:27-33`) — procent → ułamek, `null` jako sentinel.
 - `attenuationFromDraft` (`recipe-to-calc.ts:35-41`) — tylko ABV.
 - `mapDraftHopsToCalc` (`recipe-to-calc.ts:43-53`) — filtr `stage!=="dryHop"` + `alpha/amount/time>0`;
@@ -113,14 +116,15 @@ posiada recompute.
 
 **Asymetria seam vs. silnik (rdzeń Ryzyka #1):**
 
-| Sprawdzenie | Seam | Silnik |
-|---|---|---|
-| `malts[].extractPercent` | **nie sprawdza** | `>0` wymagane dla grawitacji (`src/lib/calc/gravity.ts:52-54`) |
-| `malts[].colorEbc` | **nie sprawdza** | `>0` wymagane dla SRM (`src/lib/calc/srm.ts:31-34`) |
-| `volumeL` | `isFinite` wymagane | tylko `>0` |
-| `efficiencyPct` | guard `(0,100]` | — |
+| Sprawdzenie              | Seam                | Silnik                                                         |
+| ------------------------ | ------------------- | -------------------------------------------------------------- |
+| `malts[].extractPercent` | **nie sprawdza**    | `>0` wymagane dla grawitacji (`src/lib/calc/gravity.ts:52-54`) |
+| `malts[].colorEbc`       | **nie sprawdza**    | `>0` wymagane dla SRM (`src/lib/calc/srm.ts:31-34`)            |
+| `volumeL`                | `isFinite` wymagane | tylko `>0`                                                     |
+| `efficiencyPct`          | guard `(0,100]`     | —                                                              |
 
 **Scenariusze „plausible-but-wrong" (hotspoty Ryzyka #1):**
+
 - Malt z `amountKg>0` ale `extractPercent:0` → seam `{ok:true}`, `metrics.blg` **fail** (`gravity.ts:52-54`).
 - Malt z `colorEbc:0` → seam `{ok:true}`, `metrics.srm` **fail** (`srm.ts:31-34`).
 - Mieszany grist (valid + zero-extract malt) → BLG liczy tylko malty z ekstraktem, cicho zaniża OG.
@@ -133,14 +137,14 @@ Pełna analiza: [types & wizard states subagent](e8e853d9-7d19-41e3-bc87-33cc9be
 
 **Topologia kreatora (`RecipeWizard.tsx`), 6 kroków:**
 
-| Idx | Krok | Walidacja „Dalej" |
-|---|---|---|
-| 0 | `basics` | `basics.name` + inline `basicsStyleSchema` (`RecipeWizard.tsx:79-87`) |
-| 1 | `grist` | `gristStepSchema` (volume **positive**, malt `amountKg` positive) |
-| 2 | `mash` | `mashStepSchema` (efficiency **positive**) |
-| 3 | `hops` | `hopsStepSchema` |
-| 4 | `yeast` | **brak schematu kroku** |
-| 5 | `adjuncts` | **brak schematu kroku** |
+| Idx | Krok       | Walidacja „Dalej"                                                     |
+| --- | ---------- | --------------------------------------------------------------------- |
+| 0   | `basics`   | `basics.name` + inline `basicsStyleSchema` (`RecipeWizard.tsx:79-87`) |
+| 1   | `grist`    | `gristStepSchema` (volume **positive**, malt `amountKg` positive)     |
+| 2   | `mash`     | `mashStepSchema` (efficiency **positive**)                            |
+| 3   | `hops`     | `hopsStepSchema`                                                      |
+| 4   | `yeast`    | **brak schematu kroku**                                               |
+| 5   | `adjuncts` | **brak schematu kroku**                                               |
 
 **`RecipeDraft`** (`src/types.ts:55-63`) — wszystkie klucze top-level wymagane; semantycznie
 trzymają „puste" sentinele (`""`, `0`, `[]`). Domyślny draft: `defaultRecipeDraft`
@@ -151,6 +155,7 @@ trzymają „puste" sentinele (`""`, `0`, `[]`). Domyślny draft: `defaultRecipe
 `computeMetrics`** — `computeWizardMetrics` odtwarza te same wejścia ręcznie.
 
 **Najwyższego ryzyka niezgodności required/optional:**
+
 1. **Procent vs ułamek** — draft `%`, silnik `(0,1]` (`efficiencyPct`, `attenuationPct`).
 2. **Rename pól chmielu** — `timeMin → boilTimeMin`; stage → `utilizationFactor`; dryHop wykluczony.
 3. **Asymetria filtrów maltu** — seam tylko `amountKg`; silnik dodatkowo `extractPercent>0`/`colorEbc>0`.
@@ -164,6 +169,7 @@ trzymają „puste" sentinele (`""`, `0`, `[]`). Domyślny draft: `defaultRecipe
 Pełna analiza: [save round-trip subagent](c608b72a-a563-4b55-802a-df5e1ac4e4fb).
 
 **Pipeline:**
+
 ```
 RecipeWizard.handleSave()  → gate: buildRecipeInsert(draft,"")  (RecipeWizard.tsx:115-133)
    │ POST /api/recipes (create) | PUT /api/recipes/[id] (update) — body = surowy RecipeDraft (bez metryk)
@@ -186,6 +192,7 @@ w `20260614100000_add_recipe_edit_delete.sql`): `id`, `user_id`, `name`, `style`
 `abv`, `data` (jsonb — pełny `RecipeDraft`), `created_at`, `updated_at` — wszystkie NOT NULL.
 
 **Kluczowe zabezpieczenia (dlaczego Ryzyko #3 jest średnio-niskie):**
+
 - **Metryki liczone po stronie serwera** — `RecipeDraft` nie ma pól metryk; klient nie może ich
   wstrzyknąć ani pominąć; zawsze recompute (`recipe-save.ts:34, 56-59`).
 - **Kolumny NOT NULL zawsze wypełnione** gdy save `ok`.
@@ -193,14 +200,14 @@ w `20260614100000_add_recipe_edit_delete.sql`): `id`, `user_id`, `name`, `style`
 
 **Wektory cichego dropu / niezgodności (Ryzyko #3):**
 
-| Scenariusz | Cichy? | Mechanizm |
-|---|---|---|
-| Nieznane/dodatkowe klucze w body | **Tak** | Zod domyślnie usuwa unknown keys z `parsed.data` (brak `.strict()`/`.passthrough()` w repo) |
-| Brak top-level klucza (`yeast`, `mash`…) | Nie | Zod fail z błędem ścieżki |
-| Kolumna NOT NULL bez odpowiednika w Zod | Nie | `blg/srm/ibu/abv` zawsze serwerowe |
-| Pola „product-required" ale Zod-optional (pusty `yeast.strain`, nazwy chmielu) | **Zapisze bez błędu** | Niekompletny przepis, ale nie drop mapowania — puste wartości persystują |
-| `parsed.data` vs surowy `draft` | Częściowo | `data` = `parsed.data` (po trim/coerce); metryki liczone z surowego `draft` |
-| Walidacja na odczycie | N/A | Brak schematu; korupcja jsonb ujawni się dopiero w UI/runtime |
+| Scenariusz                                                                     | Cichy?                | Mechanizm                                                                                   |
+| ------------------------------------------------------------------------------ | --------------------- | ------------------------------------------------------------------------------------------- |
+| Nieznane/dodatkowe klucze w body                                               | **Tak**               | Zod domyślnie usuwa unknown keys z `parsed.data` (brak `.strict()`/`.passthrough()` w repo) |
+| Brak top-level klucza (`yeast`, `mash`…)                                       | Nie                   | Zod fail z błędem ścieżki                                                                   |
+| Kolumna NOT NULL bez odpowiednika w Zod                                        | Nie                   | `blg/srm/ibu/abv` zawsze serwerowe                                                          |
+| Pola „product-required" ale Zod-optional (pusty `yeast.strain`, nazwy chmielu) | **Zapisze bez błędu** | Niekompletny przepis, ale nie drop mapowania — puste wartości persystują                    |
+| `parsed.data` vs surowy `draft`                                                | Częściowo             | `data` = `parsed.data` (po trim/coerce); metryki liczone z surowego `draft`                 |
+| Walidacja na odczycie                                                          | N/A                   | Brak schematu; korupcja jsonb ujawni się dopiero w UI/runtime                               |
 
 **Uwaga o asymetrii:** walidacja i zapis jsonb używają **`parsed.data`** (coerced), a metryki
 używają **`draft`** (surowe body). Coercible stringi (`"20"` dla `volumeL`) mogą przejść Zod, a
@@ -225,23 +232,24 @@ Pełna analiza: [test baseline subagent](bdda1958-bf23-4d4d-ba7a-1cc5231dd0e5).
 
 **9 plików testowych (wszystkie `src/lib/`):**
 
-| Plik | SUT | Wzorzec |
-|---|---|---|
-| `src/lib/calc/index.test.ts` | `computeMetrics` agregat | unit; inline `fullInput`; cross-check vs standalone |
-| `src/lib/calc/blg.test.ts` | `calcBLG` | golden/invariants/sentinels; `expectOk()`, `TOLERANCE` |
-| `src/lib/calc/srm.test.ts` | `calcSRM` | jw. |
-| `src/lib/calc/ibu.test.ts` | `calcIBU` | golden + regresja `utilizationFactor` |
-| `src/lib/calc/abv.test.ts` | `calcABV` | jw. |
-| `src/lib/recipe-to-calc.test.ts` | seam (`mapDraftToCalcInput`, `computeWizardMetrics`) | lokalny `draft()`/`boilHop()` + `defaultRecipeDraft` |
-| `src/lib/recipe-save.test.ts` | `buildRecipeInsert` | jw.; cross-assert metryk vs `computeWizardMetrics` |
-| `src/lib/recipe-mappers.test.ts` | `mapRowToListItem`/`mapRowToRecord` | inline DB row → domena (jeden kierunek) |
-| `src/lib/recipe-export.test.ts` | `sanitizeFilename`/`buildRecipeJsonBlob` | string + blob round-trip |
+| Plik                             | SUT                                                  | Wzorzec                                                |
+| -------------------------------- | ---------------------------------------------------- | ------------------------------------------------------ |
+| `src/lib/calc/index.test.ts`     | `computeMetrics` agregat                             | unit; inline `fullInput`; cross-check vs standalone    |
+| `src/lib/calc/blg.test.ts`       | `calcBLG`                                            | golden/invariants/sentinels; `expectOk()`, `TOLERANCE` |
+| `src/lib/calc/srm.test.ts`       | `calcSRM`                                            | jw.                                                    |
+| `src/lib/calc/ibu.test.ts`       | `calcIBU`                                            | golden + regresja `utilizationFactor`                  |
+| `src/lib/calc/abv.test.ts`       | `calcABV`                                            | jw.                                                    |
+| `src/lib/recipe-to-calc.test.ts` | seam (`mapDraftToCalcInput`, `computeWizardMetrics`) | lokalny `draft()`/`boilHop()` + `defaultRecipeDraft`   |
+| `src/lib/recipe-save.test.ts`    | `buildRecipeInsert`                                  | jw.; cross-assert metryk vs `computeWizardMetrics`     |
+| `src/lib/recipe-mappers.test.ts` | `mapRowToListItem`/`mapRowToRecord`                  | inline DB row → domena (jeden kierunek)                |
+| `src/lib/recipe-export.test.ts`  | `sanitizeFilename`/`buildRecipeJsonBlob`             | string + blob round-trip                               |
 
 **Brak:** `vi.mock`/`vi.spyOn`/`beforeEach` w `src/`; testów Supabase/API/middleware/komponentów;
 wspólnego katalogu fixtures. Builder `draft()`/`boilHop()` jest **zduplikowany** w
 `recipe-to-calc.test.ts:7-27` i `recipe-save.test.ts:8-28`.
 
 **Konwencje dla nowych testów Fazy 1:**
+
 - Nazwa `*.test.ts`, **co-located** obok SUT w `src/lib/` (glob to `*.test.ts`, nie `*.integration.test.ts`).
 - Importy `@/` dla cross-module; jawny import z `"vitest"`.
 - Wzorzec `CalcResult`: assert `.ok`, potem narrow przed `.value`.

@@ -16,18 +16,18 @@ At `/recipes/new` (protected), a two-step wizard (Basics → Grist & batch) show
 
 ## Key Decisions Made
 
-| Decision | Choice | Why | Source |
-| --- | --- | --- | --- |
-| F-02 (calc engine) handling | Separate prerequisite change; S-01 consumes its contract | Keeps roadmap's foundation/slice split; S-01 codes against a defined `src/lib/calc/` interface | Plan |
-| Calc engine shape (F-02 contract) | Pure functions in `src/lib/calc/`, typed input/output | Trivially testable, no hidden state, extensible per metric | Plan |
-| Formulas / units | Gravity-points (BLG) + Morey (SRM); metric, EBC→SRM | De-facto home-brew standards; matches Polish persona conventions | Plan |
-| Wizard shell | Extensible stepper, 2 steps active now | S-02/S-03 add steps via config array, no nav rewrite | Plan |
-| Form & state | React Hook Form + zod (`useFieldArray`), wrapped in `useWizardRecipe()` hook | RHF owns state (supersedes a reducer); built for dynamic arrays + validation reused at save | Plan |
-| Reorder UX | Up/down buttons (no drag-drop) | Zero new deps, keyboard-accessible | Plan |
-| Incomplete-input display | Placeholder `—` until valid; guards prevent NaN | Honors "no silent wrong numbers" guardrail | Plan |
-| BLG before mash step | Default efficiency constant (75%), replaced by user input in S-02 | Mash efficiency is FR-006/S-02; SRM is efficiency-independent | Plan |
-| Routing | Protected `/recipes/new`, linked from dashboard | Composes with `/recipes` list/detail in later slices | Plan |
-| Testing this slice | Vitest unit tests for mapping + wizard logic; manual UI check | Formula correctness is F-02's harness; this covers the glue | Plan |
+| Decision                          | Choice                                                                       | Why                                                                                            | Source |
+| --------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------ |
+| F-02 (calc engine) handling       | Separate prerequisite change; S-01 consumes its contract                     | Keeps roadmap's foundation/slice split; S-01 codes against a defined `src/lib/calc/` interface | Plan   |
+| Calc engine shape (F-02 contract) | Pure functions in `src/lib/calc/`, typed input/output                        | Trivially testable, no hidden state, extensible per metric                                     | Plan   |
+| Formulas / units                  | Gravity-points (BLG) + Morey (SRM); metric, EBC→SRM                          | De-facto home-brew standards; matches Polish persona conventions                               | Plan   |
+| Wizard shell                      | Extensible stepper, 2 steps active now                                       | S-02/S-03 add steps via config array, no nav rewrite                                           | Plan   |
+| Form & state                      | React Hook Form + zod (`useFieldArray`), wrapped in `useWizardRecipe()` hook | RHF owns state (supersedes a reducer); built for dynamic arrays + validation reused at save    | Plan   |
+| Reorder UX                        | Up/down buttons (no drag-drop)                                               | Zero new deps, keyboard-accessible                                                             | Plan   |
+| Incomplete-input display          | Placeholder `—` until valid; guards prevent NaN                              | Honors "no silent wrong numbers" guardrail                                                     | Plan   |
+| BLG before mash step              | Default efficiency constant (75%), replaced by user input in S-02            | Mash efficiency is FR-006/S-02; SRM is efficiency-independent                                  | Plan   |
+| Routing                           | Protected `/recipes/new`, linked from dashboard                              | Composes with `/recipes` list/detail in later slices                                           | Plan   |
+| Testing this slice                | Vitest unit tests for mapping + wizard logic; manual UI check                | Formula correctness is F-02's harness; this covers the glue                                    | Plan   |
 
 ## Scope
 
@@ -41,12 +41,12 @@ One React island (`RecipeWizard`) on a protected Astro page. RHF (via `useWizard
 
 ## Phases at a Glance
 
-| Phase | What it delivers | Key risk |
-| --- | --- | --- |
-| 1. Foundation & routing | Deps, shadcn primitives, `src/types.ts`, protected `/recipes/new` + island, dashboard link | Middleware/route wiring regressions |
-| 2. Wizard shell & basics | Extensible stepper, `useWizardRecipe()` hook + zod schema, Basics step | Over-engineering the step abstraction |
-| 3. Grist & batch + malt list | Batch volume input, malt rows with add/move/remove + validation | Field-array reorder/remove edge cases |
-| 4. Live metrics + tests | Draft→calc mapping with guards, persistent BLG/SRM panel, Vitest tests | Mapping mismatch vs F-02's actual contract |
+| Phase                        | What it delivers                                                                           | Key risk                                   |
+| ---------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------ |
+| 1. Foundation & routing      | Deps, shadcn primitives, `src/types.ts`, protected `/recipes/new` + island, dashboard link | Middleware/route wiring regressions        |
+| 2. Wizard shell & basics     | Extensible stepper, `useWizardRecipe()` hook + zod schema, Basics step                     | Over-engineering the step abstraction      |
+| 3. Grist & batch + malt list | Batch volume input, malt rows with add/move/remove + validation                            | Field-array reorder/remove edge cases      |
+| 4. Live metrics + tests      | Draft→calc mapping with guards, persistent BLG/SRM panel, Vitest tests                     | Mapping mismatch vs F-02's actual contract |
 
 **Prerequisites:** F-02 (`calc-engine-harness`) implemented first — `/10x-implement` for S-01 is gated on it. Logged-in auth already exists.
 **Estimated effort:** ~2–3 after-hours sessions across 4 phases.

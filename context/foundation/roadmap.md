@@ -27,27 +27,27 @@ Tworzenie przepisu na piwo wymaga wielu ręcznych obliczeń (BLG, ABV, SRM, IBU)
 
 ## At a glance
 
-| ID | Change ID | Outcome (user can …) | Prerequisites | PRD refs | Status |
-|---|---|---|---|---|---|
-| F-01 | recipe-persistence-model | (foundation) model danych przepisu + RLS + typy współdzielone | — | FR-001, FR-002, FR-011, FR-012, Access Control | ready |
-| F-02 | calc-engine-harness | (foundation) szkielet silnika obliczeń + harness testów poprawności | — | FR-010, NFR (poprawność) | ready |
-| S-01 | wizard-basics-grist-blg-srm | rozpocząć kreator, wpisać podstawy i zasyp, zobaczyć na żywo BLG/SRM | F-02 | FR-003, FR-004, FR-005, FR-010 | proposed |
-| S-02 | wizard-mash-hops-ibu | skonfigurować zacieranie i chmiel, zobaczyć na żywo IBU | S-01 | FR-006, FR-007, FR-010 | proposed |
-| S-03 | wizard-yeast-adjuncts-abv | ustawić drożdże i dodatki, zobaczyć na żywo ABV — wszystkie 4 metryki | S-02 | FR-008, FR-009, FR-010 | proposed |
-| S-04 | save-recipe | zapisać ukończony przepis z czterema metrykami | F-01, S-03 | FR-011 | proposed |
-| S-05 | saved-recipes-list | zobaczyć listę zapisanych przepisów (tylko do odczytu) z metrykami | F-01, S-04 | FR-012 | proposed |
-| S-06 | recipe-export | wyeksportować zapisany przepis jako PDF lub JSON | S-05 | FR-013 | proposed |
-| S-07 | recipe-edit-delete | edytować istniejący przepis (pełny kreator) i trwale go usunąć z potwierdzeniem | S-05 | — | planned |
+| ID   | Change ID                   | Outcome (user can …)                                                            | Prerequisites | PRD refs                                       | Status   |
+| ---- | --------------------------- | ------------------------------------------------------------------------------- | ------------- | ---------------------------------------------- | -------- |
+| F-01 | recipe-persistence-model    | (foundation) model danych przepisu + RLS + typy współdzielone                   | —             | FR-001, FR-002, FR-011, FR-012, Access Control | ready    |
+| F-02 | calc-engine-harness         | (foundation) szkielet silnika obliczeń + harness testów poprawności             | —             | FR-010, NFR (poprawność)                       | ready    |
+| S-01 | wizard-basics-grist-blg-srm | rozpocząć kreator, wpisać podstawy i zasyp, zobaczyć na żywo BLG/SRM            | F-02          | FR-003, FR-004, FR-005, FR-010                 | proposed |
+| S-02 | wizard-mash-hops-ibu        | skonfigurować zacieranie i chmiel, zobaczyć na żywo IBU                         | S-01          | FR-006, FR-007, FR-010                         | proposed |
+| S-03 | wizard-yeast-adjuncts-abv   | ustawić drożdże i dodatki, zobaczyć na żywo ABV — wszystkie 4 metryki           | S-02          | FR-008, FR-009, FR-010                         | proposed |
+| S-04 | save-recipe                 | zapisać ukończony przepis z czterema metrykami                                  | F-01, S-03    | FR-011                                         | proposed |
+| S-05 | saved-recipes-list          | zobaczyć listę zapisanych przepisów (tylko do odczytu) z metrykami              | F-01, S-04    | FR-012                                         | proposed |
+| S-06 | recipe-export               | wyeksportować zapisany przepis jako PDF lub JSON                                | S-05          | FR-013                                         | proposed |
+| S-07 | recipe-edit-delete          | edytować istniejący przepis (pełny kreator) i trwale go usunąć z potwierdzeniem | S-05          | —                                              | planned  |
 
 ## Streams
 
 Pomoc nawigacyjna — grupuje pozycje dzielące ten sam łańcuch zależności. Kanoniczna kolejność wciąż żyje w grafie zależności poniżej; ta tabela to proponowana kolejność czytania równoległych tras.
 
-| Stream | Theme | Chain | Note |
-|---|---|---|---|
-| A | Kreator i obliczenia na żywo | `F-02` → `S-01` → `S-02` → `S-03` | Ścieżka konieczna do gwiazdy przewodniej; priorytet przy celu `speed`. |
-| B | Trwałość, lista i eksport | `F-01` → `S-04` → `S-05` → `S-06` | `F-01` można budować równolegle do całego Stream A; `S-04` dołącza do Stream A w `S-03`. |
-| C | Edycja i usuwanie | `S-05` → `S-07` | Odgałęzienie od Stream B po S-05; można budować równolegle do S-06. |
+| Stream | Theme                        | Chain                             | Note                                                                                     |
+| ------ | ---------------------------- | --------------------------------- | ---------------------------------------------------------------------------------------- |
+| A      | Kreator i obliczenia na żywo | `F-02` → `S-01` → `S-02` → `S-03` | Ścieżka konieczna do gwiazdy przewodniej; priorytet przy celu `speed`.                   |
+| B      | Trwałość, lista i eksport    | `F-01` → `S-04` → `S-05` → `S-06` | `F-01` można budować równolegle do całego Stream A; `S-04` dołącza do Stream A w `S-03`. |
+| C      | Edycja i usuwanie            | `S-05` → `S-07`                   | Odgałęzienie od Stream B po S-05; można budować równolegle do S-06.                      |
 
 ## Baseline
 
@@ -179,17 +179,17 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 
 ## Backlog Handoff
 
-| Roadmap ID | Change ID | Suggested issue title | Ready for `/10x-plan` | Notes |
-|---|---|---|---|---|
-| F-01 | recipe-persistence-model | Model danych przepisu + polityki RLS + typy współdzielone | yes | Run `/10x-plan recipe-persistence-model` |
-| F-02 | calc-engine-harness | Szkielet silnika obliczeń + harness testów poprawności | yes | Run `/10x-plan calc-engine-harness` |
-| S-01 | wizard-basics-grist-blg-srm | Kreator: podstawy i zasyp z BLG/SRM na żywo | no | Wymaga F-02 |
-| S-02 | wizard-mash-hops-ibu | Kreator: zacieranie i chmiel z IBU na żywo | no | Wymaga S-01 |
-| S-03 | wizard-yeast-adjuncts-abv | Kreator: drożdże i dodatki z ABV na żywo (4 metryki) | no | Wymaga S-02 |
-| S-04 | save-recipe | Zapis ukończonego przepisu z metrykami | no | Wymaga F-01, S-03 |
-| S-05 | saved-recipes-list | Lista zapisanych przepisów (tylko do odczytu) | no | Wymaga F-01, S-04 |
-| S-06 | recipe-export | Eksport przepisu jako PDF/JSON | no | Wymaga S-05; nice-to-have |
-| S-07 | recipe-edit-delete | Edycja i usuwanie przepisu | no | Wymaga S-05; można równolegle do S-06 |
+| Roadmap ID | Change ID                   | Suggested issue title                                     | Ready for `/10x-plan` | Notes                                    |
+| ---------- | --------------------------- | --------------------------------------------------------- | --------------------- | ---------------------------------------- |
+| F-01       | recipe-persistence-model    | Model danych przepisu + polityki RLS + typy współdzielone | yes                   | Run `/10x-plan recipe-persistence-model` |
+| F-02       | calc-engine-harness         | Szkielet silnika obliczeń + harness testów poprawności    | yes                   | Run `/10x-plan calc-engine-harness`      |
+| S-01       | wizard-basics-grist-blg-srm | Kreator: podstawy i zasyp z BLG/SRM na żywo               | no                    | Wymaga F-02                              |
+| S-02       | wizard-mash-hops-ibu        | Kreator: zacieranie i chmiel z IBU na żywo                | no                    | Wymaga S-01                              |
+| S-03       | wizard-yeast-adjuncts-abv   | Kreator: drożdże i dodatki z ABV na żywo (4 metryki)      | no                    | Wymaga S-02                              |
+| S-04       | save-recipe                 | Zapis ukończonego przepisu z metrykami                    | no                    | Wymaga F-01, S-03                        |
+| S-05       | saved-recipes-list          | Lista zapisanych przepisów (tylko do odczytu)             | no                    | Wymaga F-01, S-04                        |
+| S-06       | recipe-export               | Eksport przepisu jako PDF/JSON                            | no                    | Wymaga S-05; nice-to-have                |
+| S-07       | recipe-edit-delete          | Edycja i usuwanie przepisu                                | no                    | Wymaga S-05; można równolegle do S-06    |
 
 ## Open Roadmap Questions
 

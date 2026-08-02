@@ -12,22 +12,16 @@ engine does **not** depend on `@/types` (`RecipeDraft`) or any DB entity.
 ## Public API
 
 ```ts
-import {
-  calcBLG,
-  calcSRM,
-  calcIBU,
-  calcABV,
-  computeMetrics,
-} from "@/lib/calc";
+import { calcBLG, calcSRM, calcIBU, calcABV, computeMetrics } from "@/lib/calc";
 ```
 
-| Function                | Input               | Returns               |
-| ----------------------- | ------------------- | --------------------- |
-| `calcBLG(input)`        | `BlgInput`          | `CalcResult<number>`  |
-| `calcSRM(input)`        | `SrmInput`          | `CalcResult<number>`  |
-| `calcIBU(input)`        | `IbuInput`          | `CalcResult<number>`  |
-| `calcABV(input)`        | `AbvInput`          | `CalcResult<number>`  |
-| `computeMetrics(input)` | `RecipeMetricsInput`| `RecipeMetrics`       |
+| Function                | Input                | Returns              |
+| ----------------------- | -------------------- | -------------------- |
+| `calcBLG(input)`        | `BlgInput`           | `CalcResult<number>` |
+| `calcSRM(input)`        | `SrmInput`           | `CalcResult<number>` |
+| `calcIBU(input)`        | `IbuInput`           | `CalcResult<number>` |
+| `calcABV(input)`        | `AbvInput`           | `CalcResult<number>` |
+| `computeMetrics(input)` | `RecipeMetricsInput` | `RecipeMetrics`      |
 
 `computeMetrics` computes gravity **once** and feeds BLG/IBU/ABV (SRM is
 computed independently). Each metric in `RecipeMetrics` is its own
@@ -68,18 +62,18 @@ golden vectors within a documented per-metric tolerance. Changing a formula is
 a contract change and must move its golden vectors with it.
 
 - **Gravity (shared root):** extract = `Σ amountKg × extractPercent/100 ×
-  mashEfficiency`; points = `384 × extract / volumeL`; `SG = 1 + points/1000`.
+mashEfficiency`; points = `384 × extract / volumeL`; `SG = 1 + points/1000`.
   (Palmer, _How to Brew_ — extract-potential / PPG method.)
 - **BLG:** `259 − 259/SG` (°Plato/°Balling hydrometer approximation).
 - **SRM:** Morey `1.4922 × MCU^0.6859`, MCU = `Σ (°L × lb) / gal` with
   `°L = EBC/1.97`. (Morey 2000; Daniels, _Designing Great Beers_.)
 - **IBU:** Tinseth `Σ AA_decimal × mass_g × utilization × 1000 / volumeL`,
   `utilization = 1.65 × 0.000125^(SG−1) × (1 − e^(−0.04·t))/4.15 ×
-  (utilizationFactor ?? 1)`. The optional `HopAddition.utilizationFactor`
+(utilizationFactor ?? 1)`. The optional `HopAddition.utilizationFactor`
   scales per-addition utilization (range `[0, 1]`, default `1.0`) — an
   approximation for whirlpool vs boil, not a physical whirlpool model.
 - **ABV:** `FG_points = OG_points × (1 − attenuation)`; `ABV% =
-  (OG − FG) × 131.25`.
+(OG − FG) × 131.25`.
 
 ## Guards (when each returns `{ ok: false }`)
 

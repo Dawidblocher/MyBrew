@@ -20,13 +20,14 @@
 ## Bloki budulcowe
 
 PDF opisuje się jako JSX z prymitywów (`Document` → `Page` → `View`/`Text`/`Image`)
-+ `StyleSheet.create`:
+
+- `StyleSheet.create`:
 
 ```jsx
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
-  page: { padding: 30, fontFamily: 'Inter', fontSize: 11 },
+  page: { padding: 30, fontFamily: "Inter", fontSize: 11 },
   section: { marginBottom: 12 },
 });
 
@@ -48,22 +49,17 @@ Trzy opcje po stronie klienta:
 ### 1. `PDFDownloadLink` — najprostszy (link z wbudowanym loading/error)
 
 ```jsx
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
-<PDFDownloadLink
-  document={<RecipePdf recipe={recipe} />}
-  fileName={`${recipe.name}.pdf`}
->
-  {({ blob, url, loading, error }) =>
-    loading ? 'Generuję PDF…' : error ? `Błąd: ${error.message}` : 'Pobierz PDF'
-  }
+<PDFDownloadLink document={<RecipePdf recipe={recipe} />} fileName={`${recipe.name}.pdf`}>
+  {({ blob, url, loading, error }) => (loading ? "Generuję PDF…" : error ? `Błąd: ${error.message}` : "Pobierz PDF")}
 </PDFDownloadLink>;
 ```
 
 ### 2. `usePDF` hook — reaktywny (gdy dane mogą się zmienić przed eksportem)
 
 ```jsx
-import { usePDF } from '@react-pdf/renderer';
+import { usePDF } from "@react-pdf/renderer";
 
 const [instance, updateInstance] = usePDF({ document: <RecipePdf recipe={recipe} /> });
 // instance.{ loading, error, url, blob }
@@ -76,7 +72,7 @@ if (instance.error) return <div>Błąd: {instance.error}</div>;
 ### 3. `pdf().toBlob()` — imperatywny (na klik, bez renderu linku)
 
 ```jsx
-import { pdf } from '@react-pdf/renderer';
+import { pdf } from "@react-pdf/renderer";
 
 const blob = await pdf(<RecipePdf recipe={recipe} />).toBlob();
 const url = URL.createObjectURL(blob);
@@ -85,20 +81,24 @@ const url = URL.createObjectURL(blob);
 // Dynamiczna aktualizacja / nasłuch zmian:
 const instance = pdf();
 instance.updateContainer(<RecipePdf recipe={recipe} />);
-instance.on('change', () => console.log('Document changed'));
+instance.on("change", () => console.log("Document changed"));
 const blob2 = await instance.toBlob();
 ```
 
 ### `BlobProvider` — dostęp do surowego blob/url (np. upload)
 
 ```jsx
-import { BlobProvider } from '@react-pdf/renderer';
+import { BlobProvider } from "@react-pdf/renderer";
 
 <BlobProvider document={<RecipePdf recipe={recipe} />}>
   {({ blob, url, loading, error }) => {
     if (loading) return <div>Generuję PDF…</div>;
     if (error) return <div>Błąd: {error.message}</div>;
-    return <a href={url} target="_blank" rel="noopener noreferrer">Otwórz w nowej karcie</a>;
+    return (
+      <a href={url} target="_blank" rel="noopener noreferrer">
+        Otwórz w nowej karcie
+      </a>
+    );
   }}
 </BlobProvider>;
 ```
@@ -114,7 +114,7 @@ Wspierane m.in.: `flexDirection`, `justifyContent`, `flex`, `gap`/`rowGap`/`colu
 
 ```jsx
 const t = StyleSheet.create({
-  row: { flexDirection: 'row', borderBottomWidth: 1, borderColor: '#ddd' },
+  row: { flexDirection: "row", borderBottomWidth: 1, borderColor: "#ddd" },
   cell: { flex: 1, padding: 4 },
 });
 
@@ -155,22 +155,20 @@ renderem. Preferuj self-hosting `.ttf` w `public/fonts/` (offline, bez problemó
 z siecią/CSP) zamiast URL Google Fonts.
 
 ```jsx
-import { Font } from '@react-pdf/renderer';
+import { Font } from "@react-pdf/renderer";
 
 Font.register({
-  family: 'Inter',
+  family: "Inter",
   fonts: [
-    { src: '/fonts/Inter-Regular.ttf', fontWeight: 400 },
-    { src: '/fonts/Inter-Bold.ttf', fontWeight: 700 },
-    { src: '/fonts/Inter-Italic.ttf', fontStyle: 'italic', fontWeight: 400 },
+    { src: "/fonts/Inter-Regular.ttf", fontWeight: 400 },
+    { src: "/fonts/Inter-Bold.ttf", fontWeight: 700 },
+    { src: "/fonts/Inter-Italic.ttf", fontStyle: "italic", fontWeight: 400 },
   ],
 });
 
 // opcjonalnie — emoji i własne dzielenie wyrazów:
-Font.registerEmojiSource({ format: 'png', url: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/' });
-Font.registerHyphenationCallback((word) =>
-  word.length > 12 ? [word.slice(0, 6) + '-', word.slice(6)] : [word],
-);
+Font.registerEmojiSource({ format: "png", url: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/" });
+Font.registerHyphenationCallback((word) => (word.length > 12 ? [word.slice(0, 6) + "-", word.slice(6)] : [word]));
 ```
 
 Następnie ustaw `fontFamily: 'Inter'` w stylach (np. na `page` lub per `Text`).
@@ -178,7 +176,7 @@ Następnie ustaw `fontFamily: 'Inter'` w stylach (np. na `page` lub per `Text`).
 ## Eksport JSON (bez zależności)
 
 ```js
-const blob = new Blob([JSON.stringify(recipe, null, 2)], { type: 'application/json' });
+const blob = new Blob([JSON.stringify(recipe, null, 2)], { type: "application/json" });
 const url = URL.createObjectURL(blob);
 // <a href={url} download={`${recipe.name}.json`}>Pobierz JSON</a> → revokeObjectURL po pobraniu
 ```

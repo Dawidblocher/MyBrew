@@ -17,14 +17,14 @@ Istnieją współdzielone fixtures i in-memory fake klienta Supabase; seam ma go
 
 ## Key Decisions Made
 
-| Decision | Choice | Why (1 sentence) | Source |
-| --- | --- | --- | --- |
-| Warstwa round-tripu | In-memory fake klienta Supabase | Testuje realną ścieżkę insert→read bez Dockera/sekretów; CI zostaje offline | Plan |
-| Zachowanie Zod (nieznane klucze) | Zamrozić strip jako kontrakt | Dokumentuje świadomą, defensywną decyzję zamiast wymuszać zmianę kodu | Plan |
-| Dryf duplikatu seamu | Test parytetu (bez refaktoru) | Najtańsza, najwyższego sygnału ochrona; refaktor poza zakresem Fazy 1 | Plan |
-| Źródło golden vectors | Reuse oracle z testów silnika | Unika niezależnego, potencjalnie błędnego źródła prawdy | Plan |
-| Fixtures | Wydzielić do wspólnego test-utils | Usuwa duplikację; skaluje na wiele scenariuszy | Plan |
-| Zakres Ryzyka #1 | Wszystkie nazwane wektory | Pełne pokrycie asymetrii filtrów + konwersji z researchu | Plan |
+| Decision                         | Choice                            | Why (1 sentence)                                                            | Source |
+| -------------------------------- | --------------------------------- | --------------------------------------------------------------------------- | ------ |
+| Warstwa round-tripu              | In-memory fake klienta Supabase   | Testuje realną ścieżkę insert→read bez Dockera/sekretów; CI zostaje offline | Plan   |
+| Zachowanie Zod (nieznane klucze) | Zamrozić strip jako kontrakt      | Dokumentuje świadomą, defensywną decyzję zamiast wymuszać zmianę kodu       | Plan   |
+| Dryf duplikatu seamu             | Test parytetu (bez refaktoru)     | Najtańsza, najwyższego sygnału ochrona; refaktor poza zakresem Fazy 1       | Plan   |
+| Źródło golden vectors            | Reuse oracle z testów silnika     | Unika niezależnego, potencjalnie błędnego źródła prawdy                     | Plan   |
+| Fixtures                         | Wydzielić do wspólnego test-utils | Usuwa duplikację; skaluje na wiele scenariuszy                              | Plan   |
+| Zakres Ryzyka #1                 | Wszystkie nazwane wektory         | Pełne pokrycie asymetrii filtrów + konwersji z researchu                    | Plan   |
 
 ## Scope
 
@@ -38,12 +38,12 @@ Budowa od dołu: (1) współdzielone fixtures oparte na `defaultRecipeDraft` + a
 
 ## Phases at a Glance
 
-| Phase | What it delivers | Key risk |
-| --- | --- | --- |
-| 1. Fixtures + fake klienta | Współdzielone buildery + in-memory Supabase | Fake musi wiernie odwzorować chainable/await builder |
-| 2. Seam (Ryzyko #1) | Golden-vector, asymetria, konwersje, parytet | Prywatne mappery — odtworzyć wejścia w teście bez zmiany API |
-| 3. Round-trip (Ryzyko #3) | Deep-equal save→read, strip Zod, błędy | Porównać `parsed.data` (nie surowy draft) |
-| 4. Cookbook + status | §6 wypełnione, statusy zsynchronizowane | Spójność statusów test-plan ↔ change |
+| Phase                      | What it delivers                             | Key risk                                                     |
+| -------------------------- | -------------------------------------------- | ------------------------------------------------------------ |
+| 1. Fixtures + fake klienta | Współdzielone buildery + in-memory Supabase  | Fake musi wiernie odwzorować chainable/await builder         |
+| 2. Seam (Ryzyko #1)        | Golden-vector, asymetria, konwersje, parytet | Prywatne mappery — odtworzyć wejścia w teście bez zmiany API |
+| 3. Round-trip (Ryzyko #3)  | Deep-equal save→read, strip Zod, błędy       | Porównać `parsed.data` (nie surowy draft)                    |
+| 4. Cookbook + status       | §6 wypełnione, statusy zsynchronizowane      | Spójność statusów test-plan ↔ change                         |
 
 **Prerequisites:** brak — research kompletny; kod seamu/zapisu istnieje; Vitest skonfigurowany.
 **Estimated effort:** ~2-3 sesje przez 4 fazy.

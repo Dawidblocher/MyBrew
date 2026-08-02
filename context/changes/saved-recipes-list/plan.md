@@ -8,7 +8,7 @@ Implements **FR-012** and the view half of **US-01**.
 
 ## Current State Analysis
 
-- **The persistence + save slice (S-04) is fully done.** The `recipes` table exists with columns `id, user_id, name, style, blg, srm, ibu, abv, data jsonb, created_at`, a `(user_id, created_at desc)` index created *specifically for this list*, and RLS `select`/`insert` policies bound to `auth.uid() = user_id` (no `update`/`delete` — default-deny). See `supabase/migrations/*_create_recipes.sql` and `supabase/migrations/20260609110000_grant_recipes.sql`.
+- **The persistence + save slice (S-04) is fully done.** The `recipes` table exists with columns `id, user_id, name, style, blg, srm, ibu, abv, data jsonb, created_at`, a `(user_id, created_at desc)` index created _specifically for this list_, and RLS `select`/`insert` policies bound to `auth.uid() = user_id` (no `update`/`delete` — default-deny). See `supabase/migrations/*_create_recipes.sql` and `supabase/migrations/20260609110000_grant_recipes.sql`.
 - **`/recipes` is a placeholder** (`src/pages/recipes/index.astro`) that statically renders "Pełna lista zapisanych przepisów pojawi się wkrótce" with a `Nowy przepis` link. This slice replaces it.
 - **`/recipes` is already protected.** `src/middleware.ts:4` lists `/recipes` in `PROTECTED_ROUTES`, and `startsWith` already covers `/recipes/[id]`. Unauthenticated users are redirected to `/auth/signin` before the page runs.
 - **Reading is naturally server-side.** Astro is `output: "server"` (full SSR). Protected pages like `dashboard.astro` read `Astro.locals.user` directly. A per-request Supabase client (`createClient(request.headers, cookies)` in `src/lib/supabase.ts`) plus RLS means a server-side `select` returns only the current user's rows — **no GET API route is needed**.
@@ -83,6 +83,7 @@ Add the read-side building blocks shared by both pages: a list/summary type, a p
 **Intent**: Wrap the two Supabase reads behind named functions the pages call, returning mapped entities and surfacing failure explicitly so the list page can show its error notice.
 
 **Contract**: Two functions taking the per-request Supabase client (the non-null return of `createClient`):
+
 - `listRecipes(supabase, userId): Promise<{ ok: true; items: RecipeListItem[] } | { ok: false }>` — `select("id, name, style, blg, srm, ibu, abv, created_at").eq("user_id", userId).order("created_at", { ascending: false })`; on error return `{ ok: false }`, else map rows via `mapRowToListItem`.
 - `getRecipe(supabase, userId, id): Promise<RecipeRecord | null>` — `select("*").eq("user_id", userId).eq("id", id).maybeSingle()`; return `null` on no row or error, else `mapRowToRecord`. (RLS also scopes these; the explicit `eq("user_id", …)` is defense-in-depth.)
 
