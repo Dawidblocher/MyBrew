@@ -299,25 +299,25 @@ Nie dotyczy — zmiana nie rusza schematu bazy ani kodu produkcyjnego.
 
 #### Automated
 
-- [x] 2.1 Nowe testy przechodzą
-- [x] 2.2 Lint i typy
+- [x] 2.1 Nowe testy przechodzą — e188cd9
+- [x] 2.2 Lint i typy — e188cd9
 
 #### Manual
 
-- [x] 2.3 Test mutacji zapala się po uszkodzeniu `mapRowToRecord`
-- [x] 2.4 Test invariantu metryk zapala się po podmianie `data: parsed.data` na `data: draft`
+- [x] 2.3 Test mutacji zapala się po uszkodzeniu `mapRowToRecord` — e188cd9
+- [x] 2.4 Test invariantu metryk zapala się po podmianie `data: parsed.data` na `data: draft` — e188cd9
 
 ### Phase 3: Charakteryzacja zdegradowanego jsonb
 
 #### Automated
 
-- [ ] 3.1 Testy przechodzą i opisują rzeczywiste zachowanie
-- [ ] 3.2 Lint i typy
+- [x] 3.1 Testy przechodzą i opisują rzeczywiste zachowanie
+- [x] 3.2 Lint i typy
 
 #### Manual
 
-- [ ] 3.3 Zaobserwowane zachowanie potwierdzone odwróceniem asercji
-- [ ] 3.4 Wybrane pola potwierdzone jako nieuczestniczące w obliczeniach metryk
+- [x] 3.3 Zaobserwowane zachowanie potwierdzone odwróceniem asercji
+- [x] 3.4 Wybrane pola potwierdzone jako nieuczestniczące w obliczeniach metryk
 
 ### Phase 4: Trwałość usuwania i strażnik właściciela
 

@@ -111,3 +111,41 @@ describe("recipe edit round-trip", () => {
     expect(new Date(after.updatedAt).getTime()).toBeGreaterThan(new Date(seed.created_at).getTime());
   });
 });
+
+/**
+ * Characterizes how save reacts to jsonb that no longer matches today's draft
+ * shape. Fields are chosen outside the metrics engine (`recipe-to-calc.ts`
+ * reads efficiencyPct / attenuationPct / volume / malts / hops — not these),
+ * so a silent rewrite is not masked by a metrics error.
+ *
+ * Observed today: `z.coerce.number` turns `null` into `0` and saves; a missing
+ * key fails validation. Do not "fix" the coercion here — Phase 5 records it.
+ */
+describe("degraded jsonb characterization", () => {
+  it("null mash.waterToGrainRatio coerces to 0 and saves successfully", () => {
+    const seed = recipeRow({ data: { mash: { waterToGrainRatio: 3 } } });
+    const data = structuredClone(seed.data);
+    const degraded = {
+      ...data,
+      mash: { ...data.mash, waterToGrainRatio: null },
+    } as unknown as RecipeDraft;
+
+    const result = buildRecipeInsert(degraded, seed.user_id);
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.insert.data.mash.waterToGrainRatio).toBe(0);
+  });
+
+  it("missing mash.waterToGrainRatio rejects with field mash.waterToGrainRatio", () => {
+    const seed = recipeRow({ data: { mash: { waterToGrainRatio: 3 } } });
+    const degraded = structuredClone(seed.data);
+    delete (degraded.mash as { waterToGrainRatio?: number }).waterToGrainRatio;
+
+    const result = buildRecipeInsert(degraded, seed.user_id);
+
+    expect(result.ok).toBe(false);
+    if (result.ok) return;
+    expect(result.errors).toEqual([{ field: "mash.waterToGrainRatio", message: "Podaj stosunek woda/słód" }]);
+  });
+});
