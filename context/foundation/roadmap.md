@@ -30,14 +30,14 @@ Tworzenie przepisu na piwo wymaga wielu ręcznych obliczeń (BLG, ABV, SRM, IBU)
 | ID   | Change ID                   | Outcome (user can …)                                                            | Prerequisites | PRD refs                                       | Status   |
 | ---- | --------------------------- | ------------------------------------------------------------------------------- | ------------- | ---------------------------------------------- | -------- |
 | F-01 | recipe-persistence-model    | (foundation) model danych przepisu + RLS + typy współdzielone                   | —             | FR-001, FR-002, FR-011, FR-012, Access Control | ready    |
-| F-02 | calc-engine-harness         | (foundation) szkielet silnika obliczeń + harness testów poprawności             | —             | FR-010, NFR (poprawność)                       | ready    |
-| S-01 | wizard-basics-grist-blg-srm | rozpocząć kreator, wpisać podstawy i zasyp, zobaczyć na żywo BLG/SRM            | F-02          | FR-003, FR-004, FR-005, FR-010                 | proposed |
-| S-02 | wizard-mash-hops-ibu        | skonfigurować zacieranie i chmiel, zobaczyć na żywo IBU                         | S-01          | FR-006, FR-007, FR-010                         | proposed |
-| S-03 | wizard-yeast-adjuncts-abv   | ustawić drożdże i dodatki, zobaczyć na żywo ABV — wszystkie 4 metryki           | S-02          | FR-008, FR-009, FR-010                         | proposed |
-| S-04 | save-recipe                 | zapisać ukończony przepis z czterema metrykami                                  | F-01, S-03    | FR-011                                         | proposed |
-| S-05 | saved-recipes-list          | zobaczyć listę zapisanych przepisów (tylko do odczytu) z metrykami              | F-01, S-04    | FR-012                                         | proposed |
-| S-06 | recipe-export               | wyeksportować zapisany przepis jako PDF lub JSON                                | S-05          | FR-013                                         | proposed |
-| S-07 | recipe-edit-delete          | edytować istniejący przepis (pełny kreator) i trwale go usunąć z potwierdzeniem | S-05          | —                                              | planned  |
+| F-02 | calc-engine-harness         | (foundation) szkielet silnika obliczeń + harness testów poprawności             | —             | FR-010, NFR (poprawność)                       | done     |
+| S-01 | wizard-basics-grist-blg-srm | rozpocząć kreator, wpisać podstawy i zasyp, zobaczyć na żywo BLG/SRM            | F-02          | FR-003, FR-004, FR-005, FR-010                 | done     |
+| S-02 | wizard-mash-hops-ibu        | skonfigurować zacieranie i chmiel, zobaczyć na żywo IBU                         | S-01          | FR-006, FR-007, FR-010                         | done     |
+| S-03 | wizard-yeast-adjuncts-abv   | ustawić drożdże i dodatki, zobaczyć na żywo ABV — wszystkie 4 metryki           | S-02          | FR-008, FR-009, FR-010                         | done     |
+| S-04 | save-recipe                 | zapisać ukończony przepis z czterema metrykami                                  | F-01, S-03    | FR-011                                         | done     |
+| S-05 | saved-recipes-list          | zobaczyć listę zapisanych przepisów (tylko do odczytu) z metrykami              | F-01, S-04    | FR-012                                         | done     |
+| S-06 | recipe-export               | wyeksportować zapisany przepis jako PDF lub JSON                                | S-05          | FR-013                                         | done     |
+| S-07 | recipe-edit-delete          | edytować istniejący przepis (pełny kreator) i trwale go usunąć z potwierdzeniem | S-05          | —                                              | done     |
 
 ## Streams
 
