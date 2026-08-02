@@ -1,10 +1,10 @@
 ---
 change_id: saved-recipes-list
 title: Saved recipes list
-status: implemented
+status: archived
 created: 2026-06-09
-updated: 2026-06-09
-archived_at: null
+updated: 2026-08-02
+archived_at: 2026-08-02T13:21:00Z
 ---
 
 ## Notes

@@ -149,7 +149,7 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Domyka pętlę create→save→view; ryzyko niskie — odczyt RLS dla bieżącego użytkownika, bez mutacji.
-- **Status:** proposed
+- **Status:** done
 
 ### S-06: Eksport przepisu (PDF / JSON)
 
@@ -209,6 +209,8 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **S-07: użytkownik może otworzyć zapisany przepis w trybie edycji (pełny kreator wypełniony istniejącymi danymi), zmodyfikować dowolne pola i zapisać zmiany; może też trwale usunąć przepis po potwierdzeniu w oknie dialogowym.** — Archived 2026-08-02 → `context/archive/2026-06-14-recipe-edit-delete/`. Lesson: —.
 - **S-06: użytkownik może wyeksportować zapisany przepis jako PDF lub JSON.** — Archived 2026-08-02 → `context/archive/2026-06-10-recipe-export/`. Lesson: —.
 - **S-04: użytkownik może zapisać ukończony przepis wraz z czterema obliczonymi metrykami; zapis jest blokowany lub ostrzega, gdy brakuje pól wymaganych (nazwa, styl, minimalny zasyp).** — Archived 2026-08-02 → `context/archive/2026-06-08-save-recipe/`. Lesson: —.
+- **S-05: użytkownik może zobaczyć listę swoich zapisanych przepisów (tylko do odczytu) z widocznymi czterema metrykami; brak akcji edycji i usuwania w v1.** — Archived 2026-08-02 → `context/archive/2026-06-09-saved-recipes-list/`. Lesson: —.
+
 
 
 
