@@ -120,4 +120,13 @@ Wzorce z `context/changes/testing-auth-read-boundary/` (change `testing-auth-rea
 
 ### Faza 3 — Round-trip edycji i usuwania
 
-- TBD — patrz §3 Faza 3. Docelowe wzorce: test round-tripu edycji (DB entity → wizard draft → save → DB entity — identyczne wartości metryk); test usuwania (DELETE → 404 na odczyt). Cross-user DELETE jest już pokryty w Fazie 2 (204 + asercja trwałości rekordu).
+Wzorce z `context/changes/testing-edit-delete-roundtrip/` (change `testing-edit-delete-roundtrip`, Ryzyko #5).
+
+**Sprostowanie Ryzyka #5:** w kodzie nie ma mappera DB→draft. `mapRowToRecord` przepuszcza `data` bez transformacji, a strona edycji wstrzykuje `record.data` prosto w `defaultValues`. Dryf nie leży w rozjeździe dwóch mapowań, lecz w **braku normalizacji przy odczycie** — zapis (`buildRecipeInsert`) trimuje, coerce'uje liczby i stripuje nieznane klucze, odczyt nie. PUT i POST dzielą tę samą bramkę, więc test „edycja liczy metryki inaczej niż create" byłby zielony z niewłaściwego powodu.
+
+- **`src/lib/__tests__/fixtures.ts` (`recipeRow`)** — współdzielony builder `RecipeRecordRow` z deep-merge na `draftWithHops()`, metrykami z `computeWizardMetrics` (lub jawnymi overrides) oraz stałym przeszłym `created_at`/`updated_at`. Jedno źródło prawdy dla seedów edycji i usuwania.
+- **`src/lib/recipe-edit-roundtrip.test.ts`** — ścieżka aplikacji: `getRecipe` → `record.data` jako `initialData` → `buildRecipeInsert` → `updateRecipe` (bez `user_id`) → `getRecipe`. Zamraża: idempotencję bez zmian, mutację jednego pola z przeliczeniem metryk, invariant kolumn metryk względem `after.data`, stempel `updatedAt` (późniejszy niż seedowany `created_at`, `createdAt` nietknięte).
+- **Charakteryzacja zdegradowanego jsonb** (ten sam plik, osobny `describe`) — pola spoza silnika metryk (`mash.waterToGrainRatio`): `null` → `z.coerce.number` zapisuje `0` (cicha korupcja — świadomie nie naprawiana); brakujący klucz → `ok: false` z `field: mash.waterToGrainRatio`. Nazwy testów nazywają zjawisko wprost.
+- **`src/lib/recipe-queries.test.ts` (własne DELETE / strażnik właściciela)** — po `deleteRecipe` własnego rekordu: `getRecipe` → `null`, `listRecipes` bez niego (pozostałe własne zostają). Asercje na `fake._rows` zostają jako uzupełnienie. `updateRecipe` z normalnym payloadem nie zmienia `user_id` — strażnik kontraktu payloadu warstwy zapytań, nie dowód stripu w handlerze PUT (trasy API nieimportowalne w Vitest). Cross-user DELETE pozostaje w Fazie 2.
+
+Konwencje: seed wiersza przez `createFakeSupabase([recipeRow(...)])` ze stałym znacznikiem w przeszłości — **nie** przez `insert`, gdy asercja dotyczy `updated_at` (insert i update w tej samej milisekundzie dają flaky równość). Punktem wyjścia round-tripu jest odczytane `record.data`, nie draft, z którego wiersz powstał. Vitest `node`, fake Supabase, zero zmian w kodzie produkcyjnym.

@@ -323,20 +323,20 @@ Nie dotyczy — zmiana nie rusza schematu bazy ani kodu produkcyjnego.
 
 #### Automated
 
-- [x] 4.1 Testy przechodzą
-- [x] 4.2 Lint i typy
+- [x] 4.1 Testy przechodzą — 264eef8
+- [x] 4.2 Lint i typy — 264eef8
 
 #### Manual
 
-- [x] 4.3 Test trwałości zapala się po usunięciu filtra `user_id` z `listRecipes`
+- [x] 4.3 Test trwałości zapala się po usunięciu filtra `user_id` z `listRecipes` — 264eef8
 
 ### Phase 5: Cookbook i domknięcie zmiany
 
 #### Automated
 
-- [ ] 5.1 Cała suita zielona
-- [ ] 5.2 Lint i typy
+- [x] 5.1 Cała suita zielona
+- [x] 5.2 Lint i typy
 
 #### Manual
 
-- [ ] 5.3 §6 test-planu czyta się samodzielnie
+- [x] 5.3 §6 test-planu czyta się samodzielnie
