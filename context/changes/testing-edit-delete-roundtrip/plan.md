@@ -334,9 +334,9 @@ Nie dotyczy — zmiana nie rusza schematu bazy ani kodu produkcyjnego.
 
 #### Automated
 
-- [x] 5.1 Cała suita zielona
-- [x] 5.2 Lint i typy
+- [x] 5.1 Cała suita zielona — ef03ef5
+- [x] 5.2 Lint i typy — ef03ef5
 
 #### Manual
 
-- [x] 5.3 §6 test-planu czyta się samodzielnie
+- [x] 5.3 §6 test-planu czyta się samodzielnie — ef03ef5
