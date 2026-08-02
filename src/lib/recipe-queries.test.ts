@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { createFakeSupabase } from "@/lib/__tests__/fake-supabase";
-import { draftWithHops } from "@/lib/__tests__/fixtures";
+import { draftWithHops, recipeRow } from "@/lib/__tests__/fixtures";
 import type { RecipeRecordRow } from "@/lib/recipe-mappers";
 import { deleteRecipe, getRecipe, listRecipes, updateRecipe } from "@/lib/recipe-queries";
 import { buildRecipeInsert } from "@/lib/recipe-save";
@@ -13,28 +13,9 @@ const USER_B = "user-b";
 const RECIPE_A_ID = "recipe-a";
 const RECIPE_B_ID = "recipe-b";
 
-function seedRow(overrides: Pick<RecipeRecordRow, "id" | "user_id" | "name">): RecipeRecordRow {
-  const draft = draftWithHops({ basics: { name: overrides.name, style: "American IPA" } });
-  const now = "2026-08-01T10:00:00.000Z";
-
-  return {
-    id: overrides.id,
-    user_id: overrides.user_id,
-    name: overrides.name,
-    style: "American IPA",
-    blg: 12,
-    srm: 8,
-    ibu: 40,
-    abv: 5.5,
-    data: draft,
-    created_at: now,
-    updated_at: now,
-  };
-}
-
 const SEED: RecipeRecordRow[] = [
-  seedRow({ id: RECIPE_A_ID, user_id: USER_A, name: "A's IPA" }),
-  seedRow({ id: RECIPE_B_ID, user_id: USER_B, name: "B's Stout" }),
+  recipeRow({ id: RECIPE_A_ID, user_id: USER_A, data: { basics: { name: "A's IPA" } } }),
+  recipeRow({ id: RECIPE_B_ID, user_id: USER_B, data: { basics: { name: "B's Stout" } } }),
 ];
 
 /** Same shape the PUT handler passes after stripping `user_id` from `buildRecipeInsert`. */
