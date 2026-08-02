@@ -288,24 +288,24 @@ Nie dotyczy — zmiana nie rusza schematu bazy ani kodu produkcyjnego.
 
 #### Automated
 
-- [x] 1.1 Testy przechodzą bez zmian w liczbie i nazwach
-- [x] 1.2 Lint i typy
+- [x] 1.1 Testy przechodzą bez zmian w liczbie i nazwach — 2f3da3d
+- [x] 1.2 Lint i typy — 2f3da3d
 
 #### Manual
 
-- [x] 1.3 Builder używalny bez rzutowań w miejscu wywołania
+- [x] 1.3 Builder używalny bez rzutowań w miejscu wywołania — 2f3da3d
 
 ### Phase 2: Round-trip edycji
 
 #### Automated
 
-- [ ] 2.1 Nowe testy przechodzą
-- [ ] 2.2 Lint i typy
+- [x] 2.1 Nowe testy przechodzą
+- [x] 2.2 Lint i typy
 
 #### Manual
 
-- [ ] 2.3 Test mutacji zapala się po uszkodzeniu `mapRowToRecord`
-- [ ] 2.4 Test invariantu metryk zapala się po podmianie `data: parsed.data` na `data: draft`
+- [x] 2.3 Test mutacji zapala się po uszkodzeniu `mapRowToRecord`
+- [x] 2.4 Test invariantu metryk zapala się po podmianie `data: parsed.data` na `data: draft`
 
 ### Phase 3: Charakteryzacja zdegradowanego jsonb
 
