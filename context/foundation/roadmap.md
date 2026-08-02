@@ -162,7 +162,7 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **Unknowns:**
   - Czy v1 wymaga obu formatów (PDF i JSON), czy wystarczy jeden na start? — Owner: user. Block: no.
 - **Risk:** Nice-to-have poza ścieżką konieczną; przy celu `speed` świadomie ostatni — nie blokuje MVP.
-- **Status:** proposed
+- **Status:** done
 
 ### S-07: Edycja i usuwanie przepisu
 
@@ -207,5 +207,7 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 
 - **F-02: (foundation) struktura modułu obliczeń, kontrakt wyjścia czterech metryk (BLG/ABV/SRM/IBU), typy wejść metryk oraz harness testów potwierdzający poprawność formuł dla standardowych danych są na miejscu (bez implementacji wszystkich formuł — te lądują w slice'ach, które ich potrzebują).** — Archived 2026-08-02 → `context/archive/2026-06-04-calc-engine-harness/`. Lesson: —.
 - **S-07: użytkownik może otworzyć zapisany przepis w trybie edycji (pełny kreator wypełniony istniejącymi danymi), zmodyfikować dowolne pola i zapisać zmiany; może też trwale usunąć przepis po potwierdzeniu w oknie dialogowym.** — Archived 2026-08-02 → `context/archive/2026-06-14-recipe-edit-delete/`. Lesson: —.
+- **S-06: użytkownik może wyeksportować zapisany przepis jako PDF lub JSON.** — Archived 2026-08-02 → `context/archive/2026-06-10-recipe-export/`. Lesson: —.
+
 
 

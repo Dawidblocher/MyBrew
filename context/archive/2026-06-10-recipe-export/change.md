@@ -1,10 +1,10 @@
 ---
 change_id: recipe-export
 title: Eksport zapisanego przepisu jako PDF lub JSON
-status: implemented
+status: archived
 created: 2026-06-10
-updated: 2026-06-10
-archived_at: null
+updated: 2026-08-02
+archived_at: 2026-08-02T13:21:00Z
 ---
 
 ## Notes
