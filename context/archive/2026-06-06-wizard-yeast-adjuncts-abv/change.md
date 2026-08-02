@@ -1,10 +1,10 @@
 ---
 change_id: wizard-yeast-adjuncts-abv
 title: Wizard yeast adjuncts abv
-status: implemented
+status: archived
 created: 2026-06-06
-updated: 2026-06-08
-archived_at: null
+updated: 2026-08-02
+archived_at: 2026-08-02T13:21:00Z
 ---
 
 ## Notes

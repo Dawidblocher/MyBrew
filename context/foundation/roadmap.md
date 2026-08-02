@@ -125,7 +125,7 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Domyka rdzenną obietnicę (cztery metryki na żywo); ryzyko: ABV zależy od odfermentowania drożdży i poprzednich kroków — błąd ujawni się tylko z pełnym przepływem, dlatego harness pokrywa standardowe dane wejściowe.
-- **Status:** proposed
+- **Status:** done
 
 ### S-04: Zapis ukończonego przepisu
 
@@ -212,6 +212,8 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **S-05: użytkownik może zobaczyć listę swoich zapisanych przepisów (tylko do odczytu) z widocznymi czterema metrykami; brak akcji edycji i usuwania w v1.** — Archived 2026-08-02 → `context/archive/2026-06-09-saved-recipes-list/`. Lesson: —.
 - **S-01: użytkownik może rozpocząć nowy przepis w kreatorze, wpisać podstawy (nazwa, styl) oraz skonfigurować parametry warki i dynamiczną listę słodów (dodaj/przesuń/usuń), i widzi na żywo aktualizowane BLG oraz SRM.** — Archived 2026-08-02 → `context/archive/2026-05-31-wizard-basics-grist-blg-srm/`. Lesson: —.
 - **S-02: użytkownik może skonfigurować wydajność zacierania, stosunek wody do słodu i dynamiczną listę przerw zacierania oraz dynamiczną listę dodatków chmielu (etap, czas), i widzi na żywo aktualizowane IBU.** — Archived 2026-08-02 → `context/archive/2026-06-05-wizard-mash-hops-ibu/`. Lesson: —.
+- **S-03: użytkownik może wybrać parametry drożdży (szczep, typ, odfermentowanie, zakres temperatur) i skonfigurować dynamiczną listę dodatków (etap, czas, notatki), i widzi na żywo ABV — w tym momencie wszystkie cztery metryki (BLG/ABV/SRM/IBU) liczą się na żywo w pełnym kreatorze.** — Archived 2026-08-02 → `context/archive/2026-06-06-wizard-yeast-adjuncts-abv/`. Lesson: —.
+
 
 
 
