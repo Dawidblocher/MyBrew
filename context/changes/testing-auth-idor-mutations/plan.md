@@ -366,32 +366,32 @@ Brak migracji danych i schematu. Uruchomienie Fazy 4 wymaga ręcznego utworzenia
 
 #### Automated
 
-- [x] 3.1 Speca przechodzi lokalnie: `npx playwright test --project=crossuser`
-- [x] 3.2 Import fixture'ów przez alias `@/` rozwiązuje się pod Playwrightem
-- [x] 3.3 Projekt gościa i offline suite nadal przechodzą
-- [x] 3.4 Type-check przechodzi: `npm run build`
-- [x] 3.5 Lint jest czysty: `npm run lint`
+- [x] 3.1 Speca przechodzi lokalnie: `npx playwright test --project=crossuser` — 82d043f
+- [x] 3.2 Import fixture'ów przez alias `@/` rozwiązuje się pod Playwrightem — 82d043f
+- [x] 3.3 Projekt gościa i offline suite nadal przechodzą — 82d043f
+- [x] 3.4 Type-check przechodzi: `npm run build` — 82d043f
+- [x] 3.5 Lint jest czysty: `npm run lint` — 82d043f
 
 #### Manual
 
-- [x] 3.6 Po przebiegu brak pozostałości danych testowych w bazie
-- [x] 3.7 Usunięcie filtra własności z `updateRecipe` czerwieni asercję nazwy na stronie B
-- [x] 3.8 Usunięcie filtra własności z `deleteRecipe` czerwieni atak DELETE
-- [x] 3.9 Podmiana stanu B na stan A czerwieni testy ataku
-- [x] 3.10 Niepoprawny payload ataku daje 400 zamiast 404
+- [x] 3.6 Po przebiegu brak pozostałości danych testowych w bazie — 82d043f
+- [x] 3.7 Usunięcie filtra własności z `updateRecipe` czerwieni asercję nazwy na stronie B — 82d043f
+- [x] 3.8 Usunięcie filtra własności z `deleteRecipe` czerwieni atak DELETE — 82d043f
+- [x] 3.9 Podmiana stanu B na stan A czerwieni testy ataku — 82d043f
+- [x] 3.10 Niepoprawny payload ataku daje 400 zamiast 404 — 82d043f
 
 ### Phase 4: CI, cookbook i synchronizacja statusów
 
 #### Automated
 
-- [ ] 4.1 Workflow uruchamia `guest` i `crossuser` w osobnych krokach, bez poświadczeń w kroku gościa
-- [ ] 4.2 Offline suite przechodzi: `npm run test:run`
-- [ ] 4.3 Oba projekty E2E przechodzą
-- [ ] 4.4 Type-check przechodzi: `npm run build`
-- [ ] 4.5 Lint jest czysty: `npm run lint`
+- [x] 4.1 Workflow uruchamia `guest` i `crossuser` w osobnych krokach, bez poświadczeń w kroku gościa
+- [x] 4.2 Offline suite przechodzi: `npm run test:run`
+- [x] 4.3 Oba projekty E2E przechodzą
+- [x] 4.4 Type-check przechodzi: `npm run build`
+- [x] 4.5 Lint jest czysty: `npm run lint`
 
 #### Manual
 
-- [ ] 4.6 Cztery sekrety poświadczeń skonfigurowane w GitHub, konto B istnieje z potwierdzonym e-mailem
-- [ ] 4.7 Przebieg CI nie zostawia danych testowych w bazie
-- [ ] 4.8 Dokumentacja nie odwołuje się już do `PATCH` ani do odroczonego cross-user
+- [x] 4.6 Cztery sekrety poświadczeń skonfigurowane w GitHub, konto B istnieje z potwierdzonym e-mailem
+- [x] 4.7 Przebieg CI nie zostawia danych testowych w bazie
+- [x] 4.8 Dokumentacja nie odwołuje się już do `PATCH` ani do odroczonego cross-user
