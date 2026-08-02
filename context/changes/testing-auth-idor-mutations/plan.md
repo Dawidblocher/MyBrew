@@ -384,14 +384,14 @@ Brak migracji danych i schematu. Uruchomienie Fazy 4 wymaga ręcznego utworzenia
 
 #### Automated
 
-- [x] 4.1 Workflow uruchamia `guest` i `crossuser` w osobnych krokach, bez poświadczeń w kroku gościa
-- [x] 4.2 Offline suite przechodzi: `npm run test:run`
-- [x] 4.3 Oba projekty E2E przechodzą
-- [x] 4.4 Type-check przechodzi: `npm run build`
-- [x] 4.5 Lint jest czysty: `npm run lint`
+- [x] 4.1 Workflow uruchamia `guest` i `crossuser` w osobnych krokach, bez poświadczeń w kroku gościa — b2803bb
+- [x] 4.2 Offline suite przechodzi: `npm run test:run` — b2803bb
+- [x] 4.3 Oba projekty E2E przechodzą — b2803bb
+- [x] 4.4 Type-check przechodzi: `npm run build` — b2803bb
+- [x] 4.5 Lint jest czysty: `npm run lint` — b2803bb
 
 #### Manual
 
-- [x] 4.6 Cztery sekrety poświadczeń skonfigurowane w GitHub, konto B istnieje z potwierdzonym e-mailem
-- [x] 4.7 Przebieg CI nie zostawia danych testowych w bazie
-- [x] 4.8 Dokumentacja nie odwołuje się już do `PATCH` ani do odroczonego cross-user
+- [x] 4.6 Cztery sekrety poświadczeń skonfigurowane w GitHub, konto B istnieje z potwierdzonym e-mailem — b2803bb
+- [x] 4.7 Przebieg CI nie zostawia danych testowych w bazie — b2803bb
+- [x] 4.8 Dokumentacja nie odwołuje się już do `PATCH` ani do odroczonego cross-user — b2803bb
