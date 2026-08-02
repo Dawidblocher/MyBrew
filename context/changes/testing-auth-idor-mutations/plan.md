@@ -337,30 +337,30 @@ Brak migracji danych i schematu. Uruchomienie Fazy 4 wymaga ręcznego utworzenia
 
 #### Automated
 
-- [x] 1.1 Nowe testy mutacji przechodzą: `npm run test:run`
-- [x] 1.2 Type-check przechodzi: `npm run build`
-- [x] 1.3 Lint jest czysty: `npm run lint`
+- [x] 1.1 Nowe testy mutacji przechodzą: `npm run test:run` — 13ccba5
+- [x] 1.2 Type-check przechodzi: `npm run build` — 13ccba5
+- [x] 1.3 Lint jest czysty: `npm run lint` — 13ccba5
 
 #### Manual
 
-- [x] 1.4 Usunięcie filtra własności z `updateRecipe` czerwieni asercję integralności wiersza B
-- [x] 1.5 Usunięcie filtra własności z `deleteRecipe` czerwieni asercję trwałości wiersza B
+- [x] 1.4 Usunięcie filtra własności z `updateRecipe` czerwieni asercję integralności wiersza B — 13ccba5
+- [x] 1.5 Usunięcie filtra własności z `deleteRecipe` czerwieni asercję trwałości wiersza B — 13ccba5
 
 ### Phase 2: Druga tożsamość E2E
 
 #### Automated
 
-- [ ] 2.1 Oba setupy produkują dwa różne pliki `storageState`
-- [ ] 2.2 Istniejące projekty zalogowane przechodzą bez zmiennych konta B: `npx playwright test --project=chromium`
-- [ ] 2.3 Projekt gościa nadal przechodzi: `npx playwright test --project=guest`
-- [ ] 2.4 Type-check przechodzi: `npm run build`
-- [ ] 2.5 Lint jest czysty: `npm run lint`
+- [x] 2.1 Oba setupy produkują dwa różne pliki `storageState`
+- [x] 2.2 Istniejące projekty zalogowane przechodzą bez zmiennych konta B: `npx playwright test --project=chromium`
+- [x] 2.3 Projekt gościa nadal przechodzi: `npx playwright test --project=guest`
+- [x] 2.4 Type-check przechodzi: `npm run build`
+- [x] 2.5 Lint jest czysty: `npm run lint`
 
 #### Manual
 
-- [ ] 2.6 Pliki stanu zawierają różne tokeny sesji
-- [ ] 2.7 Brak `E2E_USERNAME_B` psuje wyłącznie tor cross-user
-- [ ] 2.8 Identyczny e-mail obu kont zatrzymuje setup z jawnym błędem
+- [x] 2.6 Pliki stanu zawierają różne tokeny sesji
+- [x] 2.7 Brak `E2E_USERNAME_B` psuje wyłącznie tor cross-user
+- [x] 2.8 Identyczny e-mail obu kont zatrzymuje setup z jawnym błędem
 
 ### Phase 3: Speca IDOR cross-user
 

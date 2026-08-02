@@ -29,8 +29,17 @@ applyEnvFile(".env.test", { override: true });
 /** Signed-in browser state produced by the `setup` project (see `tests/auth.setup.ts`). */
 export const STORAGE_STATE = path.join(rootDir, "playwright/.auth/user.json");
 
+/** Second identity for cross-user specs (see `tests/auth-crossuser.setup.ts`). */
+export const STORAGE_STATE_B = path.join(rootDir, "playwright/.auth/user-b.json");
+
 /** Guest-only specs must not run under signed-in projects (storageState would defeat redirects). */
 const GUEST_SPEC = /auth-read-boundary\.spec\.ts/;
+
+/** Cross-user IDOR specs own both identities via explicit contexts — never inherit A's storageState. */
+const CROSSUSER_SPEC = /idor-mutations\.spec\.ts/;
+
+/** Specs that must not run under single-identity signed-in browser projects. */
+const SIGNED_IN_IGNORE = [GUEST_SPEC, CROSSUSER_SPEC];
 
 const baseURL = process.env.E2E_BASE_URL ?? "http://localhost:4321";
 
@@ -60,8 +69,11 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    /* Logs in once and writes STORAGE_STATE; every signed-in browser project depends on it. */
-    { name: "setup", testMatch: /.*\.setup\.ts/ },
+    /* Account A — existing signed-in projects depend only on this setup. */
+    { name: "setup", testMatch: /auth\.setup\.ts/ },
+
+    /* Account B — optional; only the cross-user track depends on it. */
+    { name: "setup-crossuser", testMatch: /auth-crossuser\.setup\.ts/ },
 
     /**
      * Unauthenticated Chromium — no storageState, no setup dependency.
@@ -75,23 +87,34 @@ export default defineConfig({
 
     {
       name: "chromium",
-      testIgnore: GUEST_SPEC,
+      testIgnore: SIGNED_IN_IGNORE,
       use: { ...devices["Desktop Chrome"], storageState: STORAGE_STATE },
       dependencies: ["setup"],
     },
 
     {
       name: "firefox",
-      testIgnore: GUEST_SPEC,
+      testIgnore: SIGNED_IN_IGNORE,
       use: { ...devices["Desktop Firefox"], storageState: STORAGE_STATE },
       dependencies: ["setup"],
     },
 
     {
       name: "webkit",
-      testIgnore: GUEST_SPEC,
+      testIgnore: SIGNED_IN_IGNORE,
       use: { ...devices["Desktop Safari"], storageState: STORAGE_STATE },
       dependencies: ["setup"],
+    },
+
+    /**
+     * Cross-user IDOR track — no project-level storageState; the spec builds
+     * separate contexts from STORAGE_STATE and STORAGE_STATE_B.
+     */
+    {
+      name: "crossuser",
+      testMatch: CROSSUSER_SPEC,
+      use: { ...devices["Desktop Chrome"] },
+      dependencies: ["setup", "setup-crossuser"],
     },
   ],
 
