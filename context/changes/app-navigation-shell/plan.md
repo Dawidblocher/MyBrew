@@ -348,25 +348,25 @@ No data or schema migration. The one-way structural migration is the background 
 
 #### Automated
 
-- [x] 3.1 Linting passes: `npm run lint`
-- [x] 3.2 Build passes: `npm run build`
+- [x] 3.1 Linting passes: `npm run lint` — 5ac491f
+- [x] 3.2 Build passes: `npm run build` — 5ac491f
 
 #### Manual
 
-- [ ] 3.3 Items collapse behind the hamburger at 375px and it opens and closes
-- [ ] 3.4 Hamburger and panel contents fully keyboard-operable with visible focus rings
-- [ ] 3.5 Active link exposes `aria-current="page"`
-- [ ] 3.6 Full horizontal row at `sm` and above, no hamburger
-- [ ] 3.7 Guest and signed-in variants of the collapsed menu both correct
+- [x] 3.3 Items collapse behind the hamburger at 375px and it opens and closes — 5ac491f
+- [x] 3.4 Hamburger and panel contents fully keyboard-operable with visible focus rings — 5ac491f
+- [x] 3.5 Active link exposes `aria-current="page"` — 5ac491f
+- [x] 3.6 Full horizontal row at `sm` and above, no hamburger — 5ac491f
+- [x] 3.7 Guest and signed-in variants of the collapsed menu both correct — 5ac491f
 
 ### Phase 4: Redundancy cleanup and cross-route regression sweep
 
 #### Automated
 
-- [ ] 4.1 Linting passes: `npm run lint`
-- [ ] 4.2 Build passes: `npm run build`
-- [ ] 4.3 Unit tests pass: `npm run test:run`
-- [ ] 4.4 Guest auth-boundary suite passes: `npx playwright test --project=guest`
+- [x] 4.1 Linting passes: `npm run lint`
+- [x] 4.2 Build passes: `npm run build`
+- [x] 4.3 Unit tests pass: `npm run test:run`
+- [x] 4.4 Guest auth-boundary suite passes: `npx playwright test --project=guest`
 
 #### Manual
 
