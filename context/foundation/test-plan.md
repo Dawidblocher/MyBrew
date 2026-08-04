@@ -53,7 +53,7 @@ Trzy zasady obowiązujące we wszystkich fazach rollout i we wszystkich testach 
 | --- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------- | ------ | --------------------------------------------------- | ----------- | ------------------------------------------------- |
 | 1   | Integralność seamu i zapisu  | Udowodnić, że wizard draft → silnik mapuje poprawnie dla wszystkich stanów kreatora i że round-trip zapisu nie gubi danych | #1, #3 | Testy integracyjne (Vitest, node)                   | complete    | context/changes/testing-seam-save-integrity/      |
 | 2   | Ochrona autoryzacji          | Udowodnić izolację przepisów per user i że mutacje wymagają potwierdzenia własności zasobu                                 | #2, #4 | Testy integracyjne auth/API (Supabase SSR lub mock) | complete    | context/changes/testing-auth-read-boundary/, context/changes/testing-auth-idor-mutations/ |
-| 3   | Round-trip edycji i usuwania | Udowodnić, że tryb edycji S-07 nie korumpuje danych przy save i że usuwanie jest trwałe oraz wymaga bycia właścicielem     | #5     | Testy integracyjne (recipe-mappers + edit flow)     | not started | —                                                 |
+| 3   | Round-trip edycji i usuwania | Udowodnić, że tryb edycji S-07 nie korumpuje danych przy save i że usuwanie jest trwałe oraz wymaga bycia właścicielem     | #5     | Testy integracyjne (recipe-mappers + edit flow)     | complete    | context/changes/testing-edit-delete-roundtrip/    |
 
 ---
 

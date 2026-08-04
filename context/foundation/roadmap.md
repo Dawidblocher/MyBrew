@@ -3,7 +3,7 @@ project: Beer Recipe Builder
 version: 1
 status: draft
 created: 2026-05-28
-updated: 2026-08-02
+updated: 2026-08-04
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -29,7 +29,7 @@ Tworzenie przepisu na piwo wymaga wielu ręcznych obliczeń (BLG, ABV, SRM, IBU)
 
 | ID   | Change ID                   | Outcome (user can …)                                                            | Prerequisites | PRD refs                                       | Status   |
 | ---- | --------------------------- | ------------------------------------------------------------------------------- | ------------- | ---------------------------------------------- | -------- |
-| F-01 | recipe-persistence-model    | (foundation) model danych przepisu + RLS + typy współdzielone                   | —             | FR-001, FR-002, FR-011, FR-012, Access Control | ready    |
+| F-01 | recipe-persistence-model    | (foundation) model danych przepisu + RLS + typy współdzielone                   | —             | FR-001, FR-002, FR-011, FR-012, Access Control | done     |
 | F-02 | calc-engine-harness         | (foundation) szkielet silnika obliczeń + harness testów poprawności             | —             | FR-010, NFR (poprawność)                       | done     |
 | S-01 | wizard-basics-grist-blg-srm | rozpocząć kreator, wpisać podstawy i zasyp, zobaczyć na żywo BLG/SRM            | F-02          | FR-003, FR-004, FR-005, FR-010                 | done     |
 | S-02 | wizard-mash-hops-ibu        | skonfigurować zacieranie i chmiel, zobaczyć na żywo IBU                         | S-01          | FR-006, FR-007, FR-010                         | done     |
@@ -38,6 +38,8 @@ Tworzenie przepisu na piwo wymaga wielu ręcznych obliczeń (BLG, ABV, SRM, IBU)
 | S-05 | saved-recipes-list          | zobaczyć listę zapisanych przepisów (tylko do odczytu) z metrykami              | F-01, S-04    | FR-012                                         | done     |
 | S-06 | recipe-export               | wyeksportować zapisany przepis jako PDF lub JSON                                | S-05          | FR-013                                         | done     |
 | S-07 | recipe-edit-delete          | edytować istniejący przepis (pełny kreator) i trwale go usunąć z potwierdzeniem | S-05          | —                                              | done     |
+| S-08 | app-navigation-shell        | poruszać się po aplikacji ze spójnego, trwałego paska nawigacji na każdej stronie | —             | — (UX, post-v1)                                | done     |
+| S-09 | product-landing-page        | zrozumieć czym jest aplikacja od razu po wejściu na stronę główną, z jasnym CTA  | —             | — (UX, post-v1)                                | planned  |
 
 ## Streams
 
@@ -48,6 +50,7 @@ Pomoc nawigacyjna — grupuje pozycje dzielące ten sam łańcuch zależności. 
 | A      | Kreator i obliczenia na żywo | `F-02` → `S-01` → `S-02` → `S-03` | Ścieżka konieczna do gwiazdy przewodniej; priorytet przy celu `speed`.                   |
 | B      | Trwałość, lista i eksport    | `F-01` → `S-04` → `S-05` → `S-06` | `F-01` można budować równolegle do całego Stream A; `S-04` dołącza do Stream A w `S-03`. |
 | C      | Edycja i usuwanie            | `S-05` → `S-07`                   | Odgałęzienie od Stream B po S-05; można budować równolegle do S-06.                      |
+| D      | UX i nawigacja               | `S-08` → `S-09`                   | Warstwa UX na gotowym produkcie v1; `S-08` (nawigacja) daje shell, z którego korzysta `S-09` (strona główna). Oba niezależne od Streamów A–C. |
 
 ## Baseline
 
@@ -74,7 +77,7 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Sekwencjonowane wcześnie i równolegle do kreatora, bo persystencja jest potrzebna dopiero przy S-04; ryzyko: zbyt rozbudowany model — trzymać minimalny pojedynczy model przepisu, nie odtwarzać auth.
-- **Status:** ready
+- **Status:** done
 
 ### F-02: Szkielet silnika obliczeń + harness testów poprawności
 
@@ -177,6 +180,32 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **Risk:** Reużywa logiki kreatora (S-01–S-03) w trybie "wypełnij z istniejących danych" — ryzyko dryfu między kształtem formularza a zapisanym schematem, minimalizowane przez współdzielone typy z F-01. Usuwanie jest nieodwracalne — wymagać wyraźnego potwierdzenia użytkownika przed operacją.
 - **Status:** done
 
+### S-08: Spójna globalna nawigacja (app shell)
+
+- **Outcome:** użytkownik porusza się po całej aplikacji z jednego, trwałego paska nawigacji obecnego na każdej stronie (strona główna, lista przepisów, kreator, szczegóły, dashboard): widzi markę/nazwę aplikacji prowadzącą do strony startowej, ma stały dostęp do „Twoje przepisy" i „Nowy przepis", widzi swój stan zalogowania (e-mail) oraz akcję wylogowania; aktywna sekcja jest wizualnie wyróżniona, a nawigacja jest responsywna (na wąskich ekranach zwijana do menu).
+- **Change ID:** app-navigation-shell
+- **PRD refs:** — (UX, post-v1; nie zmienia zakresu funkcjonalnego v1)
+- **Prerequisites:** — (produkt v1 gotowy)
+- **Parallel with:** Streamy A–C (zakończone); niezależne od S-09, ale S-09 z niego korzysta
+- **Blockers:** —
+- **Unknowns:**
+  - Czy nawigacja różni się dla stanu zalogowany/niezalogowany (np. ukrycie „Twoje przepisy" gdy brak sesji)? — Owner: user. Block: no.
+- **Risk:** Obecny `Topbar` renderuje się tylko wewnątrz `Welcome.astro`, więc reszta stron nie ma nawigacji; ryzyko: wyniesienie nawigacji do wspólnego `Layout.astro`/komponentu shell może wpłynąć na wszystkie strony (odstępy, tło `bg-cosmic`) — trzymać zmianę w warstwie layoutu, nie dotykać logiki stron. Bez zmian w danych/API.
+- **Status:** done
+
+### S-09: Produktowa strona główna (landing)
+
+- **Outcome:** użytkownik trafiający na `/` od razu rozumie, czym jest aplikacja — kreator przepisów na piwo z obliczeniami BLG, ABV, SRM i IBU na żywo — zamiast generycznego szablonu „10x Astro Starter"; treść (nagłówek, opis, karty korzyści) opisuje realny produkt po polsku, a jasne CTA prowadzi niezalogowanego do rejestracji/logowania, a zalogowanego bezpośrednio do „Twoje przepisy" / „Nowy przepis".
+- **Change ID:** product-landing-page
+- **PRD refs:** — (UX, post-v1; wspiera zrozumienie rdzennej obietnicy z Vision recap)
+- **Prerequisites:** — (może użyć nawigacji z S-08, ale nie blokuje)
+- **Parallel with:** S-08
+- **Blockers:** —
+- **Unknowns:**
+  - Czy landing ma być dostępny również dla zalogowanych (marketingowy) czy dla zalogowanych od razu przekierowywać na listę przepisów? — Owner: user. Block: no.
+- **Risk:** Zmiana głównie prezentacyjna (`Welcome.astro`); ryzyko niskie — brak wpływu na dane i obliczenia. Uwaga: usunąć treści boilerplate startera, by nie wprowadzać użytkownika w błąd.
+- **Status:** planned
+
 ## Backlog Handoff
 
 | Roadmap ID | Change ID                   | Suggested issue title                                     | Ready for `/10x-plan` | Notes                                    |
@@ -190,6 +219,8 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 | S-05       | saved-recipes-list          | Lista zapisanych przepisów (tylko do odczytu)             | no                    | Wymaga F-01, S-04                        |
 | S-06       | recipe-export               | Eksport przepisu jako PDF/JSON                            | no                    | Wymaga S-05; nice-to-have                |
 | S-07       | recipe-edit-delete          | Edycja i usuwanie przepisu                                | no                    | Wymaga S-05; można równolegle do S-06    |
+| S-08       | app-navigation-shell        | Spójna globalna nawigacja (app shell)                     | yes                   | Run `/10x-plan app-navigation-shell`     |
+| S-09       | product-landing-page        | Produktowa strona główna (landing)                        | yes                   | Run `/10x-plan product-landing-page`; może korzystać z S-08 |
 
 ## Open Roadmap Questions
 
@@ -205,6 +236,7 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 
 ## Done
 
+- **F-01: (foundation) model danych przepisu (migracja Supabase z zagnieżdżonymi danymi), polityki RLS wiązane z `auth.uid()` oraz współdzielone typy encji w `src/types.ts` są na miejscu.** — Zrealizowane w kodzie: `supabase/migrations/20260609100000_create_recipes.sql`, `supabase/migrations/20260609110000_grant_recipes.sql` oraz typy przepisu w `src/types.ts`; model powstał razem z pracą nad zapisem (S-04), bez osobnego folderu zmiany. Lesson: —.
 - **F-02: (foundation) struktura modułu obliczeń, kontrakt wyjścia czterech metryk (BLG/ABV/SRM/IBU), typy wejść metryk oraz harness testów potwierdzający poprawność formuł dla standardowych danych są na miejscu (bez implementacji wszystkich formuł — te lądują w slice'ach, które ich potrzebują).** — Archived 2026-08-02 → `context/archive/2026-06-04-calc-engine-harness/`. Lesson: —.
 - **S-07: użytkownik może otworzyć zapisany przepis w trybie edycji (pełny kreator wypełniony istniejącymi danymi), zmodyfikować dowolne pola i zapisać zmiany; może też trwale usunąć przepis po potwierdzeniu w oknie dialogowym.** — Archived 2026-08-02 → `context/archive/2026-06-14-recipe-edit-delete/`. Lesson: —.
 - **S-06: użytkownik może wyeksportować zapisany przepis jako PDF lub JSON.** — Archived 2026-08-02 → `context/archive/2026-06-10-recipe-export/`. Lesson: —.
@@ -213,6 +245,7 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **S-01: użytkownik może rozpocząć nowy przepis w kreatorze, wpisać podstawy (nazwa, styl) oraz skonfigurować parametry warki i dynamiczną listę słodów (dodaj/przesuń/usuń), i widzi na żywo aktualizowane BLG oraz SRM.** — Archived 2026-08-02 → `context/archive/2026-05-31-wizard-basics-grist-blg-srm/`. Lesson: —.
 - **S-02: użytkownik może skonfigurować wydajność zacierania, stosunek wody do słodu i dynamiczną listę przerw zacierania oraz dynamiczną listę dodatków chmielu (etap, czas), i widzi na żywo aktualizowane IBU.** — Archived 2026-08-02 → `context/archive/2026-06-05-wizard-mash-hops-ibu/`. Lesson: —.
 - **S-03: użytkownik może wybrać parametry drożdży (szczep, typ, odfermentowanie, zakres temperatur) i skonfigurować dynamiczną listę dodatków (etap, czas, notatki), i widzi na żywo ABV — w tym momencie wszystkie cztery metryki (BLG/ABV/SRM/IBU) liczą się na żywo w pełnym kreatorze.** — Archived 2026-08-02 → `context/archive/2026-06-06-wizard-yeast-adjuncts-abv/`. Lesson: —.
+- **S-08: użytkownik porusza się po całej aplikacji z jednego, trwałego paska nawigacji obecnego na każdej stronie (strona główna, lista przepisów, kreator, szczegóły, dashboard): widzi markę/nazwę aplikacji prowadzącą do strony startowej, ma stały dostęp do „Twoje przepisy" i „Nowy przepis", widzi swój stan zalogowania (e-mail) oraz akcję wylogowania; aktywna sekcja jest wizualnie wyróżniona, a nawigacja jest responsywna (na wąskich ekranach zwijana do menu).** — Archived 2026-08-04 → `context/archive/2026-08-04-app-navigation-shell/`. Lesson: —.
 
 
 
