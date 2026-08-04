@@ -12,6 +12,17 @@ const pathname = Astro.url.pathname;
 const suppressed = isNavSuppressedPath(pathname);
 const navItems = user ? SIGNED_IN_NAV_ITEMS : GUEST_NAV_ITEMS;
 const activeHref = resolveActiveHref(pathname, navItems);
+
+const focusRing =
+  "rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent";
+
+function linkClass(href: string): string[] {
+  return [
+    focusRing,
+    "px-2 py-1 transition-colors hover:text-purple-100",
+    activeHref === href ? "font-medium text-white" : "text-blue-100/70 hover:underline",
+  ];
+}
 ---
 
 {
@@ -20,19 +31,19 @@ const activeHref = resolveActiveHref(pathname, navItems);
       <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-8" aria-label="Główne menu">
         <a
           href={NAV_BRAND_HREF}
-          class="shrink-0 text-sm font-semibold text-white transition-colors hover:text-purple-200"
+          class:list={[
+            focusRing,
+            "shrink-0 px-2 py-1 text-sm font-semibold text-white transition-colors hover:text-purple-200",
+          ]}
         >
           Beer Recipe Builder
         </a>
 
-        <div class="flex items-center gap-4 text-sm">
+        <div class="hidden items-center gap-4 text-sm sm:flex">
           {navItems.map((item) => (
             <a
               href={item.href}
-              class:list={[
-                "transition-colors hover:text-purple-100",
-                activeHref === item.href ? "font-medium text-white" : "text-blue-100/70 hover:underline",
-              ]}
+              class:list={linkClass(item.href)}
               aria-current={activeHref === item.href ? "page" : undefined}
             >
               {item.label}
@@ -43,14 +54,88 @@ const activeHref = resolveActiveHref(pathname, navItems);
             <>
               <span class="text-blue-100/70">{user.email}</span>
               <form method="POST" action="/api/auth/signout">
-                <button type="submit" class="text-purple-300 transition-colors hover:text-purple-100 hover:underline">
+                <button
+                  type="submit"
+                  class:list={[
+                    focusRing,
+                    "px-2 py-1 text-purple-300 transition-colors hover:text-purple-100 hover:underline",
+                  ]}
+                >
                   Wyloguj się
                 </button>
               </form>
             </>
           )}
         </div>
+
+        <details class="nav-menu relative sm:hidden">
+          <summary
+            class:list={[
+              focusRing,
+              "flex cursor-pointer items-center justify-center p-2 text-blue-100/70 transition-colors hover:text-purple-100",
+            ]}
+            aria-label="Menu nawigacji"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="4" x2="20" y1="6" y2="6" />
+              <line x1="4" x2="20" y1="12" y2="12" />
+              <line x1="4" x2="20" y1="18" y2="18" />
+            </svg>
+          </summary>
+
+          <div class="absolute right-0 z-30 mt-2 min-w-48 rounded-xl border border-white/10 bg-white/10 p-3 backdrop-blur-xl">
+            <div class="flex flex-col gap-1 text-sm">
+              {navItems.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={[linkClass(item.href), "block"]}
+                  aria-current={activeHref === item.href ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              ))}
+
+              {user && (
+                <>
+                  <span class="mt-2 border-t border-white/10 px-2 py-2 text-blue-100/70">{user.email}</span>
+                  <form method="POST" action="/api/auth/signout">
+                    <button
+                      type="submit"
+                      class:list={[
+                        focusRing,
+                        "w-full px-2 py-1 text-left text-purple-300 transition-colors hover:text-purple-100 hover:underline",
+                      ]}
+                    >
+                      Wyloguj się
+                    </button>
+                  </form>
+                </>
+              )}
+            </div>
+          </div>
+        </details>
       </nav>
     </header>
   )
 }
+
+<style>
+  .nav-menu summary {
+    list-style: none;
+  }
+
+  .nav-menu summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

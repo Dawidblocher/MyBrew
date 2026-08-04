@@ -328,28 +328,28 @@ No data or schema migration. The one-way structural migration is the background 
 
 #### Automated
 
-- [x] 2.1 Linting passes: `npm run lint`
-- [x] 2.2 Build passes: `npm run build`
-- [x] 2.3 Unit tests still pass: `npm run test:run`
-- [x] 2.4 No references to the deleted component remain: `rg "Topbar" src`
+- [x] 2.1 Linting passes: `npm run lint` — 9e4bc6e
+- [x] 2.2 Build passes: `npm run build` — 9e4bc6e
+- [x] 2.3 Unit tests still pass: `npm run test:run` — 9e4bc6e
+- [x] 2.4 No references to the deleted component remain: `rg "Topbar" src` — 9e4bc6e
 
 #### Manual
 
-- [ ] 2.5 Nav appears on all six product routes
-- [ ] 2.6 Nav absent on the three `/auth/*` routes, background still cosmic
-- [ ] 2.7 No spurious scrollbars; centered cards centered below the nav
-- [ ] 2.8 Homepage shows exactly one bar, orbs and star field unchanged
-- [ ] 2.9 Nav stays pinned when scrolling recipe detail, above the blurred cards
-- [ ] 2.10 Correct single item highlighted on each route
-- [ ] 2.11 Signed-in shows e-mail and "Wyloguj się"; guest shows "Zaloguj" / "Zarejestruj"
-- [ ] 2.12 Sign-out from the nav ends the session and lands on `/`
+- [x] 2.5 Nav appears on all six product routes — 9e4bc6e
+- [x] 2.6 Nav absent on the three `/auth/*` routes, background still cosmic — 9e4bc6e
+- [x] 2.7 No spurious scrollbars; centered cards centered below the nav — 9e4bc6e
+- [x] 2.8 Homepage shows exactly one bar, orbs and star field unchanged — 9e4bc6e
+- [x] 2.9 Nav stays pinned when scrolling recipe detail, above the blurred cards — 9e4bc6e
+- [x] 2.10 Correct single item highlighted on each route — 9e4bc6e
+- [x] 2.11 Signed-in shows e-mail and "Wyloguj się"; guest shows "Zaloguj" / "Zarejestruj" — 9e4bc6e
+- [x] 2.12 Sign-out from the nav ends the session and lands on `/` — 9e4bc6e
 
 ### Phase 3: Narrow-screen collapse and accessibility
 
 #### Automated
 
-- [ ] 3.1 Linting passes: `npm run lint`
-- [ ] 3.2 Build passes: `npm run build`
+- [x] 3.1 Linting passes: `npm run lint`
+- [x] 3.2 Build passes: `npm run build`
 
 #### Manual
 
