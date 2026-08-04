@@ -363,15 +363,15 @@ No data or schema migration. The one-way structural migration is the background 
 
 #### Automated
 
-- [x] 4.1 Linting passes: `npm run lint`
-- [x] 4.2 Build passes: `npm run build`
-- [x] 4.3 Unit tests pass: `npm run test:run`
-- [x] 4.4 Guest auth-boundary suite passes: `npx playwright test --project=guest`
+- [x] 4.1 Linting passes: `npm run lint` — be85702
+- [x] 4.2 Build passes: `npm run build` — be85702
+- [x] 4.3 Unit tests pass: `npm run test:run` — be85702
+- [x] 4.4 Guest auth-boundary suite passes: `npx playwright test --project=guest` — be85702
 
 #### Manual
 
-- [ ] 4.5 `/dashboard` has exactly one sign-out control
-- [ ] 4.6 All ten routes correct signed-in and as guest, desktop and 375px
-- [ ] 4.7 Tab titles show the product name, no "10x Astro Starter" remaining
-- [ ] 4.8 Page source declares `lang="pl"`
-- [ ] 4.9 List CTAs and the detail-page back link still present and working
+- [x] 4.5 `/dashboard` has exactly one sign-out control — be85702
+- [x] 4.6 All ten routes correct signed-in and as guest, desktop and 375px — be85702
+- [x] 4.7 Tab titles show the product name, no "10x Astro Starter" remaining — be85702
+- [x] 4.8 Page source declares `lang="pl"` — be85702
+- [x] 4.9 List CTAs and the detail-page back link still present and working — be85702

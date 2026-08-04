@@ -1,7 +1,7 @@
 ﻿---
 change_id: app-navigation-shell
 title: App navigation shell
-status: implementing
+status: implemented
 created: 2026-08-04
 updated: 2026-08-04
 archived_at: null
