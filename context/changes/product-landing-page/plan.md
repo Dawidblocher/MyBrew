@@ -200,11 +200,11 @@ None — no data or schema involved.
 
 #### Automated
 
-- [x] 2.1 Linting passes: `npm run lint`
-- [x] 2.2 Production build succeeds: `npm run build`
+- [x] 2.1 Linting passes: `npm run lint` — 2c14d13
+- [x] 2.2 Production build succeeds: `npm run build` — 2c14d13
 
 #### Manual
 
-- [x] 2.3 Logged-in `/` shows "Twoje przepisy" / "Nowy przepis" CTAs with correct hrefs
-- [x] 2.4 At ≈375px width everything stacks cleanly with no horizontal scroll
-- [x] 2.5 `AppNav` still renders correctly above the landing in both auth states
+- [x] 2.3 Logged-in `/` shows "Twoje przepisy" / "Nowy przepis" CTAs with correct hrefs — 2c14d13
+- [x] 2.4 At ≈375px width everything stacks cleanly with no horizontal scroll — 2c14d13
+- [x] 2.5 `AppNav` still renders correctly above the landing in both auth states — 2c14d13
