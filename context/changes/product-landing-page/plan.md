@@ -186,25 +186,25 @@ None — no data or schema involved.
 
 #### Automated
 
-- [x] 1.1 Linting passes: `npm run lint`
-- [x] 1.2 Production build succeeds: `npm run build`
+- [x] 1.1 Linting passes: `npm run lint` — a90952a
+- [x] 1.2 Production build succeeds: `npm run build` — a90952a
 
 #### Manual
 
-- [x] 1.3 Guest `/` shows Polish hero, BLG/ABV/SRM/IBU badges, and correct guest CTAs
-- [x] 1.4 No English copy or starter-boilerplate text remains on the page
-- [x] 1.5 Three benefit cards describe the real product in Polish
-- [x] 1.6 Cosmic orbs and star field still render, scoped to the hero (no scrollbar regression)
+- [x] 1.3 Guest `/` shows Polish hero, BLG/ABV/SRM/IBU badges, and correct guest CTAs — a90952a
+- [x] 1.4 No English copy or starter-boilerplate text remains on the page — a90952a
+- [x] 1.5 Three benefit cards describe the real product in Polish — a90952a
+- [x] 1.6 Cosmic orbs and star field still render, scoped to the hero (no scrollbar regression) — a90952a
 
 ### Phase 2: Verification sweep
 
 #### Automated
 
-- [ ] 2.1 Linting passes: `npm run lint`
-- [ ] 2.2 Production build succeeds: `npm run build`
+- [x] 2.1 Linting passes: `npm run lint`
+- [x] 2.2 Production build succeeds: `npm run build`
 
 #### Manual
 
-- [ ] 2.3 Logged-in `/` shows "Twoje przepisy" / "Nowy przepis" CTAs with correct hrefs
-- [ ] 2.4 At ≈375px width everything stacks cleanly with no horizontal scroll
-- [ ] 2.5 `AppNav` still renders correctly above the landing in both auth states
+- [x] 2.3 Logged-in `/` shows "Twoje przepisy" / "Nowy przepis" CTAs with correct hrefs
+- [x] 2.4 At ≈375px width everything stacks cleanly with no horizontal scroll
+- [x] 2.5 `AppNav` still renders correctly above the landing in both auth states
