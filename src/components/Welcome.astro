@@ -1,3 +1,19 @@
+---
+const { user } = Astro.locals;
+
+const ctas = user
+  ? {
+      primary: { label: "Twoje przepisy", href: "/recipes" },
+      secondary: { label: "Nowy przepis", href: "/recipes/new" },
+    }
+  : {
+      primary: { label: "Zacznij za darmo", href: "/auth/signup" },
+      secondary: { label: "Zaloguj się", href: "/auth/signin" },
+    };
+
+const metrics = ["BLG", "ABV", "SRM", "IBU"] as const;
+---
+
 <div class="relative flex w-full flex-1 overflow-hidden">
   <!-- Cosmic orbs -->
   <div
@@ -20,34 +36,48 @@
   >
   </div>
 
-  <div class="relative z-10 p-4 sm:p-8">
+  <div class="relative z-10 w-full p-4 sm:p-8">
     <!-- Hero section -->
     <div class="mx-auto flex max-w-4xl flex-col items-center justify-center px-4 py-24 text-center sm:py-32 lg:py-40">
       <h1
         class="mb-6 bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-text text-5xl leading-tight font-bold text-transparent sm:text-6xl lg:text-7xl"
       >
-        10x Astro Starter
+        Beer Recipe Builder
       </h1>
-      <p class="mb-10 max-w-2xl text-lg text-blue-100/70 sm:text-xl">
-        A production-ready starter with authentication, modern tooling, and a cosmic developer experience.
+      <p class="mb-8 max-w-2xl text-lg text-blue-100/70 sm:text-xl">
+        Kreator przepisów piwnych krok po kroku z obliczeniami BLG, ABV, SRM i IBU na żywo — bez arkuszy i zewnętrznych
+        kalkulatorów.
       </p>
+
+      <div class="mb-10 flex flex-wrap items-center justify-center gap-3">
+        {
+          metrics.map((metric) => (
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white backdrop-blur-xl">
+              <span class="text-purple-200">{metric}</span>
+              <span class="text-blue-100/50">·</span>
+              <span class="text-blue-100/60">na żywo</span>
+            </span>
+          ))
+        }
+      </div>
+
       <div class="flex flex-col gap-4 sm:flex-row">
         <a
-          href="/auth/signin"
+          href={ctas.primary.href}
           class="inline-flex items-center justify-center rounded-lg bg-purple-600 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-purple-500"
         >
-          Sign In
+          {ctas.primary.label}
         </a>
         <a
-          href="/auth/signup"
+          href={ctas.secondary.href}
           class="inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-white/10"
         >
-          Sign Up
+          {ctas.secondary.label}
         </a>
       </div>
     </div>
 
-    <!-- Feature cards -->
+    <!-- Benefit cards -->
     <div class="mx-auto grid max-w-4xl grid-cols-1 gap-6 px-4 pb-24 sm:grid-cols-3">
       <div class="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
         <svg
@@ -62,12 +92,13 @@
           stroke-linejoin="round"
           class="mb-4 text-purple-300"
         >
-          <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          <path d="M3 3v18h18"></path>
+          <path d="m19 9-5 5-4-4-3 3"></path>
         </svg>
-        <h3 class="mb-2 text-lg font-semibold text-white">Authentication Ready</h3>
+        <h3 class="mb-2 text-lg font-semibold text-white">Obliczenia na żywo</h3>
         <p class="text-sm leading-relaxed text-blue-100/60">
-          Built-in Supabase auth with sign in, sign up, and protected routes out of the box.
+          BLG, ABV, SRM i IBU aktualizują się automatycznie w trakcie tworzenia przepisu — widzisz wynik od razu, zanim
+          zapiszesz.
         </p>
       </div>
 
@@ -88,9 +119,10 @@
           <polyline points="2 17 12 22 22 17"></polyline>
           <polyline points="2 12 12 17 22 12"></polyline>
         </svg>
-        <h3 class="mb-2 text-lg font-semibold text-white">Modern Stack</h3>
+        <h3 class="mb-2 text-lg font-semibold text-white">Pełny kreator krok po kroku</h3>
         <p class="text-sm leading-relaxed text-blue-100/60">
-          Astro 5, React 19, Tailwind 4, and TypeScript — the latest tools, ready to go.
+          Podstawy → zasyp → zacieranie → chmiel → drożdże → dodatki. Każdy etap w jednym przewodniku, bez
+          przeskakiwania między narzędziami.
         </p>
       </div>
 
@@ -107,12 +139,16 @@
           stroke-linejoin="round"
           class="mb-4 text-purple-300"
         >
-          <polyline points="16 18 22 12 16 6"></polyline>
-          <polyline points="8 6 2 12 8 18"></polyline>
+          <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+          <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+          <path d="M10 9H8"></path>
+          <path d="M16 13H8"></path>
+          <path d="M16 17H8"></path>
         </svg>
-        <h3 class="mb-2 text-lg font-semibold text-white">Developer Experience</h3>
+        <h3 class="mb-2 text-lg font-semibold text-white">Zapis i przegląd przepisów</h3>
         <p class="text-sm leading-relaxed text-blue-100/60">
-          ESLint, Prettier, and pre-commit hooks keep your codebase clean from day one.
+          Zapisuj gotowe przepisy na swoim koncie i wracaj do listy z kluczowymi parametrami — wszystko w jednym
+          miejscu.
         </p>
       </div>
     </div>
