@@ -20,7 +20,7 @@ if (!record) {
 {
   !record ? (
     <Layout title="Nie znaleziono przepisu">
-      <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
+      <div class="flex flex-1 items-center justify-center p-4">
         <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
           <h1 class="mb-4 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
             Nie znaleziono przepisu
@@ -37,7 +37,7 @@ if (!record) {
     </Layout>
   ) : (
     <Layout title={`Edytuj: ${record.name}`}>
-      <div class="bg-cosmic min-h-screen p-4 md:p-8">
+      <div class="p-4 md:p-8">
         <div class="mx-auto max-w-4xl">
           <RecipeWizard client:load recipeId={id} initialData={record.data} />
         </div>

@@ -1,0 +1,56 @@
+---
+import {
+  GUEST_NAV_ITEMS,
+  isNavSuppressedPath,
+  NAV_BRAND_HREF,
+  resolveActiveHref,
+  SIGNED_IN_NAV_ITEMS,
+} from "@/lib/nav-items";
+
+const { user } = Astro.locals;
+const pathname = Astro.url.pathname;
+const suppressed = isNavSuppressedPath(pathname);
+const navItems = user ? SIGNED_IN_NAV_ITEMS : GUEST_NAV_ITEMS;
+const activeHref = resolveActiveHref(pathname, navItems);
+---
+
+{
+  !suppressed && (
+    <header class="sticky top-0 z-20 border-b border-white/10 bg-white/5 backdrop-blur-xl">
+      <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-8" aria-label="Główne menu">
+        <a
+          href={NAV_BRAND_HREF}
+          class="shrink-0 text-sm font-semibold text-white transition-colors hover:text-purple-200"
+        >
+          Beer Recipe Builder
+        </a>
+
+        <div class="flex items-center gap-4 text-sm">
+          {navItems.map((item) => (
+            <a
+              href={item.href}
+              class:list={[
+                "transition-colors hover:text-purple-100",
+                activeHref === item.href ? "font-medium text-white" : "text-blue-100/70 hover:underline",
+              ]}
+              aria-current={activeHref === item.href ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+
+          {user && (
+            <>
+              <span class="text-blue-100/70">{user.email}</span>
+              <form method="POST" action="/api/auth/signout">
+                <button type="submit" class="text-purple-300 transition-colors hover:text-purple-100 hover:underline">
+                  Wyloguj się
+                </button>
+              </form>
+            </>
+          )}
+        </div>
+      </nav>
+    </header>
+  )
+}

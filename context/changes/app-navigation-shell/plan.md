@@ -316,22 +316,22 @@ No data or schema migration. The one-way structural migration is the background 
 
 #### Automated
 
-- [x] 1.1 Linting passes: `npm run lint`
-- [x] 1.2 Unit tests pass, including the new resolver spec: `npm run test:run`
-- [x] 1.3 Build passes: `npm run build`
+- [x] 1.1 Linting passes: `npm run lint` — a0aa120
+- [x] 1.2 Unit tests pass, including the new resolver spec: `npm run test:run` — a0aa120
+- [x] 1.3 Build passes: `npm run build` — a0aa120
 
 #### Manual
 
-- [x] 1.4 Item labels and hrefs match the S-08 outcome
+- [x] 1.4 Item labels and hrefs match the S-08 outcome — a0aa120
 
 ### Phase 2: The shell — `AppNav.astro` and the `Layout.astro` viewport contract
 
 #### Automated
 
-- [ ] 2.1 Linting passes: `npm run lint`
-- [ ] 2.2 Build passes: `npm run build`
-- [ ] 2.3 Unit tests still pass: `npm run test:run`
-- [ ] 2.4 No references to the deleted component remain: `rg "Topbar" src`
+- [x] 2.1 Linting passes: `npm run lint`
+- [x] 2.2 Build passes: `npm run build`
+- [x] 2.3 Unit tests still pass: `npm run test:run`
+- [x] 2.4 No references to the deleted component remain: `rg "Topbar" src`
 
 #### Manual
 
