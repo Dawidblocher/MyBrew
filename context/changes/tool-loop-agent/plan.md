@@ -202,22 +202,22 @@ Not applicable — no persisted data or existing external consumers of this pack
 
 #### Automated
 
-- [x] 1.1 Typecheck passes: `npm run typecheck`
+- [x] 1.1 Typecheck passes: `npm run typecheck` — 8ee5551
 
 #### Manual
 
-- [x] 1.2 Read `schemas/review.ts` and `prompts/review.ts` and confirm the schema field descriptions and instructions read clearly and match the intent above
+- [x] 1.2 Read `schemas/review.ts` and `prompts/review.ts` and confirm the schema field descriptions and instructions read clearly and match the intent above — 8ee5551
 
 ### Phase 2: Tools & Agent Factory
 
 #### Automated
 
-- [ ] 2.1 Typecheck passes: `npm run typecheck`
+- [x] 2.1 Typecheck passes: `npm run typecheck`
 
 #### Manual
 
-- [ ] 2.2 Call `createCodeReviewAgent().generate(...)` against a sample diff and repo root and confirm a `readFile` tool call and schema-matching output
-- [ ] 2.3 Confirm a path-traversal attempt through the `readFile` tool is rejected
+- [x] 2.2 Call `createCodeReviewAgent().generate(...)` against a sample diff and repo root and confirm a `readFile` tool call and schema-matching output
+- [x] 2.3 Confirm a path-traversal attempt through the `readFile` tool is rejected
 
 ### Phase 3: CLI Rewire & Verification
 
