@@ -212,21 +212,21 @@ Not applicable — no persisted data or existing external consumers of this pack
 
 #### Automated
 
-- [x] 2.1 Typecheck passes: `npm run typecheck`
+- [x] 2.1 Typecheck passes: `npm run typecheck` — 365ee0d
 
 #### Manual
 
-- [x] 2.2 Call `createCodeReviewAgent().generate(...)` against a sample diff and repo root and confirm a `readFile` tool call and schema-matching output
-- [x] 2.3 Confirm a path-traversal attempt through the `readFile` tool is rejected
+- [x] 2.2 Call `createCodeReviewAgent().generate(...)` against a sample diff and repo root and confirm a `readFile` tool call and schema-matching output — 365ee0d
+- [x] 2.3 Confirm a path-traversal attempt through the `readFile` tool is rejected — 365ee0d
 
 ### Phase 3: CLI Rewire & Verification
 
 #### Automated
 
-- [ ] 3.1 Typecheck passes: `npm run typecheck`
-- [ ] 3.2 Build succeeds: `npm run build`
+- [x] 3.1 Typecheck passes: `npm run typecheck`
+- [x] 3.2 Build succeeds: `npm run build`
 
 #### Manual
 
-- [ ] 3.3 `npm run dev -- <diff-file>` prints valid JSON matching `reviewOutputSchema`
-- [ ] 3.4 `npm run dev` with no argv path prints a usage message and exits non-zero
+- [x] 3.3 `npm run dev -- <diff-file>` prints valid JSON matching `reviewOutputSchema`
+- [x] 3.4 `npm run dev` with no argv path prints a usage message and exits non-zero

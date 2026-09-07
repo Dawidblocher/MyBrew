@@ -32,5 +32,6 @@ export function createCodeReviewAgent(config: CodeReviewAgentConfig) {
     tools: createReviewTools(config.repoRoot),
     output: Output.object({ schema: reviewOutputSchema }),
     stopWhen: isStepCount(8),
+    maxOutputTokens: 4096,
   });
 }
