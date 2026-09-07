@@ -223,10 +223,10 @@ Not applicable — no persisted data or existing external consumers of this pack
 
 #### Automated
 
-- [x] 3.1 Typecheck passes: `npm run typecheck`
-- [x] 3.2 Build succeeds: `npm run build`
+- [x] 3.1 Typecheck passes: `npm run typecheck` — 9cb0afb
+- [x] 3.2 Build succeeds: `npm run build` — 9cb0afb
 
 #### Manual
 
-- [x] 3.3 `npm run dev -- <diff-file>` prints valid JSON matching `reviewOutputSchema`
-- [x] 3.4 `npm run dev` with no argv path prints a usage message and exits non-zero
+- [x] 3.3 `npm run dev -- <diff-file>` prints valid JSON matching `reviewOutputSchema` — 9cb0afb
+- [x] 3.4 `npm run dev` with no argv path prints a usage message and exits non-zero — 9cb0afb
