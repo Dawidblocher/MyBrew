@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { Font } from "astro:assets";
 import AppNav from "@/components/AppNav.astro";
 import Banner from "@/components/Banner.astro";
 import { missingConfigs } from "@/lib/config-status";
@@ -18,6 +19,9 @@ const { title = "Beer Recipe Builder" } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <title>{title}</title>
+    <Font cssVariable="--font-plex-sans" preload={[{ weight: 400, subset: "latin" }]} />
+    <Font cssVariable="--font-fraunces" />
+    <Font cssVariable="--font-plex-mono" />
   </head>
   <body class="bg-cosmic flex min-h-screen flex-col">
     {
