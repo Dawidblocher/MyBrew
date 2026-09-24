@@ -1,18 +1,21 @@
+export type NavIconKey = "recipes" | "new-recipe" | "signin" | "signup";
+
 export interface NavItem {
   href: string;
   label: string;
+  icon: NavIconKey;
 }
 
 export const NAV_BRAND_HREF = "/";
 
 export const SIGNED_IN_NAV_ITEMS: readonly NavItem[] = [
-  { href: "/recipes", label: "Twoje przepisy" },
-  { href: "/recipes/new", label: "Nowy przepis" },
+  { href: "/recipes", label: "Twoje przepisy", icon: "recipes" },
+  { href: "/recipes/new", label: "Nowy przepis", icon: "new-recipe" },
 ];
 
 export const GUEST_NAV_ITEMS: readonly NavItem[] = [
-  { href: "/auth/signin", label: "Zaloguj" },
-  { href: "/auth/signup", label: "Zarejestruj" },
+  { href: "/auth/signin", label: "Zaloguj", icon: "signin" },
+  { href: "/auth/signup", label: "Zarejestruj", icon: "signup" },
 ];
 
 function normalizePathname(pathname: string): string {
@@ -20,11 +23,6 @@ function normalizePathname(pathname: string): string {
     return pathname.slice(0, -1);
   }
   return pathname;
-}
-
-export function isNavSuppressedPath(pathname: string): boolean {
-  const normalized = normalizePathname(pathname);
-  return normalized === "/auth" || normalized.startsWith("/auth/");
 }
 
 export function resolveActiveHref(pathname: string, items: readonly NavItem[]): string | null {

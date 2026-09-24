@@ -527,34 +527,34 @@ Brak zmian w bazie i API. Jedyna zmiana tras: `/dashboard` → redirect na `/rec
 
 #### Automated
 
-- [x] 1.1 Lint przechodzi: `npm run lint`
-- [x] 1.2 Build przechodzi (fonty pobrane, brak błędów configu): `npm run build`
-- [x] 1.3 Testy jednostkowe przechodzą (w tym nowe `srm-color.test.ts`): `npm run test:run`
-- [x] 1.4 W `dist/` są pliki fontów z zakresem latin-ext
+- [x] 1.1 Lint przechodzi: `npm run lint` — 758031d
+- [x] 1.2 Build przechodzi (fonty pobrane, brak błędów configu): `npm run build` — 758031d
+- [x] 1.3 Testy jednostkowe przechodzą (w tym nowe `srm-color.test.ts`): `npm run test:run` — 758031d
+- [x] 1.4 W `dist/` są pliki fontów z zakresem latin-ext — 758031d
 
 #### Manual
 
-- [x] 1.5 Aplikacja działa jak wcześniej, `body` ma font IBM Plex Sans
-- [x] 1.6 Polskie znaki renderują się fontem webowym
+- [x] 1.5 Aplikacja działa jak wcześniej, `body` ma font IBM Plex Sans — 758031d
+- [x] 1.6 Polskie znaki renderują się fontem webowym — 758031d
 
 ### Phase 2: Shell, auth, landing, dashboard
 
 #### Automated
 
-- [ ] 2.1 Lint przechodzi: `npm run lint`
-- [ ] 2.2 Build przechodzi: `npm run build`
-- [ ] 2.3 Testy jednostkowe przechodzą (`nav-items.test.ts`, `auth-errors.test.ts`): `npm run test:run`
-- [ ] 2.4 Brak odwołań do `AppNav` i `bg-cosmic`
-- [ ] 2.5 E2E przekierowań gości przechodzi
+- [x] 2.1 Lint przechodzi: `npm run lint`
+- [x] 2.2 Build przechodzi: `npm run build`
+- [x] 2.3 Testy jednostkowe przechodzą (`nav-items.test.ts`, `auth-errors.test.ts`): `npm run test:run`
+- [x] 2.4 Brak odwołań do `AppNav` i `bg-cosmic`
+- [x] 2.5 E2E przekierowań gości przechodzi
 
 #### Manual
 
-- [ ] 2.6 Zalogowany 1280px: rail, aktywna pozycja, tooltip, Wyloguj
-- [ ] 2.7 Zalogowany 375px: górny pasek, menu `<details>` z klawiatury, brak poziomego scrolla
-- [ ] 2.8 Gość na `/`: górny pasek i nowy landing
-- [ ] 2.9 Auth po polsku, polskie komunikaty błędów Supabase
-- [ ] 2.10 `/dashboard` przekierowuje na `/recipes`; gość → `/auth/signin`
-- [ ] 2.11 Widoczny copper focus ring w shellu
+- [x] 2.6 Zalogowany 1280px: rail, aktywna pozycja, tooltip, Wyloguj
+- [x] 2.7 Zalogowany 375px: górny pasek, menu `<details>` z klawiatury, brak poziomego scrolla
+- [x] 2.8 Gość na `/`: górny pasek i nowy landing
+- [x] 2.9 Auth po polsku, polskie komunikaty błędów Supabase
+- [x] 2.10 `/dashboard` przekierowuje na `/recipes`; gość → `/auth/signin`
+- [x] 2.11 Widoczny copper focus ring w shellu
 
 ### Phase 3: Przepisy — master-detail
 

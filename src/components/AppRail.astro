@@ -1,0 +1,76 @@
+---
+import { Beer, LogOut } from "lucide-react";
+
+import { NAV_ICONS } from "@/components/nav/nav-icons";
+import { NAV_BRAND_HREF, resolveActiveHref, SIGNED_IN_NAV_ITEMS } from "@/lib/nav-items";
+
+const { user } = Astro.locals;
+const activeHref = resolveActiveHref(Astro.url.pathname, SIGNED_IN_NAV_ITEMS);
+const email = user?.email ?? "";
+const initial = email.charAt(0).toUpperCase() || "?";
+
+const itemClass =
+  "group relative flex size-10 items-center justify-center rounded-md border border-transparent border-l-2 transition-colors";
+const tooltipClass =
+  "pointer-events-none absolute top-1/2 left-full z-30 ml-3 -translate-y-1/2 whitespace-nowrap rounded-md bg-ink px-2 py-1 text-xs font-medium text-white opacity-0 shadow-card transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100";
+---
+
+<aside
+  class="border-rule bg-paper-2 sticky top-0 hidden h-dvh flex-col items-center gap-2 border-r py-4 lg:flex"
+  aria-label="Nawigacja aplikacji"
+>
+  <a
+    href={NAV_BRAND_HREF}
+    class="bg-copper mb-4 flex size-10 items-center justify-center rounded-md text-white"
+    aria-label="Beer Recipe Builder — strona główna"
+  >
+    <Beer className="size-5" aria-hidden="true" />
+  </a>
+
+  <nav aria-label="Główne menu" class="flex flex-1 flex-col items-center gap-1">
+    {
+      SIGNED_IN_NAV_ITEMS.map((item) => {
+        const Icon = NAV_ICONS[item.icon];
+        const active = activeHref === item.href;
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              itemClass,
+              active
+                ? "border-rule border-l-copper text-copper bg-white"
+                : "text-ink-3 hover:bg-paper-3 hover:text-ink",
+            ]}
+            aria-current={active ? "page" : undefined}
+          >
+            <Icon className="size-[18px]" aria-hidden="true" />
+            <span class="sr-only">{item.label}</span>
+            <span class:list={[tooltipClass]} aria-hidden="true">
+              {item.label}
+            </span>
+          </a>
+        );
+      })
+    }
+  </nav>
+
+  <div class="border-rule-soft flex flex-col items-center gap-2 border-t pt-3">
+    <span
+      class="bg-copper flex size-8 items-center justify-center rounded-full font-serif text-sm font-medium text-white"
+      title={email}
+    >
+      <span aria-hidden="true">{initial}</span>
+      <span class="sr-only">Zalogowano jako {email}</span>
+    </span>
+    <form method="POST" action="/api/auth/signout">
+      <button
+        type="submit"
+        class:list={[itemClass, "text-ink-3 hover:bg-paper-3 hover:text-err"]}
+        aria-label="Wyloguj się"
+      >
+        <LogOut className="size-[18px]" aria-hidden="true" />
+        <span class:list={[tooltipClass]} aria-hidden="true">Wyloguj się</span>
+      </button>
+    </form>
+  </div>
+</aside>

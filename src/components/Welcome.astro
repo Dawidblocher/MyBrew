@@ -1,4 +1,9 @@
 ---
+import { ChartLine, FileText, Layers } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Eyebrow } from "@/components/ui/eyebrow";
+
 const { user } = Astro.locals;
 
 const ctas = user
@@ -12,145 +17,74 @@ const ctas = user
     };
 
 const metrics = ["BLG", "ABV", "SRM", "IBU"] as const;
+
+const features = [
+  {
+    Icon: ChartLine,
+    title: "Obliczenia na żywo",
+    description:
+      "BLG, ABV, SRM i IBU aktualizują się automatycznie w trakcie tworzenia przepisu — widzisz wynik od razu, zanim zapiszesz.",
+  },
+  {
+    Icon: Layers,
+    title: "Pełny kreator krok po kroku",
+    description:
+      "Podstawy → zasyp → zacieranie → chmiel → drożdże → dodatki. Każdy etap w jednym przewodniku, bez przeskakiwania między narzędziami.",
+  },
+  {
+    Icon: FileText,
+    title: "Zapis i przegląd przepisów",
+    description:
+      "Zapisuj gotowe przepisy na swoim koncie i wracaj do listy z kluczowymi parametrami — wszystko w jednym miejscu.",
+  },
+] as const;
 ---
 
-<div class="relative flex w-full flex-1 overflow-hidden">
-  <!-- Cosmic orbs -->
-  <div
-    class="pointer-events-none absolute top-1/4 -left-24 h-[350px] w-[350px] rounded-full bg-purple-500/20 blur-[120px]"
-  >
-  </div>
-  <div
-    class="pointer-events-none absolute top-2/3 -right-16 h-[250px] w-[250px] rounded-full bg-blue-500/15 blur-[100px]"
-  >
-  </div>
-  <div
-    class="pointer-events-none absolute top-0 left-1/2 h-[300px] w-[300px] -translate-x-1/2 rounded-full bg-indigo-400/10 blur-[140px]"
-  >
-  </div>
+<div class="w-full px-4 sm:px-8">
+  <section class="mx-auto flex max-w-4xl flex-col items-start py-16 sm:py-24 lg:py-28">
+    <Eyebrow className="mb-4">Kreator przepisów piwnych</Eyebrow>
+    <h1 class="text-ink mb-6 font-serif text-5xl leading-[1.05] font-medium tracking-[-0.03em] sm:text-6xl lg:text-7xl">
+      Beer Recipe Builder
+    </h1>
+    <p class="text-ink-2 mb-8 max-w-2xl text-base leading-relaxed sm:text-lg">
+      Kreator przepisów piwnych krok po kroku z obliczeniami BLG, ABV, SRM i IBU na żywo — bez arkuszy i zewnętrznych
+      kalkulatorów.
+    </p>
 
-  <!-- Star field -->
-  <div
-    class="pointer-events-none absolute inset-0"
-    style="background-image: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px), radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px), radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px); background-size: 200px 200px, 150px 150px, 100px 100px; background-position: 0 0, 40px 60px, 80px 30px;"
-  >
-  </div>
+    <ul class="mb-10 flex flex-wrap gap-2" aria-label="Wyliczane parametry">
+      {
+        metrics.map((metric) => (
+          <li class="border-rule bg-chip text-chip-ink inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 font-mono text-[11px] tracking-[0.08em] uppercase">
+            <span class="text-copper font-medium">{metric}</span>
+            <span aria-hidden="true">·</span>
+            <span>na żywo</span>
+          </li>
+        ))
+      }
+    </ul>
 
-  <div class="relative z-10 w-full p-4 sm:p-8">
-    <!-- Hero section -->
-    <div class="mx-auto flex max-w-4xl flex-col items-center justify-center px-4 py-24 text-center sm:py-32 lg:py-40">
-      <h1
-        class="mb-6 bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 bg-clip-text text-5xl leading-tight font-bold text-transparent sm:text-6xl lg:text-7xl"
-      >
-        Beer Recipe Builder
-      </h1>
-      <p class="mb-8 max-w-2xl text-lg text-blue-100/70 sm:text-xl">
-        Kreator przepisów piwnych krok po kroku z obliczeniami BLG, ABV, SRM i IBU na żywo — bez arkuszy i zewnętrznych
-        kalkulatorów.
-      </p>
-
-      <div class="mb-10 flex flex-wrap items-center justify-center gap-3">
-        {
-          metrics.map((metric) => (
-            <span class="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white backdrop-blur-xl">
-              <span class="text-purple-200">{metric}</span>
-              <span class="text-blue-100/50">·</span>
-              <span class="text-blue-100/60">na żywo</span>
-            </span>
-          ))
-        }
-      </div>
-
-      <div class="flex flex-col gap-4 sm:flex-row">
-        <a
-          href={ctas.primary.href}
-          class="inline-flex items-center justify-center rounded-lg bg-purple-600 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-purple-500"
-        >
-          {ctas.primary.label}
-        </a>
-        <a
-          href={ctas.secondary.href}
-          class="inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-white/10"
-        >
-          {ctas.secondary.label}
-        </a>
-      </div>
+    <div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+      <Button asChild variant="copper" className="h-11 px-6 text-sm">
+        <a href={ctas.primary.href}>{ctas.primary.label}</a>
+      </Button>
+      <Button asChild variant="outline" className="h-11 px-6 text-sm">
+        <a href={ctas.secondary.href}>{ctas.secondary.label}</a>
+      </Button>
     </div>
+  </section>
 
-    <!-- Benefit cards -->
-    <div class="mx-auto grid max-w-4xl grid-cols-1 gap-6 px-4 pb-24 sm:grid-cols-3">
-      <div class="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mb-4 text-purple-300"
-        >
-          <path d="M3 3v18h18"></path>
-          <path d="m19 9-5 5-4-4-3 3"></path>
-        </svg>
-        <h3 class="mb-2 text-lg font-semibold text-white">Obliczenia na żywo</h3>
-        <p class="text-sm leading-relaxed text-blue-100/60">
-          BLG, ABV, SRM i IBU aktualizują się automatycznie w trakcie tworzenia przepisu — widzisz wynik od razu, zanim
-          zapiszesz.
-        </p>
-      </div>
-
-      <div class="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mb-4 text-purple-300"
-        >
-          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-          <polyline points="2 17 12 22 22 17"></polyline>
-          <polyline points="2 12 12 17 22 12"></polyline>
-        </svg>
-        <h3 class="mb-2 text-lg font-semibold text-white">Pełny kreator krok po kroku</h3>
-        <p class="text-sm leading-relaxed text-blue-100/60">
-          Podstawy → zasyp → zacieranie → chmiel → drożdże → dodatki. Każdy etap w jednym przewodniku, bez
-          przeskakiwania między narzędziami.
-        </p>
-      </div>
-
-      <div class="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="mb-4 text-purple-300"
-        >
-          <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
-          <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
-          <path d="M10 9H8"></path>
-          <path d="M16 13H8"></path>
-          <path d="M16 17H8"></path>
-        </svg>
-        <h3 class="mb-2 text-lg font-semibold text-white">Zapis i przegląd przepisów</h3>
-        <p class="text-sm leading-relaxed text-blue-100/60">
-          Zapisuj gotowe przepisy na swoim koncie i wracaj do listy z kluczowymi parametrami — wszystko w jednym
-          miejscu.
-        </p>
-      </div>
-    </div>
-  </div>
+  <section class="border-rule mx-auto max-w-4xl border-t pt-10 pb-20" aria-labelledby="features-heading">
+    <h2 id="features-heading" class="sr-only">Możliwości</h2>
+    <ul class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      {
+        features.map(({ Icon, title, description }) => (
+          <li class="border-rule shadow-card rounded-md border bg-white p-5">
+            <Icon className="text-copper mb-4 size-6" aria-hidden="true" />
+            <h3 class="text-ink mb-2 font-serif text-lg font-medium tracking-[-0.01em]">{title}</h3>
+            <p class="text-ink-2 text-[13px] leading-relaxed">{description}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
 </div>

@@ -43,7 +43,7 @@ Full server-side rendering (`output: "server"` in `astro.config.mjs`). All pages
 - `src/middleware.ts` — runs on every request, resolves the current user, attaches to `context.locals.user` (typed in `src/env.d.ts`). Redirects unauthenticated users away from routes listed in `PROTECTED_ROUTES`.
 - API endpoints: `src/pages/api/auth/{signin,signup,signout}.ts`
 - Auth pages: `src/pages/auth/{signin,signup,confirm-email}.astro`
-- Protected page example: `src/pages/dashboard.astro`
+- Protected page example: `src/pages/recipes/index.astro`
 
 ### Environment
 

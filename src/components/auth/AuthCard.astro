@@ -1,0 +1,28 @@
+---
+import { Beer } from "lucide-react";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="flex flex-1 flex-col items-center justify-center gap-6 px-4 py-10">
+  <a href="/" class="text-ink flex items-center gap-2.5 rounded-md px-1 py-1">
+    <span class="bg-copper flex size-8 items-center justify-center rounded-md text-white">
+      <Beer className="size-4" aria-hidden="true" />
+    </span>
+    <span class="font-serif text-lg font-semibold tracking-[-0.02em]">Beer Recipe Builder</span>
+  </a>
+
+  <div class="border-rule shadow-card w-full max-w-sm rounded-md border bg-white p-6 sm:p-8">
+    <slot name="icon" />
+    <h1 class="text-ink mb-6 text-center font-serif text-[28px] leading-tight font-medium tracking-[-0.02em]">
+      {title}
+    </h1>
+    <slot />
+  </div>
+
+  <slot name="footer" />
+</div>

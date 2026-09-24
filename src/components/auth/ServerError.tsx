@@ -8,8 +8,11 @@ export function ServerError({ message }: ServerErrorProps) {
   if (!message) return null;
 
   return (
-    <p className="flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-900/30 px-3 py-2 text-sm text-red-300">
-      <CircleAlert className="size-4 shrink-0" />
+    <p
+      role="alert"
+      className="border-err/40 bg-err/5 text-err flex items-center gap-2 rounded-md border px-3 py-2 text-[13px]"
+    >
+      <CircleAlert className="size-4 shrink-0" aria-hidden="true" />
       {message}
     </p>
   );
