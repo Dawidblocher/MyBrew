@@ -541,30 +541,30 @@ Brak zmian w bazie i API. Jedyna zmiana tras: `/dashboard` → redirect na `/rec
 
 #### Automated
 
-- [x] 2.1 Lint przechodzi: `npm run lint`
-- [x] 2.2 Build przechodzi: `npm run build`
-- [x] 2.3 Testy jednostkowe przechodzą (`nav-items.test.ts`, `auth-errors.test.ts`): `npm run test:run`
-- [x] 2.4 Brak odwołań do `AppNav` i `bg-cosmic`
-- [x] 2.5 E2E przekierowań gości przechodzi
+- [x] 2.1 Lint przechodzi: `npm run lint` — 4a85a4e
+- [x] 2.2 Build przechodzi: `npm run build` — 4a85a4e
+- [x] 2.3 Testy jednostkowe przechodzą (`nav-items.test.ts`, `auth-errors.test.ts`): `npm run test:run` — 4a85a4e
+- [x] 2.4 Brak odwołań do `AppNav` i `bg-cosmic` — 4a85a4e
+- [x] 2.5 E2E przekierowań gości przechodzi — 4a85a4e
 
 #### Manual
 
-- [x] 2.6 Zalogowany 1280px: rail, aktywna pozycja, tooltip, Wyloguj
-- [x] 2.7 Zalogowany 375px: górny pasek, menu `<details>` z klawiatury, brak poziomego scrolla
-- [x] 2.8 Gość na `/`: górny pasek i nowy landing
-- [x] 2.9 Auth po polsku, polskie komunikaty błędów Supabase
-- [x] 2.10 `/dashboard` przekierowuje na `/recipes`; gość → `/auth/signin`
-- [x] 2.11 Widoczny copper focus ring w shellu
+- [x] 2.6 Zalogowany 1280px: rail, aktywna pozycja, tooltip, Wyloguj — 4a85a4e
+- [x] 2.7 Zalogowany 375px: górny pasek, menu `<details>` z klawiatury, brak poziomego scrolla — 4a85a4e
+- [x] 2.8 Gość na `/`: górny pasek i nowy landing — 4a85a4e
+- [x] 2.9 Auth po polsku, polskie komunikaty błędów Supabase — 4a85a4e
+- [x] 2.10 `/dashboard` przekierowuje na `/recipes`; gość → `/auth/signin` — 4a85a4e
+- [x] 2.11 Widoczny copper focus ring w shellu — 4a85a4e
 
 ### Phase 3: Przepisy — master-detail
 
 #### Automated
 
-- [ ] 3.1 Lint przechodzi: `npm run lint`
-- [ ] 3.2 Build przechodzi: `npm run build`
-- [ ] 3.3 Testy jednostkowe przechodzą: `npm run test:run`
-- [ ] 3.4 E2E bez zmian w asercjach przechodzi: `npm run test:e2e`
-- [ ] 3.5 Brak klas starej palety w plikach fazy
+- [x] 3.1 Lint przechodzi: `npm run lint`
+- [x] 3.2 Build przechodzi: `npm run build`
+- [x] 3.3 Testy jednostkowe przechodzą: `npm run test:run`
+- [x] 3.4 E2E bez zmian w asercjach przechodzi: `npm run test:e2e`
+- [x] 3.5 Brak klas starej palety w plikach fazy
 
 #### Manual
 

@@ -1,7 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import RecipeMetricTiles from "@/components/recipe/RecipeMetricTiles.astro";
-import { DeleteRecipeDialog } from "@/components/recipe/DeleteRecipeDialog";
+import RecipeListAside from "@/components/recipe/RecipeListAside.astro";
+import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase";
 import { listRecipes } from "@/lib/recipe-queries";
 import type { RecipeListItem } from "@/types";
@@ -20,34 +20,18 @@ if (supabase && user) {
     items = result.items;
   }
 }
-
-const dateFormatter = new Intl.DateTimeFormat("pl-PL", { dateStyle: "medium" });
 ---
 
 <Layout title="Twoje przepisy">
-  <div class="p-4 sm:p-8">
-    <div class="mx-auto max-w-6xl">
-      <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 class="bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
-          Twoje przepisy
-        </h1>
-        {
-          pageState !== "error" && (
-            <a
-              href="/recipes/new"
-              class="inline-block rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-center text-sm text-white transition-colors hover:bg-white/20"
-            >
-              Nowy przepis
-            </a>
-          )
-        }
-      </div>
+  <div class="flex min-h-0 flex-1">
+    <RecipeListAside state={pageState} items={items} />
 
+    <div class="hidden flex-1 items-center justify-center p-8 lg:flex">
       {
         pageState === "error" && (
-          <div class="rounded-2xl border border-red-400/30 bg-red-500/10 p-8 text-center text-white backdrop-blur-xl">
-            <p class="text-lg font-medium">Nie udało się wczytać przepisów</p>
-            <p class="mt-2 text-sm text-blue-100/70">
+          <div class="border-err/30 bg-err/5 max-w-md rounded-md border p-6 text-center" role="alert">
+            <p class="text-ink font-medium">Nie udało się wczytać przepisów</p>
+            <p class="text-ink-3 mt-2 text-sm">
               Sprawdź połączenie z bazą danych lub skonfiguruj Supabase, a następnie odśwież stronę.
             </p>
           </div>
@@ -56,62 +40,22 @@ const dateFormatter = new Intl.DateTimeFormat("pl-PL", { dateStyle: "medium" });
 
       {
         pageState === "empty" && (
-          <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
-            <p class="text-lg text-blue-100/80">Nie masz jeszcze przepisów</p>
-            <a
-              href="/recipes/new"
-              class="mt-6 inline-block rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm transition-colors hover:bg-white/20"
-            >
-              Nowy przepis
-            </a>
+          <div class="border-rule shadow-card max-w-md rounded-md border bg-white p-8 text-center">
+            <p class="text-ink-3 text-sm">Nie masz jeszcze przepisów.</p>
+            <Button asChild variant="copper" className="mt-4">
+              <a href="/recipes/new">Nowy przepis</a>
+            </Button>
           </div>
         )
       }
 
       {
         pageState === "list" && (
-          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((item) => (
-              <div class="group relative">
-                <a
-                  href={`/recipes/${item.id}`}
-                  class="flex flex-col rounded-2xl border border-white/10 bg-white/10 p-5 text-white backdrop-blur-xl transition-colors hover:border-white/20 hover:bg-white/15"
-                >
-                  <h2 class="text-xl font-semibold">{item.name}</h2>
-                  <p class="mt-1 text-sm text-blue-100/70">{item.style}</p>
-                  <div class="mt-4">
-                    <RecipeMetricTiles metrics={item} compact />
-                  </div>
-                  <p class="mt-4 text-xs text-blue-100/50">
-                    Zapisano: {dateFormatter.format(new Date(item.createdAt))}
-                  </p>
-                </a>
-                <div class="absolute top-3 right-3 flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
-                  <a
-                    href={`/recipes/${item.id}/edit`}
-                    class="rounded-lg p-1.5 text-blue-200/70 transition-colors hover:bg-white/20 hover:text-blue-200"
-                    aria-label="Edytuj przepis"
-                    onclick="event.stopPropagation()"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
-                      <path d="m15 5 4 4" />
-                    </svg>
-                  </a>
-                  <DeleteRecipeDialog recipeId={item.id} recipeName={item.name} variant="icon" client:load />
-                </div>
-              </div>
-            ))}
+          <div class="max-w-md text-center">
+            <p class="text-ink-3 text-sm">Wybierz przepis z listy albo utwórz nowy.</p>
+            <Button asChild variant="copper" className="mt-4">
+              <a href="/recipes/new">Nowy przepis</a>
+            </Button>
           </div>
         )
       }

@@ -1,0 +1,59 @@
+---
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import RecipeListSearch from "@/components/recipe/RecipeListSearch";
+import { cn } from "@/lib/utils";
+import type { RecipeListItem } from "@/types";
+
+interface Props {
+  state: "error" | "empty" | "list";
+  items: RecipeListItem[];
+  activeId?: string;
+  /** The list page has no other `h1`; the detail page's `h1` is the recipe name. */
+  titleAs?: "h1" | "h2";
+  class?: string;
+}
+
+const { state, items, activeId, titleAs = "h1", class: className } = Astro.props;
+---
+
+<aside
+  class:list={cn(
+    "border-rule bg-paper-2 flex w-full flex-col lg:sticky lg:top-0 lg:h-dvh lg:w-[360px] lg:shrink-0 lg:overflow-y-auto lg:border-r",
+    className,
+  )}
+  aria-label="Biblioteka przepisów"
+>
+  <div class="border-rule-soft flex items-baseline justify-between gap-3 border-b px-5 py-4">
+    <div>
+      <Eyebrow>Biblioteka</Eyebrow>
+      {
+        titleAs === "h1" ? (
+          <h1 class="text-ink font-serif text-[22px] font-medium tracking-[-0.02em]">Twoje przepisy</h1>
+        ) : (
+          <h2 class="text-ink font-serif text-[22px] font-medium tracking-[-0.02em]">Twoje przepisy</h2>
+        )
+      }
+    </div>
+    <Badge>{items.length}</Badge>
+  </div>
+
+  {
+    state === "error" && (
+      <div class="border-err/30 bg-err/5 text-err mx-5 mt-4 rounded-md border p-3 text-sm" role="alert">
+        Nie udało się wczytać listy przepisów.
+      </div>
+    )
+  }
+
+  {state === "empty" && <p class="text-ink-3 px-5 py-6 text-sm">Nie masz jeszcze przepisów.</p>}
+
+  {state === "list" && <RecipeListSearch client:load items={items} activeId={activeId} />}
+
+  <div class="border-rule-soft mt-auto border-t p-4">
+    <Button asChild variant="primary" className="w-full justify-center">
+      <a href="/recipes/new">Nowy przepis</a>
+    </Button>
+  </div>
+</aside>
