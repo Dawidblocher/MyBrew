@@ -617,15 +617,15 @@ Brak zmian w bazie i API. Jedyna zmiana tras: `/dashboard` → redirect na `/rec
 
 #### Automated
 
-- [x] 6.1 Lint przechodzi: `npm run lint`
-- [x] 6.2 Build przechodzi: `npm run build`
-- [x] 6.3 Testy jednostkowe przechodzą: `npm run test:run`
-- [x] 6.4 E2E przechodzi: `npm run test:e2e`
-- [x] 6.5 Grep-bramka na starą paletę pusta
-- [x] 6.6 `LibBadge` usunięty
+- [x] 6.1 Lint przechodzi: `npm run lint` — 467c804
+- [x] 6.2 Build przechodzi: `npm run build` — 467c804
+- [x] 6.3 Testy jednostkowe przechodzą: `npm run test:run` — 467c804
+- [x] 6.4 E2E przechodzi: `npm run test:e2e` — 467c804
+- [x] 6.5 Grep-bramka na starą paletę pusta — 467c804
+- [x] 6.6 `LibBadge` usunięty — 467c804
 
 #### Manual
 
-- [x] 6.7 Pełny przegląd wszystkich ekranów na 375px i 1280px
-- [x] 6.8 Spójność odcieni, radiusów i fontów
-- [x] 6.9 Pełny flow wyłącznie klawiaturą z widocznym focus ringiem
+- [x] 6.7 Pełny przegląd wszystkich ekranów na 375px i 1280px — 467c804
+- [x] 6.8 Spójność odcieni, radiusów i fontów — 467c804
+- [x] 6.9 Pełny flow wyłącznie klawiaturą z widocznym focus ringiem — 467c804
