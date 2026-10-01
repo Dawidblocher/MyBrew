@@ -581,37 +581,37 @@ Brak zmian w bazie i API. Jedyna zmiana tras: `/dashboard` → redirect na `/rec
 
 #### Automated
 
-- [x] 4.1 Lint przechodzi (w tym `jsx-a11y`): `npm run lint`
-- [x] 4.2 Build przechodzi: `npm run build`
-- [x] 4.3 Testy jednostkowe przechodzą: `npm run test:run`
-- [x] 4.4 `WizardStepper` usunięty
+- [x] 4.1 Lint przechodzi (w tym `jsx-a11y`): `npm run lint` — d5e1423
+- [x] 4.2 Build przechodzi: `npm run build` — d5e1423
+- [x] 4.3 Testy jednostkowe przechodzą: `npm run test:run` — d5e1423
+- [x] 4.4 `WizardStepper` usunięty — d5e1423
 
 #### Manual
 
-- [x] 4.5 1280px: stepper, metryki na żywo, sticky stopka
-- [x] 4.6 Gating Dalej bez zmian, klikalne tylko ukończone kroki
-- [x] 4.7 Fokus na nagłówku kroku / na polu z błędem
-- [x] 4.8 Zapis new/edit przekierowuje poprawnie, błąd serwera w stopce
-- [x] 4.9 Anuluj/X z potwierdzeniem przy zmianach
-- [x] 4.10 375px: wskaźnik kroku, czytelna stopka i metryki
+- [x] 4.5 1280px: stepper, metryki na żywo, sticky stopka — d5e1423
+- [x] 4.6 Gating Dalej bez zmian, klikalne tylko ukończone kroki — d5e1423
+- [x] 4.7 Fokus na nagłówku kroku / na polu z błędem — d5e1423
+- [x] 4.8 Zapis new/edit przekierowuje poprawnie, błąd serwera w stopce — d5e1423
+- [x] 4.9 Anuluj/X z potwierdzeniem przy zmianach — d5e1423
+- [x] 4.10 375px: wskaźnik kroku, czytelna stopka i metryki — d5e1423
 
 ### Phase 5: Kreator — wiersze i kroki
 
 #### Automated
 
-- [ ] 5.1 Lint przechodzi (w tym `jsx-a11y`): `npm run lint`
-- [ ] 5.2 Build przechodzi: `npm run build`
-- [ ] 5.3 Testy jednostkowe przechodzą: `npm run test:run`
-- [ ] 5.4 Brak lokalnych `inputClass` / `FieldError`
+- [x] 5.1 Lint przechodzi (w tym `jsx-a11y`): `npm run lint`
+- [x] 5.2 Build przechodzi: `npm run build`
+- [x] 5.3 Testy jednostkowe przechodzą: `npm run test:run`
+- [x] 5.4 Brak lokalnych `inputClass` / `FieldError`
 
 #### Manual
 
-- [ ] 5.5 Dodawanie, przesuwanie, usuwanie wierszy w każdym kroku; jednostki w sufiksach
-- [ ] 5.6 Błędy przy konkretnym polu konkretnego wiersza, `aria-invalid`
-- [ ] 5.7 Dostępna nazwa pola zawiera jednostkę, błąd powiązany z polem
-- [ ] 5.8 Krok Drożdże pokazuje błędy pól
-- [ ] 5.9 Edycja wczytuje wszystkie wartości
-- [ ] 5.10 375px: wiersze w stacku, brak poziomego scrolla
+- [x] 5.5 Dodawanie, przesuwanie, usuwanie wierszy w każdym kroku; jednostki w sufiksach
+- [x] 5.6 Błędy przy konkretnym polu konkretnego wiersza, `aria-invalid`
+- [x] 5.7 Dostępna nazwa pola zawiera jednostkę, błąd powiązany z polem
+- [x] 5.8 Krok Drożdże pokazuje błędy pól
+- [x] 5.9 Edycja wczytuje wszystkie wartości
+- [x] 5.10 375px: wiersze w stacku, brak poziomego scrolla
 
 ### Phase 6: Sprzątanie
 

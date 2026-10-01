@@ -1,5 +1,6 @@
 import { useFormContext, Controller } from "react-hook-form";
 import { ArrowDown, ArrowUp, X } from "lucide-react";
+import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,11 @@ const ADJUNCT_STAGE_OPTIONS: { value: AdjunctStage; label: string }[] = [
   { value: "fermentation", label: "Fermentacja" },
 ];
 
+const textareaClass = cn(
+  "border-rule bg-white text-ink placeholder:text-ink-3/60 focus-visible:border-copper aria-invalid:border-err",
+  "flex min-h-[4.5rem] w-full rounded-md border px-2.5 py-2 text-[13px] outline-none",
+);
+
 interface AdjunctRowProps {
   index: number;
   isFirst: boolean;
@@ -21,16 +27,6 @@ interface AdjunctRowProps {
   onMoveUp: () => void;
   onMoveDown: () => void;
   onRemove: () => void;
-}
-
-const inputClass = cn(
-  "border-white/20 bg-white/10 text-white placeholder:text-white/40",
-  "focus-visible:border-purple-400 focus-visible:ring-purple-400/50",
-);
-
-function FieldError({ message }: { message?: string }) {
-  if (!message) return null;
-  return <p className="mt-1 text-xs text-red-300">{message}</p>;
 }
 
 export function AdjunctRow({ index, isFirst, isLast, onMoveUp, onMoveDown, onRemove }: AdjunctRowProps) {
@@ -44,25 +40,20 @@ export function AdjunctRow({ index, isFirst, isLast, onMoveUp, onMoveDown, onRem
   const position = index + 1;
 
   return (
-    <li className="rounded-xl border border-white/10 bg-white/5 p-4">
+    <li className="border-rule rounded-md border bg-white p-4">
       <div className="flex items-start gap-3">
-        <div className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-3">
-          <div className="sm:col-span-3">
-            <Label htmlFor={`adjunct-${index}-name`} className="mb-1 text-blue-100/80">
-              Nazwa dodatku
-            </Label>
-            <Input
-              id={`adjunct-${index}-name`}
-              placeholder="np. Cukier stołowy"
-              className={cn(inputClass, rowErrors?.name && "border-red-400/60")}
-              aria-invalid={Boolean(rowErrors?.name)}
-              {...register(`adjuncts.${index}.name`)}
-            />
-            <FieldError message={rowErrors?.name?.message} />
-          </div>
+        <div className="grid flex-1 grid-cols-1 gap-3 lg:grid-cols-3">
+          <Field
+            id={`adjunct-${index}-name`}
+            label="Nazwa dodatku"
+            error={rowErrors?.name?.message}
+            className="lg:col-span-3"
+          >
+            <Input placeholder="np. Cukier stołowy" {...register(`adjuncts.${index}.name`)} />
+          </Field>
 
           <div>
-            <Label htmlFor={`adjunct-${index}-stage`} className="mb-1 text-blue-100/80">
+            <Label htmlFor={`adjunct-${index}-stage`} className="mb-1">
               Etap
             </Label>
             <Controller
@@ -79,77 +70,72 @@ export function AdjunctRow({ index, isFirst, isLast, onMoveUp, onMoveDown, onRem
                 />
               )}
             />
-            <FieldError message={rowErrors?.stage?.message} />
+            {rowErrors?.stage?.message && <p className="text-err mt-1 text-xs">{rowErrors.stage.message}</p>}
           </div>
 
-          <div>
-            <Label htmlFor={`adjunct-${index}-time`} className="mb-1 text-blue-100/80">
-              Czas (min)
-            </Label>
+          <Field
+            id={`adjunct-${index}-time`}
+            label={
+              <>
+                Czas<span className="sr-only"> (min)</span>
+              </>
+            }
+            error={rowErrors?.timeMin?.message}
+          >
             <Input
-              id={`adjunct-${index}-time`}
               type="number"
               inputMode="decimal"
               step="1"
               min="0"
               placeholder="np. 10"
-              className={cn(inputClass, rowErrors?.timeMin && "border-red-400/60")}
-              aria-invalid={Boolean(rowErrors?.timeMin)}
+              unit="min"
               {...register(`adjuncts.${index}.timeMin`, { valueAsNumber: true })}
             />
-            <FieldError message={rowErrors?.timeMin?.message} />
-          </div>
+          </Field>
 
-          <div className="sm:col-span-3">
-            <Label htmlFor={`adjunct-${index}-notes`} className="mb-1 text-blue-100/80">
-              Notatki
-            </Label>
+          <Field
+            id={`adjunct-${index}-notes`}
+            label="Notatki"
+            hint="Opcjonalne"
+            error={rowErrors?.notes?.message}
+            className="lg:col-span-3"
+          >
             <textarea
-              id={`adjunct-${index}-notes`}
               rows={2}
               placeholder="Opcjonalne uwagi"
-              className={cn(
-                inputClass,
-                "flex min-h-[4.5rem] w-full rounded-md border px-3 py-2 text-base md:text-sm",
-                rowErrors?.notes && "border-red-400/60",
-              )}
-              aria-invalid={Boolean(rowErrors?.notes)}
+              className={textareaClass}
               {...register(`adjuncts.${index}.notes`)}
             />
-            <FieldError message={rowErrors?.notes?.message} />
-          </div>
+          </Field>
         </div>
 
         <div className="flex shrink-0 flex-col gap-1 pt-6">
           <Button
             type="button"
-            variant="outline"
-            size="icon"
+            variant="ghost"
+            size="icon-sm"
             onClick={onMoveUp}
             disabled={isFirst}
             aria-label={`Przesuń dodatek ${position} w górę`}
-            className="size-8 border-white/20 bg-white/5 text-white hover:bg-white/10 disabled:opacity-30"
           >
             <ArrowUp className="size-4" />
           </Button>
           <Button
             type="button"
-            variant="outline"
-            size="icon"
+            variant="ghost"
+            size="icon-sm"
             onClick={onMoveDown}
             disabled={isLast}
             aria-label={`Przesuń dodatek ${position} w dół`}
-            className="size-8 border-white/20 bg-white/5 text-white hover:bg-white/10 disabled:opacity-30"
           >
             <ArrowDown className="size-4" />
           </Button>
           <Button
             type="button"
-            variant="outline"
-            size="icon"
+            variant="danger"
+            size="icon-sm"
             onClick={onRemove}
             aria-label={`Usuń dodatek ${position}`}
-            className="size-8 border-red-400/30 bg-red-500/10 text-red-200 hover:bg-red-500/20"
           >
             <X className="size-4" />
           </Button>

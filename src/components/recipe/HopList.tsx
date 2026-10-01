@@ -12,7 +12,7 @@ export function HopList() {
   return (
     <section className="space-y-3" aria-label="Lista chmielu">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-medium text-blue-100/80">Lista chmielu</h3>
+        <h3 className="text-ink text-sm font-medium">Lista chmielu</h3>
         <Button
           type="button"
           variant="outline"
@@ -20,7 +20,6 @@ export function HopList() {
           onClick={() => {
             append({ ...defaultHopEntry });
           }}
-          className="border-purple-400/40 bg-purple-400/10 text-white hover:bg-purple-400/20"
         >
           <Plus className="size-4" />
           Dodaj chmiel
@@ -28,7 +27,7 @@ export function HopList() {
       </div>
 
       {fields.length === 0 ? (
-        <p className="rounded-xl border border-dashed border-white/15 bg-white/5 p-4 text-sm text-blue-100/50">
+        <p className="border-rule bg-paper-2 text-ink-3 rounded-md border border-dashed p-4 text-sm">
           Brak dodatków chmielu. Dodaj chmiel na gotowanie, aby zobaczyć IBU na żywo.
         </p>
       ) : (
