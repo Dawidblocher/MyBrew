@@ -17,8 +17,6 @@ const buttonVariants = cva(
         outline: "border-rule bg-transparent text-ink hover:bg-paper-2",
         ghost: "border-transparent bg-transparent text-ink hover:bg-paper-3",
         danger,
-        /** @deprecated Alias of `danger`; remove once unused (Phase 6). */
-        destructive: danger,
         link: "h-auto border-transparent bg-transparent px-0 text-copper underline-offset-4 hover:underline",
       },
       size: {

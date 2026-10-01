@@ -17,6 +17,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Services/helpers** go in `src/lib/` (or `src/lib/services/` for extracted business logic).
 - **Shared types** (entities, DTOs) go in `src/types.ts`.
 - **Path alias**: `@/*` maps to `./src/*` (tsconfig paths).
+- **Colors**: only through design tokens and `ui/` variants (`bg-paper-2`, `text-ink-3`, `border-rule`, `bg-copper`, etc.). Feature code never sets Tailwind palette classes directly.
 
 ## Commands
 

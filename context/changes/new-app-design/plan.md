@@ -599,33 +599,33 @@ Brak zmian w bazie i API. Jedyna zmiana tras: `/dashboard` → redirect na `/rec
 
 #### Automated
 
-- [x] 5.1 Lint przechodzi (w tym `jsx-a11y`): `npm run lint`
-- [x] 5.2 Build przechodzi: `npm run build`
-- [x] 5.3 Testy jednostkowe przechodzą: `npm run test:run`
-- [x] 5.4 Brak lokalnych `inputClass` / `FieldError`
+- [x] 5.1 Lint przechodzi (w tym `jsx-a11y`): `npm run lint` — 89226f3
+- [x] 5.2 Build przechodzi: `npm run build` — 89226f3
+- [x] 5.3 Testy jednostkowe przechodzą: `npm run test:run` — 89226f3
+- [x] 5.4 Brak lokalnych `inputClass` / `FieldError` — 89226f3
 
 #### Manual
 
-- [x] 5.5 Dodawanie, przesuwanie, usuwanie wierszy w każdym kroku; jednostki w sufiksach
-- [x] 5.6 Błędy przy konkretnym polu konkretnego wiersza, `aria-invalid`
-- [x] 5.7 Dostępna nazwa pola zawiera jednostkę, błąd powiązany z polem
-- [x] 5.8 Krok Drożdże pokazuje błędy pól
-- [x] 5.9 Edycja wczytuje wszystkie wartości
-- [x] 5.10 375px: wiersze w stacku, brak poziomego scrolla
+- [x] 5.5 Dodawanie, przesuwanie, usuwanie wierszy w każdym kroku; jednostki w sufiksach — 89226f3
+- [x] 5.6 Błędy przy konkretnym polu konkretnego wiersza, `aria-invalid` — 89226f3
+- [x] 5.7 Dostępna nazwa pola zawiera jednostkę, błąd powiązany z polem — 89226f3
+- [x] 5.8 Krok Drożdże pokazuje błędy pól — 89226f3
+- [x] 5.9 Edycja wczytuje wszystkie wartości — 89226f3
+- [x] 5.10 375px: wiersze w stacku, brak poziomego scrolla — 89226f3
 
 ### Phase 6: Sprzątanie
 
 #### Automated
 
-- [ ] 6.1 Lint przechodzi: `npm run lint`
-- [ ] 6.2 Build przechodzi: `npm run build`
-- [ ] 6.3 Testy jednostkowe przechodzą: `npm run test:run`
-- [ ] 6.4 E2E przechodzi: `npm run test:e2e`
-- [ ] 6.5 Grep-bramka na starą paletę pusta
-- [ ] 6.6 `LibBadge` usunięty
+- [x] 6.1 Lint przechodzi: `npm run lint`
+- [x] 6.2 Build przechodzi: `npm run build`
+- [x] 6.3 Testy jednostkowe przechodzą: `npm run test:run`
+- [x] 6.4 E2E przechodzi: `npm run test:e2e`
+- [x] 6.5 Grep-bramka na starą paletę pusta
+- [x] 6.6 `LibBadge` usunięty
 
 #### Manual
 
-- [ ] 6.7 Pełny przegląd wszystkich ekranów na 375px i 1280px
-- [ ] 6.8 Spójność odcieni, radiusów i fontów
-- [ ] 6.9 Pełny flow wyłącznie klawiaturą z widocznym focus ringiem
+- [x] 6.7 Pełny przegląd wszystkich ekranów na 375px i 1280px
+- [x] 6.8 Spójność odcieni, radiusów i fontów
+- [x] 6.9 Pełny flow wyłącznie klawiaturą z widocznym focus ringiem

@@ -5,7 +5,7 @@ import RecipeMetricTiles from "@/components/recipe/RecipeMetricTiles.astro";
 import RecipeExportActions from "@/components/recipe/RecipeExportActions";
 import { DeleteRecipeDialog } from "@/components/recipe/DeleteRecipeDialog";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { ColorSwatch } from "@/components/ui/color-swatch";
 import { SectionTitle } from "@/components/ui/section-title";
 import { StatTile } from "@/components/ui/stat-tile";
@@ -100,9 +100,9 @@ const sectionTableCellClass = "border-rule-soft border-b border-dashed py-2.5 te
               </div>
               <div class="flex flex-wrap items-start gap-2">
                 <RecipeExportActions record={record} client:load />
-                <Button asChild variant="copper" size="sm">
-                  <a href={`/recipes/${id}/edit`}>Edytuj</a>
-                </Button>
+                <a href={`/recipes/${id}/edit`} class:list={[buttonVariants({ variant: "copper", size: "sm" })]}>
+                  Edytuj
+                </a>
                 <DeleteRecipeDialog recipeId={id ?? ""} recipeName={record.name} client:load />
               </div>
             </div>
