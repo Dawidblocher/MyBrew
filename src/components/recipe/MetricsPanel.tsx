@@ -2,7 +2,8 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { computeWizardMetrics } from "@/lib/recipe-to-calc";
 import type { CalcResult } from "@/lib/calc";
 import { METRIC_DESCRIPTORS, METRIC_PLACEHOLDER, formatMetricValue } from "@/lib/recipe-metrics";
-import { cn } from "@/lib/utils";
+import { StatTile } from "@/components/ui/stat-tile";
+import { ColorSwatch } from "@/components/ui/color-swatch";
 import type { RecipeDraft } from "@/types";
 
 function formatMetric(result: CalcResult<number>, fractionDigits: number): string {
@@ -12,28 +13,13 @@ function formatMetric(result: CalcResult<number>, fractionDigits: number): strin
   return formatMetricValue(result.value, fractionDigits);
 }
 
-interface MetricProps {
-  label: string;
-  unit: string;
-  value: string;
+interface MetricsPanelProps {
+  /** Only variant used by the wizard; kept as a prop for the plan's documented contract. */
+  variant?: "strip";
 }
 
-function Metric({ label, unit, value }: MetricProps) {
-  const isPlaceholder = value === METRIC_PLACEHOLDER;
-  return (
-    <div className="flex flex-1 flex-col rounded-xl border border-white/10 bg-white/5 p-4">
-      <span className="text-xs font-medium tracking-wide text-blue-100/60 uppercase">{label}</span>
-      <span className="mt-1 flex items-baseline gap-1">
-        <span className={cn("text-3xl font-bold tabular-nums", isPlaceholder ? "text-white/30" : "text-white")}>
-          {value}
-        </span>
-        <span className="text-sm text-blue-100/60">{unit}</span>
-      </span>
-    </div>
-  );
-}
-
-export function MetricsPanel() {
+export function MetricsPanel({ variant = "strip" }: MetricsPanelProps) {
+  void variant;
   const { control } = useFormContext<RecipeDraft>();
   // Scope the subscription to fields that affect BLG/SRM/IBU/ABV — basics keystrokes
   // (name/style) and adjuncts must not trigger a recompute.
@@ -53,15 +39,23 @@ export function MetricsPanel() {
   };
 
   const metrics = computeWizardMetrics(draft);
+  const srmValue = metrics.srm.ok ? metrics.srm.value : Number.NaN;
 
   return (
     <section
       aria-label="Wyliczenia przepisu"
-      className="mt-6 flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 sm:flex-row"
+      className="border-rule grid grid-cols-2 gap-2 border-y bg-white px-4 py-3 sm:grid-cols-5 sm:gap-3 sm:px-8"
     >
-      {METRIC_DESCRIPTORS.map(({ key, label, unit, fractionDigits }) => (
-        <Metric key={key} label={label} unit={unit} value={formatMetric(metrics[key], fractionDigits)} />
-      ))}
+      {METRIC_DESCRIPTORS.map(({ key, label, unit, fractionDigits }) => {
+        const value = formatMetric(metrics[key], fractionDigits);
+        return (
+          <StatTile key={key} label={label} value={value} unit={unit} placeholder={value === METRIC_PLACEHOLDER} />
+        );
+      })}
+      <div className="border-rule-soft bg-paper-2 flex items-center justify-center gap-2 rounded-md border px-3 py-2">
+        <ColorSwatch srm={srmValue} size="md" />
+        <span className="text-ink-3 font-mono text-[10px] tracking-[0.1em] uppercase">Barwa</span>
+      </div>
     </section>
   );
 }

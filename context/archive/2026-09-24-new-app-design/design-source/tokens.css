@@ -1,0 +1,116 @@
+:root {
+    --paper: #F4EFE6;
+    --paper-2: #EFE8DB;
+    --paper-3: #E6DCC7;
+    --ink: #2C1810;
+    --ink-2: #4A3020;
+    --ink-3: #6B4A33;
+    --rule: #D9CDB4;
+    --rule-soft: #E5DBC5;
+    --copper: #B8632D;
+    --copper-2: #8B4513;
+    --amber: #D4A574;
+    --malt: #C8944F;
+    --dark-malt: #6B3510;
+    --roast: #2C1810;
+    --hop: #6B8E4E;
+    --hop-2: #556E3C;
+    --water: #6B8CA8;
+    --yeast: #D9A441;
+    --ok: #5B7A3F;
+    --warn: #C97A2B;
+    --err: #A83A27;
+    --chip: #EAE0CB;
+    --chip-ink: #3A2616;
+    --white: #FBF8F2;
+    --shadow: 0 1px 0 rgba(44, 24, 16, 0.04), 0 8px 24px -12px rgba(44, 24, 16, 0.18);
+
+    --density-y: 14px;
+    --density-x: 16px;
+    --radius: 4px;
+  }
+
+  [data-theme="dark"] {
+    --paper: #171210;
+    --paper-2: #1E1814;
+    --paper-3: #241C17;
+    --ink: #F2E7D3;
+    --ink-2: #D9CAB0;
+    --ink-3: #A8977E;
+    --rule: #332820;
+    --rule-soft: #26201A;
+    --chip: #2A211A;
+    --chip-ink: #E6D7BC;
+    --white: #1A1512;
+    --shadow: 0 1px 0 rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+
+  [data-theme="swiss"] {
+    --paper: #FAFAF7;
+    --paper-2: #FFFFFF;
+    --paper-3: #F2F0EA;
+    --ink: #0A0A0A;
+    --ink-2: #2A2A2A;
+    --ink-3: #5A5A5A;
+    --rule: #D4D0C8;
+    --rule-soft: #E8E6E0;
+    --copper: #0A0A0A;
+    --copper-2: #0A0A0A;
+    --chip: #EDEAE2;
+    --chip-ink: #0A0A0A;
+    --white: #FFFFFF;
+    --radius: 1px;
+  }
+
+  [data-density="compact"] {
+    --density-y: 8px;
+    --density-x: 12px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+  .serif { font-family: "Fraunces", Georgia, serif; font-optical-sizing: auto; }
+
+  #root { min-height: 100vh; }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+
+  /* placeholder texture for images */
+  .placeholder-img {
+    background:
+      repeating-linear-gradient(
+        45deg,
+        var(--paper-3) 0 8px,
+        var(--paper-2) 8px 16px
+      );
+    color: var(--ink-3);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* focus */
+  :focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
+
+  /* print styles for protocol export */
+  @media print {
+    .no-print { display: none !important; }
+    body { background: white; }
+  }

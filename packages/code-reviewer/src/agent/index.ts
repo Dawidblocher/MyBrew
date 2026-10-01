@@ -22,9 +22,7 @@ export function createCodeReviewAgent(config: CodeReviewAgentConfig) {
   }
 
   const openrouter = createOpenRouter({ apiKey });
-  const model = openrouter(
-    config.model ?? process.env.OPENROUTER_MODEL ?? "anthropic/claude-haiku-4.5",
-  );
+  const model = openrouter(config.model ?? process.env.OPENROUTER_MODEL ?? "anthropic/claude-haiku-4.5");
 
   return new ToolLoopAgent({
     model,

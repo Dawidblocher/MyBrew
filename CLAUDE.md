@@ -17,6 +17,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Services/helpers** go in `src/lib/` (or `src/lib/services/` for extracted business logic).
 - **Shared types** (entities, DTOs) go in `src/types.ts`.
 - **Path alias**: `@/*` maps to `./src/*` (tsconfig paths).
+- **Colors**: only through design tokens and `ui/` variants (`bg-paper-2`, `text-ink-3`, `border-rule`, `bg-copper`, etc.). Feature code never sets Tailwind palette classes directly.
 
 ## Commands
 
@@ -43,7 +44,7 @@ Full server-side rendering (`output: "server"` in `astro.config.mjs`). All pages
 - `src/middleware.ts` — runs on every request, resolves the current user, attaches to `context.locals.user` (typed in `src/env.d.ts`). Redirects unauthenticated users away from routes listed in `PROTECTED_ROUTES`.
 - API endpoints: `src/pages/api/auth/{signin,signup,signout}.ts`
 - Auth pages: `src/pages/auth/{signin,signup,confirm-email}.astro`
-- Protected page example: `src/pages/dashboard.astro`
+- Protected page example: `src/pages/recipes/index.astro`
 
 ### Environment
 

@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, envField } from "astro/config";
+import { defineConfig, envField, fontProviders } from "astro/config";
 
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
@@ -14,6 +14,35 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   adapter: cloudflare(),
+  fonts: [
+    {
+      provider: fontProviders.google(),
+      name: "Fraunces",
+      cssVariable: "--font-fraunces",
+      weights: ["400 700"],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      fallbacks: ["Georgia", "serif"],
+    },
+    {
+      provider: fontProviders.google(),
+      name: "IBM Plex Sans",
+      cssVariable: "--font-plex-sans",
+      weights: [400, 500, 600],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      fallbacks: ["system-ui", "sans-serif"],
+    },
+    {
+      provider: fontProviders.google(),
+      name: "IBM Plex Mono",
+      cssVariable: "--font-plex-mono",
+      weights: [400, 500],
+      styles: ["normal"],
+      subsets: ["latin", "latin-ext"],
+      fallbacks: ["ui-monospace", "monospace"],
+    },
+  ],
   env: {
     schema: {
       SUPABASE_URL: envField.string({ context: "server", access: "secret", optional: true }),

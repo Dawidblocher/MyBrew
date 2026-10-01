@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { buildRecipeJsonBlob, sanitizeFilename, triggerBlobDownload } from "@/lib/recipe-export";
-import { cn } from "@/lib/utils";
 import type { RecipeRecord } from "@/types";
-
-const buttonClassName = "border-white/20 bg-white/10 text-white hover:bg-white/20";
 
 export default function RecipeExportActions({ record }: { record: RecipeRecord }) {
   const [pdfLoading, setPdfLoading] = useState(false);
@@ -37,20 +34,14 @@ export default function RecipeExportActions({ record }: { record: RecipeRecord }
   return (
     <div className="flex flex-col items-stretch gap-2 sm:items-end">
       <div className="flex flex-wrap gap-2">
-        <Button type="button" variant="outline" className={cn(buttonClassName)} onClick={handleJsonDownload}>
+        <Button type="button" variant="outline" size="sm" onClick={handleJsonDownload}>
           Pobierz JSON
         </Button>
-        <Button
-          type="button"
-          variant="outline"
-          className={cn(buttonClassName)}
-          onClick={handlePdfDownload}
-          disabled={pdfLoading}
-        >
+        <Button type="button" variant="outline" size="sm" onClick={handlePdfDownload} disabled={pdfLoading}>
           {pdfLoading ? "Generuję PDF…" : "Pobierz PDF"}
         </Button>
       </div>
-      {pdfError ? <p className="text-sm text-red-300">{pdfError}</p> : null}
+      {pdfError ? <p className="text-err text-sm">{pdfError}</p> : null}
     </div>
   );
 }

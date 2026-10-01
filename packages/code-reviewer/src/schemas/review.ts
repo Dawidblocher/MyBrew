@@ -4,9 +4,7 @@ export const findingSchema = z.object({
   file: z.string().describe("Repo-relative path of the file the finding is in"),
   line: z.number().int().optional().describe("1-indexed line the finding anchors to, if applicable"),
   severity: z.enum(["blocker", "major", "minor", "nit"]).describe("How severe the finding is"),
-  category: z
-    .string()
-    .describe("Short kebab-case slug of the finding type, e.g. correctness, security, style"),
+  category: z.string().describe("Short kebab-case slug of the finding type, e.g. correctness, security, style"),
   summary: z.string().describe("One-sentence statement of the issue"),
 });
 

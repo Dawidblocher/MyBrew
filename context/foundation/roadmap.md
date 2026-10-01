@@ -3,7 +3,7 @@ project: Beer Recipe Builder
 version: 1
 status: draft
 created: 2026-05-28
-updated: 2026-08-04
+updated: 2026-10-01
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -39,7 +39,7 @@ Tworzenie przepisu na piwo wymaga wielu ręcznych obliczeń (BLG, ABV, SRM, IBU)
 | S-06 | recipe-export               | wyeksportować zapisany przepis jako PDF lub JSON                                | S-05          | FR-013                                         | done     |
 | S-07 | recipe-edit-delete          | edytować istniejący przepis (pełny kreator) i trwale go usunąć z potwierdzeniem | S-05          | —                                              | done     |
 | S-08 | app-navigation-shell        | poruszać się po aplikacji ze spójnego, trwałego paska nawigacji na każdej stronie | —             | — (UX, post-v1)                                | done     |
-| S-09 | product-landing-page        | zrozumieć czym jest aplikacja od razu po wejściu na stronę główną, z jasnym CTA  | —             | — (UX, post-v1)                                | planned  |
+| S-09 | product-landing-page        | zrozumieć czym jest aplikacja od razu po wejściu na stronę główną, z jasnym CTA  | —             | — (UX, post-v1)                                | done     |
 
 ## Streams
 
@@ -204,7 +204,7 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **Unknowns:**
   - Czy landing ma być dostępny również dla zalogowanych (marketingowy) czy dla zalogowanych od razu przekierowywać na listę przepisów? — Owner: user. Block: no.
 - **Risk:** Zmiana głównie prezentacyjna (`Welcome.astro`); ryzyko niskie — brak wpływu na dane i obliczenia. Uwaga: usunąć treści boilerplate startera, by nie wprowadzać użytkownika w błąd.
-- **Status:** planned
+- **Status:** done
 
 ## Backlog Handoff
 
@@ -246,6 +246,7 @@ Foundations poniżej zakładają obecność tych warstw i ich NIE odtwarzają.
 - **S-02: użytkownik może skonfigurować wydajność zacierania, stosunek wody do słodu i dynamiczną listę przerw zacierania oraz dynamiczną listę dodatków chmielu (etap, czas), i widzi na żywo aktualizowane IBU.** — Archived 2026-08-02 → `context/archive/2026-06-05-wizard-mash-hops-ibu/`. Lesson: —.
 - **S-03: użytkownik może wybrać parametry drożdży (szczep, typ, odfermentowanie, zakres temperatur) i skonfigurować dynamiczną listę dodatków (etap, czas, notatki), i widzi na żywo ABV — w tym momencie wszystkie cztery metryki (BLG/ABV/SRM/IBU) liczą się na żywo w pełnym kreatorze.** — Archived 2026-08-02 → `context/archive/2026-06-06-wizard-yeast-adjuncts-abv/`. Lesson: —.
 - **S-08: użytkownik porusza się po całej aplikacji z jednego, trwałego paska nawigacji obecnego na każdej stronie (strona główna, lista przepisów, kreator, szczegóły, dashboard): widzi markę/nazwę aplikacji prowadzącą do strony startowej, ma stały dostęp do „Twoje przepisy" i „Nowy przepis", widzi swój stan zalogowania (e-mail) oraz akcję wylogowania; aktywna sekcja jest wizualnie wyróżniona, a nawigacja jest responsywna (na wąskich ekranach zwijana do menu).** — Archived 2026-08-04 → `context/archive/2026-08-04-app-navigation-shell/`. Lesson: —.
+- **S-09: użytkownik trafiający na `/` od razu rozumie, czym jest aplikacja — kreator przepisów na piwo z obliczeniami BLG, ABV, SRM i IBU na żywo — zamiast generycznego szablonu „10x Astro Starter"; treść (nagłówek, opis, karty korzyści) opisuje realny produkt po polsku, a jasne CTA prowadzi niezalogowanego do rejestracji/logowania, a zalogowanego bezpośrednio do „Twoje przepisy" / „Nowy przepis".** — Archived 2026-10-01 → `context/archive/2026-08-05-product-landing-page/`. Lesson: —.
 
 
 

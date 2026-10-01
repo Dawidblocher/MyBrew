@@ -11,8 +11,8 @@ import { expect, type Page } from "@playwright/test";
 export async function signInAndSaveState(page: Page, email: string, password: string, storageStatePath: string) {
   await page.goto("/auth/signin");
 
-  const emailField = page.getByLabel("Email", { exact: true });
-  const passwordField = page.getByLabel("Password", { exact: true });
+  const emailField = page.getByLabel("E-mail", { exact: true });
+  const passwordField = page.getByLabel("Hasło", { exact: true });
 
   await expect(async () => {
     await emailField.fill(email);
@@ -21,7 +21,7 @@ export async function signInAndSaveState(page: Page, email: string, password: st
     await expect(passwordField).toHaveValue(password);
   }).toPass();
 
-  await page.getByRole("button", { name: "Sign in" }).click();
+  await page.getByRole("button", { name: "Zaloguj się" }).click();
 
   await page.waitForURL("/");
 

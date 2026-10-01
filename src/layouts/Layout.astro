@@ -1,14 +1,19 @@
 ---
 import "../styles/global.css";
-import AppNav from "@/components/AppNav.astro";
+import { Font } from "astro:assets";
+import AppRail from "@/components/AppRail.astro";
+import AppTopBar from "@/components/AppTopBar.astro";
 import Banner from "@/components/Banner.astro";
 import { missingConfigs } from "@/lib/config-status";
 
 interface Props {
   title?: string;
+  /** `app` renders the navigation shell; `bare` renders only the page (wizard, auth). */
+  shell?: "app" | "bare";
 }
 
-const { title = "Beer Recipe Builder" } = Astro.props;
+const { title = "Beer Recipe Builder", shell = "app" } = Astro.props;
+const { user } = Astro.locals;
 ---
 
 <!doctype html>
@@ -18,8 +23,11 @@ const { title = "Beer Recipe Builder" } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <title>{title}</title>
+    <Font cssVariable="--font-plex-sans" preload={[{ weight: 400, subset: "latin" }]} />
+    <Font cssVariable="--font-fraunces" />
+    <Font cssVariable="--font-plex-mono" />
   </head>
-  <body class="bg-cosmic flex min-h-screen flex-col">
+  <body class="bg-background text-foreground min-h-dvh">
     {
       missingConfigs.map((cfg) => (
         <Banner variant="error">
@@ -36,10 +44,23 @@ const { title = "Beer Recipe Builder" } = Astro.props;
         </Banner>
       ))
     }
-    <AppNav />
-    <main class="flex flex-1 flex-col">
-      <slot />
-    </main>
+    {
+      shell === "app" ? (
+        <div class:list={["min-h-dvh", user && "lg:grid lg:grid-cols-[64px_1fr]"]}>
+          {user && <AppRail />}
+          <div class="flex min-h-dvh min-w-0 flex-col">
+            <AppTopBar />
+            <main class="flex flex-1 flex-col">
+              <slot />
+            </main>
+          </div>
+        </div>
+      ) : (
+        <main class="flex min-h-dvh flex-col">
+          <slot />
+        </main>
+      )
+    }
   </body>
 </html>
 

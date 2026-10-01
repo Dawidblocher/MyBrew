@@ -1,0 +1,98 @@
+---
+import { Menu } from "lucide-react";
+
+import { NAV_ICONS } from "@/components/nav/nav-icons";
+import { GUEST_NAV_ITEMS, NAV_BRAND_HREF, resolveActiveHref, SIGNED_IN_NAV_ITEMS } from "@/lib/nav-items";
+
+const { user } = Astro.locals;
+const navItems = user ? SIGNED_IN_NAV_ITEMS : GUEST_NAV_ITEMS;
+const activeHref = resolveActiveHref(Astro.url.pathname, navItems);
+
+function linkClass(href: string): string[] {
+  return [
+    "rounded-md px-2.5 py-1.5 text-[13px] transition-colors",
+    activeHref === href ? "bg-white font-medium text-ink" : "text-ink-2 hover:bg-paper-3 hover:text-ink",
+  ];
+}
+---
+
+<header class:list={["border-rule bg-paper-2 border-b", user && "lg:hidden"]}>
+  <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-8" aria-label="Główne menu">
+    <a
+      href={NAV_BRAND_HREF}
+      class="text-ink shrink-0 rounded-md px-1 py-1 font-serif text-lg font-semibold tracking-[-0.02em]"
+    >
+      Beer Recipe Builder
+    </a>
+
+    {
+      !user && (
+        <div class="flex items-center gap-1 sm:gap-2">
+          {navItems.map((item) => (
+            <a
+              href={item.href}
+              class:list={linkClass(item.href)}
+              aria-current={activeHref === item.href ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      user && (
+        <details class="nav-menu relative">
+          <summary class="border-rule text-ink hover:bg-paper-3 flex cursor-pointer items-center gap-2 rounded-md border bg-white px-2.5 py-1.5 text-[13px] font-medium transition-colors">
+            <Menu className="size-4" aria-hidden="true" />
+            Menu
+          </summary>
+
+          <div class="border-rule shadow-card absolute right-0 z-30 mt-2 w-64 rounded-md border bg-white p-2">
+            <ul class="flex flex-col gap-1">
+              {navItems.map((item) => {
+                const Icon = NAV_ICONS[item.icon];
+                return (
+                  <li>
+                    <a
+                      href={item.href}
+                      class:list={[linkClass(item.href), "flex items-center gap-2"]}
+                      aria-current={activeHref === item.href ? "page" : undefined}
+                    >
+                      <Icon className="text-ink-3 size-4" aria-hidden="true" />
+                      {item.label}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+            <div class="border-rule-soft mt-2 border-t pt-2">
+              <p class="text-ink-3 truncate px-2.5 py-1 font-mono text-[11px]" title={user.email}>
+                {user.email}
+              </p>
+              <form method="POST" action="/api/auth/signout">
+                <button
+                  type="submit"
+                  class="text-err hover:bg-paper-3 w-full rounded-md px-2.5 py-1.5 text-left text-[13px] transition-colors"
+                >
+                  Wyloguj się
+                </button>
+              </form>
+            </div>
+          </div>
+        </details>
+      )
+    }
+  </nav>
+</header>
+
+<style>
+  .nav-menu summary {
+    list-style: none;
+  }
+
+  .nav-menu summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
