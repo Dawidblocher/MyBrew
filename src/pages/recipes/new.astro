@@ -3,10 +3,6 @@ import Layout from "@/layouts/Layout.astro";
 import RecipeWizard from "@/components/recipe/RecipeWizard";
 ---
 
-<Layout title="Nowy przepis">
-  <div class="flex flex-1 items-center justify-center p-4">
-    <div class="w-full max-w-2xl">
-      <RecipeWizard client:load />
-    </div>
-  </div>
+<Layout title="Nowy przepis" shell="bare">
+  <RecipeWizard client:load />
 </Layout>

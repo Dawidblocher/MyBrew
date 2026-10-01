@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import RecipeWizard from "@/components/recipe/RecipeWizard";
+import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase";
 import { getRecipe } from "@/lib/recipe-queries";
 
@@ -21,27 +22,18 @@ if (!record) {
   !record ? (
     <Layout title="Nie znaleziono przepisu">
       <div class="flex flex-1 items-center justify-center p-4">
-        <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
-          <h1 class="mb-4 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
-            Nie znaleziono przepisu
-          </h1>
-          <p class="text-blue-100/80">Przepis nie istnieje lub nie masz do niego dostępu.</p>
-          <a
-            href="/recipes"
-            class="mt-6 inline-block rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm transition-colors hover:bg-white/20"
-          >
-            Wróć do listy
-          </a>
+        <div class="border-rule shadow-card max-w-md rounded-md border bg-white p-8 text-center">
+          <h1 class="text-ink font-serif text-3xl font-medium tracking-[-0.02em]">Nie znaleziono przepisu</h1>
+          <p class="text-ink-3 mt-3 text-sm">Przepis nie istnieje lub nie masz do niego dostępu.</p>
+          <Button asChild variant="outline" className="mt-6">
+            <a href="/recipes">Wróć do listy</a>
+          </Button>
         </div>
       </div>
     </Layout>
   ) : (
-    <Layout title={`Edytuj: ${record.name}`}>
-      <div class="p-4 md:p-8">
-        <div class="mx-auto max-w-4xl">
-          <RecipeWizard client:load recipeId={id} initialData={record.data} />
-        </div>
-      </div>
+    <Layout title={`Edytuj: ${record.name}`} shell="bare">
+      <RecipeWizard client:load recipeId={id} initialData={record.data} />
     </Layout>
   )
 }

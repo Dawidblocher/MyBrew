@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import type { FieldPath } from "react-hook-form";
 import { FormProvider } from "react-hook-form";
 import { z } from "zod";
+import { X } from "lucide-react";
 import { useWizardRecipe } from "@/components/hooks/useWizardRecipe";
 import { gristStepSchema, hopsStepSchema, mashStepSchema } from "@/lib/recipe-schema";
 import { buildRecipeInsert, type SaveValidationError } from "@/lib/recipe-save";
@@ -13,16 +14,18 @@ import { HopsStep } from "@/components/recipe/steps/HopsStep";
 import { YeastStep } from "@/components/recipe/steps/YeastStep";
 import { AdjunctsStep } from "@/components/recipe/steps/AdjunctsStep";
 import { MetricsPanel } from "@/components/recipe/MetricsPanel";
-import { WizardStepper, type WizardStepConfig } from "@/components/recipe/WizardStepper";
+import { WizardStepNav, type WizardStepConfig } from "@/components/recipe/WizardStepNav";
+import { WizardFooter } from "@/components/recipe/WizardFooter";
+import { Eyebrow } from "@/components/ui/eyebrow";
 import type { RecipeDraft } from "@/types";
 
 const WIZARD_STEPS: WizardStepConfig[] = [
-  { id: "basics", label: "Podstawy" },
-  { id: "grist", label: "Zasyp i parametry" },
-  { id: "mash", label: "Zacieranie" },
-  { id: "hops", label: "Chmiel" },
-  { id: "yeast", label: "Drożdże" },
-  { id: "adjuncts", label: "Dodatki" },
+  { id: "basics", label: "Podstawy", hint: "Nazwa i styl" },
+  { id: "grist", label: "Zasyp i parametry", hint: "Słody i objętość" },
+  { id: "mash", label: "Zacieranie", hint: "Przerwy i wydajność" },
+  { id: "hops", label: "Chmiel", hint: "Chmielenie i IBU" },
+  { id: "yeast", label: "Drożdże", hint: "Szczep i fermentacja" },
+  { id: "adjuncts", label: "Dodatki", hint: "Przyprawy, owoce, inne" },
 ];
 
 const STEP_COMPONENTS = [BasicsStep, GristStep, MashStep, HopsStep, YeastStep, AdjunctsStep];
@@ -55,9 +58,27 @@ export default function RecipeWizard({ recipeId, initialData }: RecipeWizardProp
   const [saveErrors, setSaveErrors] = useState<SaveValidationError[]>([]);
   const [genericSaveError, setGenericSaveError] = useState<string | null>(null);
 
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const skipHeadingFocusRef = useRef(false);
+  const isFirstRenderRef = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRenderRef.current) {
+      isFirstRenderRef.current = false;
+      return;
+    }
+    if (skipHeadingFocusRef.current) {
+      skipHeadingFocusRef.current = false;
+      return;
+    }
+    stepHeadingRef.current?.focus();
+  }, [currentStep]);
+
   const StepComponent = STEP_COMPONENTS[currentStep] ?? BasicsStep;
   const isFirstStep = currentStep === 0;
   const isLastStep = currentStep === WIZARD_STEPS.length - 1;
+  const isEdit = Boolean(recipeId);
+  const cancelHref = isEdit ? `/recipes/${recipeId}` : "/recipes";
 
   function applySaveErrors(errors: SaveValidationError[]) {
     setSaveErrors(errors);
@@ -71,8 +92,15 @@ export default function RecipeWizard({ recipeId, initialData }: RecipeWizardProp
       }
     }
 
+    skipHeadingFocusRef.current = focused;
     const firstStep = errors.reduce((min, err) => Math.min(min, stepForField(err.field)), WIZARD_STEPS.length - 1);
     setCurrentStep(firstStep);
+  }
+
+  function handleStepSelect(index: number) {
+    if (index < currentStep) {
+      setCurrentStep(index);
+    }
   }
 
   async function handleNext() {
@@ -125,15 +153,15 @@ export default function RecipeWizard({ recipeId, initialData }: RecipeWizardProp
 
     setIsSaving(true);
     try {
-      const isEdit = Boolean(recipeId);
-      const response = await fetch(isEdit ? `/api/recipes/${recipeId}` : "/api/recipes", {
-        method: isEdit ? "PUT" : "POST",
+      const isEditSave = Boolean(recipeId);
+      const response = await fetch(isEditSave ? `/api/recipes/${recipeId}` : "/api/recipes", {
+        method: isEditSave ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(draft),
       });
 
       if (response.status === 201 || response.status === 200) {
-        window.location.href = isEdit ? `/recipes/${recipeId}` : "/recipes";
+        window.location.href = isEditSave ? `/recipes/${recipeId}` : "/recipes";
         return;
       }
 
@@ -165,41 +193,77 @@ export default function RecipeWizard({ recipeId, initialData }: RecipeWizardProp
     }
   }
 
+  function handleCancelClick(event: MouseEvent<HTMLAnchorElement>) {
+    if (form.formState.isDirty && !window.confirm("Porzucić niezapisane zmiany?")) {
+      event.preventDefault();
+    }
+  }
+
+  const progressPercent = ((currentStep + 1) / WIZARD_STEPS.length) * 100;
+  const wizardTitle = isEdit ? "Edytuj przepis" : "Nowy przepis";
+  const wizardEyebrow = isEdit ? "Edycja przepisu" : "Nowy przepis";
+
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/10 p-8 text-white backdrop-blur-xl">
-      <h1 className="mb-6 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-2xl font-bold text-transparent">
-        {recipeId ? "Edytuj przepis" : "Nowy przepis"}
-      </h1>
+    <div className="grid min-h-dvh lg:grid-cols-[260px_1fr]">
+      <aside className="border-rule bg-paper-2 hidden flex-col gap-5 border-r px-4 py-5 lg:sticky lg:top-0 lg:flex lg:h-dvh lg:overflow-y-auto">
+        <h1 className="text-ink font-serif text-[20px] font-medium tracking-[-0.02em]">{wizardTitle}</h1>
+        <WizardStepNav steps={WIZARD_STEPS} currentIndex={currentStep} onSelect={handleStepSelect} />
+      </aside>
 
       <FormProvider {...form}>
-        <WizardStepper
-          steps={WIZARD_STEPS}
-          currentIndex={currentStep}
-          onBack={handleBack}
-          onNext={handleNext}
-          onSave={handleSave}
-          isFirstStep={isFirstStep}
-          isLastStep={isLastStep}
-          isSaving={isSaving}
-        >
-          <StepComponent />
-        </WizardStepper>
+        <div className="flex min-h-dvh min-w-0 flex-col">
+          <header className="border-rule flex items-start justify-between gap-4 border-b px-4 py-5 sm:px-8">
+            <div className="min-w-0">
+              <Eyebrow>{wizardEyebrow}</Eyebrow>
+              <p className="text-ink-3 mt-0.5 font-mono text-xs tracking-[0.08em] uppercase">
+                Krok {currentStep + 1} / {WIZARD_STEPS.length}
+              </p>
+              <h2
+                ref={stepHeadingRef}
+                tabIndex={-1}
+                className="text-ink font-serif text-xl font-medium tracking-[-0.02em] outline-none sm:text-2xl"
+              >
+                {WIZARD_STEPS[currentStep].label}
+              </h2>
+            </div>
+            <a
+              href={cancelHref}
+              onClick={handleCancelClick}
+              aria-label="Zamknij kreator"
+              className="text-ink-3 hover:bg-paper-3 hover:text-ink shrink-0 rounded-md p-2 transition-colors"
+            >
+              <X className="size-5" aria-hidden="true" />
+            </a>
+          </header>
 
-        {(saveErrors.length > 0 || genericSaveError) && (
-          <div className="mt-4 rounded-lg border border-red-400/40 bg-red-500/10 p-4 text-sm text-red-200" role="alert">
-            {genericSaveError ? (
-              <p>{genericSaveError}</p>
-            ) : (
-              <ul className="list-inside list-disc space-y-1">
-                {saveErrors.map((err) => (
-                  <li key={`${err.field}-${err.message}`}>{err.message}</li>
-                ))}
-              </ul>
-            )}
+          <div aria-hidden="true" className="bg-paper-3 h-0.5">
+            <div
+              className="bg-copper h-full transition-[width] duration-300 ease-out"
+              style={{ width: `${progressPercent}%` }}
+            />
           </div>
-        )}
 
-        <MetricsPanel />
+          <MetricsPanel variant="strip" />
+
+          <div className="flex-1 px-4 py-6 sm:px-8">
+            <div className="mx-auto max-w-[880px]">
+              <StepComponent />
+            </div>
+          </div>
+
+          <WizardFooter
+            isFirstStep={isFirstStep}
+            isLastStep={isLastStep}
+            isSaving={isSaving}
+            onBack={handleBack}
+            onNext={handleNext}
+            onSave={handleSave}
+            cancelHref={cancelHref}
+            onCancel={handleCancelClick}
+            saveErrors={saveErrors}
+            genericSaveError={genericSaveError}
+          />
+        </div>
       </FormProvider>
     </div>
   );

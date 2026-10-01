@@ -560,40 +560,40 @@ Brak zmian w bazie i API. Jedyna zmiana tras: `/dashboard` → redirect na `/rec
 
 #### Automated
 
-- [x] 3.1 Lint przechodzi: `npm run lint`
-- [x] 3.2 Build przechodzi: `npm run build`
-- [x] 3.3 Testy jednostkowe przechodzą: `npm run test:run`
-- [x] 3.4 E2E bez zmian w asercjach przechodzi: `npm run test:e2e`
-- [x] 3.5 Brak klas starej palety w plikach fazy
+- [x] 3.1 Lint przechodzi: `npm run lint` — 19a9fa1
+- [x] 3.2 Build przechodzi: `npm run build` — 19a9fa1
+- [x] 3.3 Testy jednostkowe przechodzą: `npm run test:run` — 19a9fa1
+- [x] 3.4 E2E bez zmian w asercjach przechodzi: `npm run test:e2e` — 19a9fa1
+- [x] 3.5 Brak klas starej palety w plikach fazy — 19a9fa1
 
 #### Manual
 
-- [ ] 3.6 1280px: aside + zachęta, podświetlona aktywna karta, niezależny scroll aside
-- [ ] 3.7 Wyszukiwarka filtruje po nazwie i stylu, stan „brak wyników”, pełna lista bez JS
-- [ ] 3.8 Kotwice przewijają poprawnie pod sticky paskiem
-- [ ] 3.9 Swatch sensowny dla SRM ~3, ~12, ~35
-- [ ] 3.10 Stany pusty i błędu
-- [ ] 3.11 375px: lista / szczegóły osobno, brak poziomego scrolla
-- [ ] 3.12 Eksport, Edytuj, Usuń działają
-- [ ] 3.13 404 z „Nie znaleziono przepisu”
+- [x] 3.6 1280px: aside + zachęta, podświetlona aktywna karta, niezależny scroll aside — 19a9fa1
+- [x] 3.7 Wyszukiwarka filtruje po nazwie i stylu, stan „brak wyników”, pełna lista bez JS — 19a9fa1
+- [x] 3.8 Kotwice przewijają poprawnie pod sticky paskiem — 19a9fa1
+- [x] 3.9 Swatch sensowny dla SRM ~3, ~12, ~35 — 19a9fa1
+- [x] 3.10 Stany pusty i błędu — 19a9fa1
+- [x] 3.11 375px: lista / szczegóły osobno, brak poziomego scrolla — 19a9fa1
+- [x] 3.12 Eksport, Edytuj, Usuń działają — 19a9fa1
+- [x] 3.13 404 z „Nie znaleziono przepisu” — 19a9fa1
 
 ### Phase 4: Kreator — kompozycja
 
 #### Automated
 
-- [ ] 4.1 Lint przechodzi (w tym `jsx-a11y`): `npm run lint`
-- [ ] 4.2 Build przechodzi: `npm run build`
-- [ ] 4.3 Testy jednostkowe przechodzą: `npm run test:run`
-- [ ] 4.4 `WizardStepper` usunięty
+- [x] 4.1 Lint przechodzi (w tym `jsx-a11y`): `npm run lint`
+- [x] 4.2 Build przechodzi: `npm run build`
+- [x] 4.3 Testy jednostkowe przechodzą: `npm run test:run`
+- [x] 4.4 `WizardStepper` usunięty
 
 #### Manual
 
-- [ ] 4.5 1280px: stepper, metryki na żywo, sticky stopka
-- [ ] 4.6 Gating Dalej bez zmian, klikalne tylko ukończone kroki
-- [ ] 4.7 Fokus na nagłówku kroku / na polu z błędem
-- [ ] 4.8 Zapis new/edit przekierowuje poprawnie, błąd serwera w stopce
-- [ ] 4.9 Anuluj/X z potwierdzeniem przy zmianach
-- [ ] 4.10 375px: wskaźnik kroku, czytelna stopka i metryki
+- [x] 4.5 1280px: stepper, metryki na żywo, sticky stopka
+- [x] 4.6 Gating Dalej bez zmian, klikalne tylko ukończone kroki
+- [x] 4.7 Fokus na nagłówku kroku / na polu z błędem
+- [x] 4.8 Zapis new/edit przekierowuje poprawnie, błąd serwera w stopce
+- [x] 4.9 Anuluj/X z potwierdzeniem przy zmianach
+- [x] 4.10 375px: wskaźnik kroku, czytelna stopka i metryki
 
 ### Phase 5: Kreator — wiersze i kroki
 
